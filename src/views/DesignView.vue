@@ -24,7 +24,7 @@ const totalActivities = computed(() => {
 });
 
 const addWeek = () => {
-  props.weeks.push({ title: '', activities: [{ title: '', activityType: 'read watch listen', description: '', minutes: '', students: '' }] });
+  props.weeks.push({ title: '', activities: [{ title: '', activityType: 'read watch listen', description: '', notes: '', minutes: '', students: '' }] });
 };
 
 const removeWeek = (weekIndex) => {
@@ -32,7 +32,7 @@ const removeWeek = (weekIndex) => {
 };
 
 const addActivity = (weekIndex) => {
-  props.weeks[weekIndex].activities.push({ title: '', activityType: 'read watch listen', description: '', minutes: '', students: '' });
+  props.weeks[weekIndex].activities.push({ title: '', activityType: 'read watch listen', description: '', notes: '', minutes: '', students: '' });
 };
 
 const handleRemoveActivity = (weekIndex, activityIndex) => {
@@ -46,6 +46,7 @@ const exportJSON = () => {
       title: activity.title,
       activityType: activity.activityType,
       description: activity.description,
+      notes: activity.notes,
       minutes: activity.minutes,
       students: activity.students
     }))
@@ -75,7 +76,7 @@ const exportJSON = () => {
       <button @click="exportJSON" class="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-1">Export Course <ArrowUpOnSquareIcon class="w-5 h-5"/></button>
     </div>
   </div>
-  <div class="container py-10">
+  <div class="py-10">
     <div class="w-100">
       <div v-for="(week, weekIndex) in weeks" :key="weekIndex" class="flex flex-col gap-5 mb-8">
         <div class="bg-slate-100 p-5 rounded-md border-slate-200 border">

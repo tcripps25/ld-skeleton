@@ -46,5 +46,9 @@ const props = defineProps({
     <label :for="'description-' + weekIndex + '-' + activityIndex" class="block text-gray-700">Description:</label>
     <textarea v-model="activity.description" :id="'description-' + weekIndex + '-' + activityIndex" :name="'description-' + weekIndex + '-' + activityIndex" rows="4" class="form-textarea mt-1 block w-full rounded-sm p-1"></textarea>
   </div>
+  <div class="mt-4">
+    <label :for="'notes-' + weekIndex + '-' + activityIndex" class="block text-gray-700">Notes:</label>
+    <textarea v-model="activity.notes" :id="'notes-' + weekIndex + '-' + activityIndex" :name="'notes-' + weekIndex + '-' + activityIndex" rows="2" class="form-textarea mt-1 block w-full rounded-sm p-1"></textarea>
+  </div>
 </div>
 </template>
