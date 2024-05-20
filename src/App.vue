@@ -1,79 +1,42 @@
 <script setup>
 import { ref } from 'vue';
 import { RouterLink, RouterView } from 'vue-router';
-import { ArrowDownOnSquareIcon, PlusCircleIcon, PaintBrushIcon, HomeIcon } from '@heroicons/vue/24/solid';
+import { ArrowDownOnSquareIcon, ArrowUpOnSquareIcon, PlusCircleIcon, PaintBrushIcon, HomeIcon } from '@heroicons/vue/24/solid';
+import { useCourseStore } from '@/stores/course.js'
+import ExportCourseButton from '@/components/buttons/ExportCourseButton.vue'
+import ImportCourseButton from '@/components/buttons/ImportCourseButton.vue'
+import ResetCourseButton from '@/components/buttons/ResetCourseButton.vue'
 
+const course = useCourseStore()
 
-// Define a reactive variable to store the imported data
-const weeks = ref([]);
-
-// Function to handle importing JSON data
-const importJSON = (jsonData) => {
-  try {
-    // Parse the JSON data
-    const importedData = JSON.parse(jsonData);
-
-    // Validate the structure of the imported data
-    if (!Array.isArray(importedData)) {
-      throw new Error('Invalid JSON data: Expected an array');
-    }
-
-    // Set the imported data to the weeks ref
-    weeks.value = importedData;
-  } catch (error) {
-    console.error('Error importing JSON:', error.message);
-    // Optionally, display an error message to the user
-  }
-};
-
-// Function to trigger import when the file input changes
-const importFromFile = () => {
-  const input = document.createElement('input');
-  input.type = 'file';
-  input.accept = 'application/json';
-
-  input.onchange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-
-    reader.onload = (event) => {
-      const jsonData = event.target.result;
-      importJSON(jsonData);
-    };
-
-    reader.readAsText(file);
-  };
-
-  input.click();
-};
-
-const resetCourse = () => {
-  weeks.value = []; // Reset weeks to an empty array
-};
+const courseTitle = ref(course.title)
 </script>
 
 <template>
   <header class="">
-    <div class="text-slate-100 flex justify-between w-full p-5">
+    <div class="text-slate-100 flex justify-between w-full p-5 items-center">
       <h1 class="text-2xl font-semibold p-2">UoP Learning Designer</h1>
-      <nav class="flex gap-2 text-slate-200">
-        <button @click="importFromFile" class="bg-blue-500 text-white px-4 py-2 rounded-md h-max flex items-center gap-1">Import Course <ArrowDownOnSquareIcon class="w-5 h-5"/></button>
-        <button @click="resetCourse" class="bg-blue-500 text-white px-4 py-2 rounded-md h-max flex items-center gap-1">New Course <PlusCircleIcon class="w-5 h-5"/></button>
+      <input v-model="course.title" type="text" class="text-xl mb-0 bg-transparent text-center" :placeholder="'Course Title'"></input>
+      <h2 class="sr-only">{{ course.title }}</h2>
+      <nav class="flex gap-2">
+        <ImportCourseButton :name="'Import Course'" />
+        <ResetCourseButton :name="'Reset Course'" />
+        <ExportCourseButton :name="'Export Course'" />
       </nav>
     </div>
   </header>
-  <sidebar class="p-10 w-min text-slate-200">
+  <nav class="p-10 w-min text-slate-200">
     <nav class="flex flex-col gap-5">
         <RouterLink class="aria-current:font-semibold flex gap-2 items-center" to="/"><HomeIcon class="w-5 h-5" /> Home</RouterLink>
         <RouterLink class="aria-current:font-semibold flex gap-2 items-center" to="/design"><PaintBrushIcon class="w-5 h-5" /> Design</RouterLink>
       </nav>
-    </sidebar>
+    </nav>
   <main class="h-screen p-5 bg-white rounded-ss-lg w-full overflow-scroll">
     <!-- Render the Design view with the imported data -->
   
     <RouterView v-slot="{ Component }">
       <transition name="fade">
-        <component :is="Component" :weeks="weeks" />
+        <component :is="Component" />
       </transition>
     </RouterView>
 

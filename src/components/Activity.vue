@@ -13,7 +13,7 @@ const props = defineProps({
 
 </script>
 <template>
-<div class="mb-4 border border-slate-300 p-4 rounded-md max-w-md bg-slate-200">
+<div class="mb-4 border border-slate-300 p-4 rounded-md max-w-md bg-slate-200 shadow-sm">
 <div class="flex items-center justify-between mb-2">
     <h3 class="text-lg font-semibold">
       <input v-model="activity.title" type="text" class="form-input w-full py-1 rounded-sm bg-transparent" :placeholder="'Activity ' + (activityIndex + 1)" />
