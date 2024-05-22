@@ -3,6 +3,7 @@ import { ref, computed, watch } from 'vue';
 import Week from '@/components/Week.vue';
 import PageHeader from '@/components/PageHeader.vue';
 import AddWeekButton from '@/components/buttons/AddWeekButton.vue'
+import Page from '@/components/Page.vue'
 
 import { useCourseStore } from '@/stores/course.js'
 
@@ -25,11 +26,11 @@ watch([totalActivities, numberOfWeeks], ([newTotalActivities, newNumberOfWeeks])
     <PageHeader :title="'Design'" :message="message">
     <AddWeekButton />
     </PageHeader>
-    <div class="py-10">
+    <Page>
       <div class="w-100">
         <Week v-for="(week, weekIndex) in course.weeks" :key="weekIndex" :week="week" :weekIndex="weekIndex" class="flex flex-col gap-5 mb-8" />
       </div>
-    </div>
+    </Page>
   </div>
 </template>
 
