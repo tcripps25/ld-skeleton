@@ -1,7 +1,6 @@
 <script setup>
 import { ArrowUpOnSquareIcon } from '@heroicons/vue/24/solid';
 import { useCourseStore } from '@/stores/course.js';
-import { defineProps } from 'vue';
 import { slugify } from '@/utils/utils';
 
 const course = useCourseStore();
@@ -20,7 +19,8 @@ const exportJSON = () => {
         description: activity.description,
         notes: activity.notes,
         minutes: activity.minutes,
-        students: activity.students
+        students: activity.students,
+        group: activity.isGroup
       }))
     }))
   };

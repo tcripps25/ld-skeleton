@@ -4,10 +4,11 @@ import Week from '@/components/Week.vue';
 import PageHeader from '@/components/PageHeader.vue';
 import AddWeekButton from '@/components/buttons/AddWeekButton.vue'
 import Page from '@/components/Page.vue'
-
+import { useRoute, RouterView } from 'vue-router';
 import { useCourseStore } from '@/stores/course.js'
 
 const course = useCourseStore()
+const route = useRoute();
 
 const message = ref(course.totalActivities + ' Activities in ' + course.numberOfWeeks + ' Weeks');
 
@@ -19,6 +20,10 @@ const numberOfWeeks = computed(() => course.numberOfWeeks);
 watch([totalActivities, numberOfWeeks], ([newTotalActivities, newNumberOfWeeks]) => {
   message.value = newTotalActivities + ' Activities in ' + newNumberOfWeeks + ' Weeks';
 });
+
+// Check if the current route is '/design' or any of its sub-routes
+const isDesignPage = computed(() => route.path === '/design');
+
 </script>
 
 <template>
@@ -27,9 +32,11 @@ watch([totalActivities, numberOfWeeks], ([newTotalActivities, newNumberOfWeeks])
     <AddWeekButton />
     </PageHeader>
     <Page>
-      <div class="w-100">
+      <div v-if="isDesignPage" class="w-100">
         <Week v-for="(week, weekIndex) in course.weeks" :key="weekIndex" :week="week" :weekIndex="weekIndex" class="flex flex-col gap-5 mb-8" />
       </div>
+      <router-view v-else></router-view>
+      
     </Page>
   </div>
 </template>

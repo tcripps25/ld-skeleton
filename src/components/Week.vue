@@ -19,7 +19,7 @@ const removeWeek = (weekIndex) => {
 };
 
 const addActivity = (weekIndex) => {
-  course.weeks[weekIndex].activities.push({ title: '', activityType: 'read watch listen', description: '', notes: '', minutes: '', students: '' });
+  course.weeks[weekIndex].activities.push({ title: '', activityType: 'read watch listen', description: '', notes: '', minutes: '', students: '', isGroup: false });
 };
 
 const handleRemoveActivity = (weekIndex, activityIndex) => {
@@ -32,7 +32,7 @@ const handleRemoveActivity = (weekIndex, activityIndex) => {
           <div class="bg-slate-50 p-5 rounded-md border-slate-200 border">
             <div class="week-header pt-0 flex justify-between">
               <h2 class="text-xl font-semibold mb-4">
-                <input v-model="week.title" type="text" class="border-0 w-full p-1 rounded-sm bg-transparent" :placeholder="'Week ' + (weekIndex + 1)" />
+                <input v-model="week.title" type="text" class="text-2xl font-semibold mb-5 border-0 w-full p-1 rounded-sm bg-transparent" :placeholder="'Week ' + (weekIndex + 1)" />
               </h2>
               <button @click="removeWeek(weekIndex)" class="text-red-500 flex gap-1"><span class="sr-only">Remove Week</span><XMarkIcon class="w-5 h-5"/></button>
             </div>

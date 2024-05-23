@@ -13,9 +13,7 @@ export default {
     },
   },
   plugins: [
-    require('flowbite/plugin')({
-      charts: true,
-  }),
+    require('flowbite/plugin'),
   ]
 }
 

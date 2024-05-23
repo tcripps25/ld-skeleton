@@ -18,7 +18,8 @@ const handleAddWeek = () => {
       description: '', 
       notes: '', 
       minutes: '', 
-      students: '' 
+      students: '',
+      isGroup: false
     }] 
   });
 };
