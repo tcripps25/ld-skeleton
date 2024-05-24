@@ -70,7 +70,6 @@ console.log(course.title);
           @keyup.enter="submitTitle"
         />
       </div>
-    
     </Transition>
     </div>
  

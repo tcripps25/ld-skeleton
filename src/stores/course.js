@@ -71,7 +71,7 @@ const slug = computed(() => slugify(title.value));
 
     return maxStudents;
   });
-
+  
   // Compute the largest number of mins in any activity
   const maxMinsInActivity = computed(() => {
     let maxMins = 0;
@@ -87,6 +87,74 @@ const slug = computed(() => slugify(title.value));
     return maxMins;
   });
 
+// Calculate the percentage of each type of activity for each week
+const activityTypePercentagesPerWeek = computed(() => {
+  return weeks.value.map(week => {
+    const activityTypeCounts = {};
+
+    // Initialize counts for each activity type to 0
+    for (const type of activityTypes.value) {
+      activityTypeCounts[type] = 0;
+    }
+
+    // Count the occurrences of each activity type in the current week
+    for (const activity of week.activities) {
+      const type = activity.activityType;
+      if (activityTypeCounts[type] !== undefined) {
+        activityTypeCounts[type]++;
+      }
+    }
+
+    // Calculate the percentage of each activity type for the current week
+    const totalWeekActivities = week.activities.length;
+    const percentages = activityTypes.value.map(type => {
+      const count = activityTypeCounts[type] || 0;
+      const percentage = (count / totalWeekActivities) * 100;
+      return Number(percentage.toFixed(2));
+    });
+
+    return {
+      weekTitle: week.title,
+      percentages: percentages
+    };
+  });
+});
+
+ // Method to get a single week's data by index and include activity type percentages
+ const getWeekTypeByIndex = (index) => {
+  const week = weeks.value[index] || null;
+  if (week) {
+    const activityTypeCounts = {};
+
+    // Initialize counts for each activity type to 0
+    for (const type of activityTypes.value) {
+      activityTypeCounts[type] = 0;
+    }
+
+    // Count the occurrences of each activity type in the current week
+    for (const activity of week.activities) {
+      const type = activity.activityType;
+      if (activityTypeCounts[type] !== undefined) {
+        activityTypeCounts[type]++;
+      }
+    }
+
+    // Calculate the percentage of each activity type for the current week
+    const totalWeekActivities = week.activities.length;
+    const percentages = activityTypes.value.map(type => {
+      const count = activityTypeCounts[type] || 0;
+      const percentage = (count / totalWeekActivities) * 100;
+      return Number(percentage.toFixed(2));
+    });
+
+    return {
+      ...week,
+      activityTypePercentages: percentages
+    };
+  }
+  return null;
+};
+  
   return {
     title,
     slug,
@@ -96,8 +164,10 @@ const slug = computed(() => slugify(title.value));
     totalActivities,
     weekNames,
     activitiesPerWeek,
+    activityTypePercentagesPerWeek,
     activityTypePercentages,
     maxStudentsInActivity,
-    maxMinsInActivity
+    maxMinsInActivity,
+    getWeekTypeByIndex
   };
 });

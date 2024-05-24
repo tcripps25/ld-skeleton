@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, watchEffect } from 'vue';
+import { onMounted, watch, onUnmounted } from 'vue';
 import ApexCharts from 'apexcharts';
 import { useCourseStore } from '@/stores/course.js'
 
@@ -8,8 +8,8 @@ const course = useCourseStore();
 const props = defineProps({
     title: String,
     information: String,
-    dataseries: Object,
-    datalabels: Object,
+    dataseries: Array, // Change Object to Array for series data
+    datalabels: Array, // Change Object to Array for labels
 });
 
 let chart;
@@ -78,27 +78,32 @@ const createChart = () => {
   }
 };
 
+const updateChart = () => {
+  if (chart) {
+    chart.updateOptions({
+      series: props.dataseries,
+      labels: props.datalabels,
+    });
+  }
+};
+
 onMounted(() => {
   createChart();
 });
 
-watchEffect(() => {
+watch(() => props.dataseries, updateChart);
+watch(() => props.datalabels, updateChart);
+
+onUnmounted(() => {
   if (chart) {
-    chart.updateOptions({
-      series: [{
-        data: course.activitiesPerWeek,
-      }],
-      xaxis: {
-        categories: course.weekNames,
-      },
-    });
+    chart.destroy();
   }
 });
 </script>
 
+
 <template>
     <h3 v-if="title">{{ title }}</h3>
     <slot></slot>
-    <div id="pie-chart"></div>
-    
-</template>
+    <div id="pie-chart" class=""></div>
+  </template>
