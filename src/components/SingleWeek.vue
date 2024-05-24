@@ -28,10 +28,10 @@ onMounted(() => {
     </h2>
 </div>
 <Panel title="Overview">
-    <PieChart :dataseries="weekStats.activityTypePercentages" :datalabels="course.activityTypes">
+    <PieChart :dataseries="weekStats.activityTypePercentages" :datalabels="course.activityTypes" :colors="course.activityColors">
       <p class="mb-3">An overview of the Activity types you have used in this week of your course.</p>
       </PieChart>
 </Panel>
-    <Week :week="week" :week-index="index" />
+    <Week :week="week" :week-index="index" :showTitle=false />
 </div>
 </template>

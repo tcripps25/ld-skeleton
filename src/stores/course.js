@@ -8,7 +8,9 @@ export const useCourseStore = defineStore('course', () => {
 
   // set Activity Types here
   const activityTypes = ref(["Acquisition", "Collaboration", "Discussion", "Investigation", "Practice", "Production"]);
-
+  const activityColors = ref(["#da3732", "#e1903e", "#e3b645", "#b5cb53", "#3173b6", "#2b3a8b"])
+  
+  
   // Compute slug dynamically from title
 const slug = computed(() => slugify(title.value));
 
@@ -163,6 +165,7 @@ const activityTypePercentagesPerWeek = computed(() => {
     slug,
     weeks,
     activityTypes,
+    activityColors,
     numberOfWeeks,
     totalActivities,
     weekNames,

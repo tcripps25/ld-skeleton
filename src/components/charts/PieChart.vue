@@ -9,7 +9,8 @@ const props = defineProps({
     title: String,
     information: String,
     dataseries: Array, 
-    datalabels: Array, 
+    datalabels: Array,
+    colors: Array,
 });
 
 let chart;
@@ -17,7 +18,7 @@ let chart;
 const createChart = () => {
   const options = {
     series: props.dataseries,
-    colors: ["#1C64F2", "#16BDCA", "#9061F9", "#9061F9", "#9061F9", "#9061F9"],
+    colors: props.colors,
     chart: {
       height: 420,
       width: "100%",

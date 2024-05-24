@@ -1,15 +1,17 @@
 <script setup>
 import { RouterLink, useRoute } from 'vue-router';
-import { PaintBrushIcon, HomeIcon, ChartPieIcon, Cog8ToothIcon } from '@heroicons/vue/24/solid';
+import { PaintBrushIcon, HomeIcon, ChartPieIcon, Cog8ToothIcon, ArrowUpOnSquareIcon } from '@heroicons/vue/24/solid';
 import { useCourseStore } from '@/stores/course.js';
 import { computed } from 'vue';
 import WeekLink from '@/components/menu/WeekLink.vue';
-
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { Sortable } from '@shopify/draggable';
 
 const course = useCourseStore();
 const route = useRoute();
 
 const isDesignActive = computed(() => route.path === '/design' || route.path.startsWith('/design/'));
+
 
 </script>
 
@@ -22,8 +24,9 @@ const isDesignActive = computed(() => route.path === '/design' || route.path.sta
       <PaintBrushIcon class="w-5 h-5" /> Design
     </RouterLink>
     <Transition>
-    <TransitionGroup v-if="isDesignActive" class="flex flex-col" name="list" tag="ul">
+    <TransitionGroup v-if="isDesignActive" class="flex flex-col" name="list" tag="ul" id="draggable-list">
             <WeekLink
+            
             v-for="(week, index) in course.weeks"
             :key="index"
             :week="week"
@@ -37,6 +40,9 @@ const isDesignActive = computed(() => route.path === '/design' || route.path.sta
 </Transition>
     <RouterLink :active-class="'bg-blue-600 text-blue-50 hover:!bg-blue-600'" class="transition hover:bg-slate-300 gap-3 aria-current:font-semibold flex p-2 rounded items-center" to="/visualise">
       <ChartPieIcon class="w-5 h-5" /> Visualise
+    </RouterLink>
+    <RouterLink :active-class="'bg-blue-600 text-blue-50 hover:!bg-blue-600'" class="transition hover:bg-slate-300 gap-3 aria-current:font-semibold flex p-2 rounded items-center" to="/visualise">
+      <ArrowUpOnSquareIcon class="w-5 h-5" /> Publish
     </RouterLink>
   </nav>
 </template>

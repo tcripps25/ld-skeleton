@@ -17,7 +17,7 @@ const isActiveLink = computed(() => route.path === to.value);
 </script>
 
 <template>
-    <div class="flex justify-between items-center ml-8 hover:bg-slate-300 rounded group transition">
+    <li class="flex justify-between items-center ml-8 hover:bg-slate-300 rounded group transition">
     <RouterLink
       :to="to"
       :active-class="'aria-current:font-semibold'"
@@ -30,7 +30,7 @@ const isActiveLink = computed(() => route.path === to.value);
     <slot :week="week" :index="index"></slot>
     </RouterLink>
     <RemoveWeekButton :index="index" class="group-hover:opacity-100 opacity-0 transition" />
-</div>
+</li>
   </template>
   
  
