@@ -5,8 +5,11 @@ import { slugify } from '@/utils/utils';
 export const useCourseStore = defineStore('course', () => {
   const title = ref('');
   const weeks = ref([]);
-  const activityTypes = ref(["Read Watch Listen", "Collaborate", "Investigate", "Discuss", "Practice", "Produce"]);
-// Compute slug dynamically from title
+
+  // set Activity Types here
+  const activityTypes = ref(["Acquisition", "Collaboration", "Discussion", "Investigation", "Practice", "Production"]);
+
+  // Compute slug dynamically from title
 const slug = computed(() => slugify(title.value));
 
 

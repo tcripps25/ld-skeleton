@@ -8,8 +8,8 @@ const course = useCourseStore();
 const props = defineProps({
     title: String,
     information: String,
-    dataseries: Array, // Change Object to Array for series data
-    datalabels: Array, // Change Object to Array for labels
+    dataseries: Array, 
+    datalabels: Array, 
 });
 
 let chart;

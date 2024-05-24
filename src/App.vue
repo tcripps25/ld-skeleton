@@ -9,6 +9,7 @@ import ImportCourseButton from './components/buttons/ImportCourseButton.vue';
 import ResetCourseButton from './components/buttons/ResetCourseButton.vue';
 import { PencilIcon } from '@heroicons/vue/16/solid';
 import MainNav from '@/components/menu/MainNav.vue';
+import Logo from '@/assets/uop_logo.png';
 
 const course = useCourseStore();
 const designMenu = useDesignMenuStore();
@@ -33,6 +34,7 @@ console.log(course.title);
   <div id="sidebar" class="px-7 py-5 flex flex-col gap-5 border-r">
     <header class="text-slate-800 flex flex-col">
       <div class="flex justify-between mb-3">
+        <img :src="Logo" class="w-12" alt="University of Portsmouth Logo"></img>
     <a href="#" class="flex flex-col">
         <h1 class="text-2xl font-semibold">Module Designer</h1>
         <p>Experimental May 2024</p>

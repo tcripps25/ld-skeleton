@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, watchEffect } from 'vue';
+import { onMounted, watch, onUnmounted } from 'vue';
 import ApexCharts from 'apexcharts';
 import { useCourseStore } from '@/stores/course.js'
 
@@ -8,8 +8,8 @@ const course = useCourseStore();
 const props = defineProps({
     title: String,
     information: String,
-    datax: Object,
-    datay: Object,
+    datax: Array, // Change Object to Array for x-axis data
+    datay: Array, // Change Object to Array for y-axis data
 });
 
 let chart;
@@ -88,27 +88,35 @@ const createChart = () => {
   }
 };
 
+const updateChart = () => {
+  if (chart) {
+    chart.updateOptions({
+      series: [{
+        data: props.datay,
+      }],
+      xaxis: {
+        categories: props.datax,
+      },
+    });
+  }
+};
+
 onMounted(() => {
   createChart();
 });
 
-watchEffect(() => {
+watch(() => [props.datax, props.datay], updateChart, { deep: true });
+
+onUnmounted(() => {
   if (chart) {
-    chart.updateOptions({
-      series: [{
-        data: course.activitiesPerWeek,
-      }],
-      xaxis: {
-        categories: course.weekNames,
-      },
-    });
+    chart.destroy();
   }
 });
 </script>
 
+
 <template>
-    <h3 v-if="title">{{ title }}</h3>
-    <slot></slot>
-    <div id="line-chart"></div>
-    
+  <h3 v-if="title">{{ title }}</h3>
+  <slot></slot>
+  <div id="line-chart"></div>
 </template>
