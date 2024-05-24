@@ -41,7 +41,7 @@ const isDesignActive = computed(() => route.path === '/design' || route.path.sta
     <RouterLink :active-class="'bg-blue-600 text-blue-50 hover:!bg-blue-600'" class="transition hover:bg-slate-300 gap-3 aria-current:font-semibold flex p-2 rounded items-center" to="/visualise">
       <ChartPieIcon class="w-5 h-5" /> Visualise
     </RouterLink>
-    <RouterLink :active-class="'bg-blue-600 text-blue-50 hover:!bg-blue-600'" class="transition hover:bg-slate-300 gap-3 aria-current:font-semibold flex p-2 rounded items-center" to="/visualise">
+    <RouterLink :active-class="'bg-blue-600 text-blue-50 hover:!bg-blue-600'" class="transition hover:bg-slate-300 gap-3 aria-current:font-semibold flex p-2 rounded items-center" to="/publish">
       <ArrowUpOnSquareIcon class="w-5 h-5" /> Publish
     </RouterLink>
   </nav>

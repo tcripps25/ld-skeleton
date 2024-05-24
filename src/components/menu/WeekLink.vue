@@ -4,6 +4,7 @@ import { RouterLink } from 'vue-router';
 import { PlayIcon } from '@heroicons/vue/16/solid';
 import { useRoute } from 'vue-router';
 import RemoveWeekButton from '@/components/buttons/RemoveWeekButton.vue';
+import MoveWeekButton from '@/components/buttons/MoveWeekButton.vue'
 
 const props = defineProps({
   week: Object,
@@ -29,7 +30,10 @@ const isActiveLink = computed(() => route.path === to.value);
     </Transition>
     <slot :week="week" :index="index"></slot>
     </RouterLink>
-    <RemoveWeekButton :index="index" class="group-hover:opacity-100 opacity-0 transition" />
+    <div class="group-hover:opacity-100 opacity-0 transition flex items-center bg-slate-200 rounded mr-2">
+        <MoveWeekButton :index="index" class="" />
+        <RemoveWeekButton :index="index" class="" />
+    </div>
 </li>
   </template>
   
