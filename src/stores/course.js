@@ -122,6 +122,11 @@ const slug = computed(() => slugify(title.value));
 
 // Calculate the percentage of each type of activity for each week
 const activityTypePercentagesPerWeek = computed(() => {
+  // Check if activityTypes and weeks have valid data
+  if (!activityTypes.value || !weeks.value || activityTypes.value.length === 0 || weeks.value.length === 0) {
+    return [];
+  }
+
   return weeks.value.map(week => {
     const activityTypeCounts = {};
 
@@ -132,10 +137,12 @@ const activityTypePercentagesPerWeek = computed(() => {
 
     // Count the occurrences of each activity type in the current week
     for (const activity of week.activities) {
-      // Assuming activity.selectedActivityTypes is an array of types
-      for (const type of activity.selectedActivityTypes) {
-        if (activityTypeCounts[type] !== undefined) {
-          activityTypeCounts[type]++;
+      // Check if selectedActivityTypes array is defined and not empty
+      if (activity.selectedActivityTypes && Array.isArray(activity.selectedActivityTypes) && activity.selectedActivityTypes.length > 0) {
+        for (const type of activity.selectedActivityTypes) {
+          if (activityTypeCounts[type] !== undefined) {
+            activityTypeCounts[type]++;
+          }
         }
       }
     }
@@ -157,6 +164,8 @@ const activityTypePercentagesPerWeek = computed(() => {
   });
 });
 
+
+
 const getWeekTypeByIndex = (index) => {
   const week = weeks.value[index] || null;
   if (week) {
@@ -169,10 +178,12 @@ const getWeekTypeByIndex = (index) => {
 
     // Count the occurrences of each activity type in the current week
     for (const activity of week.activities) {
-      // Assuming activity.selectedActivityTypes is an array of types
-      for (const type of activity.selectedActivityTypes) {
-        if (activityTypeCounts[type] !== undefined) {
-          activityTypeCounts[type]++;
+      // Check if selectedActivityTypes array is defined and not empty
+      if (activity.selectedActivityTypes && Array.isArray(activity.selectedActivityTypes) && activity.selectedActivityTypes.length > 0) {
+        for (const type of activity.selectedActivityTypes) {
+          if (activityTypeCounts[type] !== undefined) {
+            activityTypeCounts[type]++;
+          }
         }
       }
     }

@@ -24,7 +24,7 @@ onMounted(() => {
 <div class="flex flex-col gap-7">
     <div>
     <h2 class="text-2xl font-semibold mb-5 flex flex-col"><span class="text-base text-slate-500 font-medium">Teaching Week {{ index +++ 1 }}</span>
-        <input v-model="week.title" type="text" class="text-2xl font-semibold mb-5 border-0 w-max p-0 rounded-sm bg-transparent" :placeholder="'Week ' + (weekIndex + 1)" />    
+        <input v-model="week.title" type="text" class="text-2xl font-semibold mb-5 border-0 w-max p-0 rounded-sm bg-transparent" :placeholder="'Week ' + (index + 1)" />    
     </h2>
 </div>
 <Panel title="Overview">
