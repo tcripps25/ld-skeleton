@@ -27,11 +27,18 @@ onMounted(() => {
         <input v-model="week.title" type="text" class="text-2xl font-semibold mb-5 border-0 w-max p-0 rounded-sm bg-transparent" :placeholder="'Week ' + (index + 1)" />    
     </h2>
 </div>
+<div class="flex gap-7">
 <Panel title="Overview">
     <PieChart :dataseries="weekStats.activityTypePercentages" :datalabels="course.activityTypes" :colors="course.activityColors">
       <p class="mb-3">An overview of the Activity types you have used in this week of your course.</p>
       </PieChart>
 </Panel>
+<Panel title="Module Learning Objectives">
+   <ol class="flex flex-col gap-2 list-decimal p-10">
+    <li v-for="(outcome, index) in course.learningOutcomes">{{ outcome.label }}</li>
+   </ol>
+</Panel>
+</div>
     <Week :week="week" :week-index="index" :showTitle=false />
 </div>
 </template>
