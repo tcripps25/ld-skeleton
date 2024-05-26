@@ -1,5 +1,5 @@
 <script setup>
-import { XMarkIcon, EllipsisHorizontalCircleIcon } from '@heroicons/vue/24/solid'
+import { XMarkIcon, EllipsisHorizontalIcon } from '@heroicons/vue/24/solid'
 import { useCourseStore } from '@/stores/course.js'
 import { ref, computed } from 'vue';
 import MultiSelect from 'primevue/multiselect';
@@ -26,22 +26,43 @@ const isAcademicPresent = ref(props.activity.isAcademicPresent ?? false);
 </script>
 <template>
   <div id="activity-container" class="relative w-full h-96 rounded-lg max-w-md mb-5 overflow-hidden">
-  <div id="activity-summary" class="bg-slate-200 p-4 relative rounded-lg h-full">
-    <div class="flex justify-center">
+
+  <div id="activity-summary" class="bg-slate-200 p-4 relative rounded-lg h-full flex flex-col gap-4">
+    <div class="flex justify-between">
       <h3 class="text-2xl font-semibold">{{ activity.title || 'Untitled Activity ' + (activityIndex + 1) }}</h3>
-      <button @click="toggleEditMode" class="text-red-500 flex items-center gap-1">
+      <button @click="toggleEditMode" class="flex items-center gap-1">
         <span class="sr-only">Remove Activity</span>
-        <EllipsisHorizontalCircleIcon class="w-5 h-5"/>
+        <EllipsisHorizontalIcon class="bg-slate-300 p-1 rounded-full w-7 h-7"/>
       </button>
     </div>
+  
+    <div class="">
+      <h4 class="text-lg font-medium">Activity Type</h4>
+      <ul class="ml-4">
+        <li v-for="(type, index) in activity.selectedActivityTypes">
+          {{ type }}
+        </li>
+      </ul>
+    </div>
+    <div class="">
+    <h4 class="text-lg font-medium">Aligned With</h4>
+      <ul class="ml-4">
+        <li v-for="(alignment, index) in activity.alignments">
+          <div class="flex flex-col">
+          {{ alignment.label }}
+        </div>
+        </li>
+      </ul>
+    </div>
   </div>
+
 
   <div v-if="editMode" id="activity-options" :class="{'z-10': editMode}" class="absolute w-full top-0 h-full overflow-y-scroll border p-4 bg-slate-300 shadow-sm">
     <div class="flex items-center justify-between mb-2">
       <h3 class="text-lg font-semibold">
         <input v-model="activity.title" type="text" class="border-0 form-input w-full py-1 px-0 rounded-sm bg-transparent" :placeholder="'Activity ' + (activityIndex + 1)" />
       </h3>
-      <button @click="toggleEditMode" class="text-red-500 flex items-center gap-1">
+      <button @click="toggleEditMode" class="flex items-center gap-1">
         <span class="sr-only">Remove Activity</span>
         <XMarkIcon class="w-5 h-5"/>
       </button>

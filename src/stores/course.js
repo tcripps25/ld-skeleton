@@ -9,9 +9,10 @@ export const useCourseStore = defineStore('course', () => {
 
 // Define the learning outcomes and assessments
 const learningOutcomes = ref([
-  { label: "Outcome 1", value: "outcome1" },
-  { label: "Outcome 2", value: "outcome2" },
-  { label: "Outcome 3", value: "outcome3" }
+  { label: "Formulate a plan to synthesise academic sources and relevant cultural texts.", value: "outcome1" },
+  { label: "Synthesise literature about food and culture from a range of relevant sources.", value: "outcome2" },
+  { label: "Critically analyse specific examples to evaluate more general arguments about food.", value: "outcome3" },
+  { label: "Critically assess the relationship(s) between food and other facets of contemporary society.", value: "outcome4" }
 ]);
 
 const assessments = ref([
