@@ -7,13 +7,7 @@ import ExportCourseButton from '@/components/buttons/ExportCourseButton.vue'
 import ImportCourseButton from '@/components/buttons/ImportCourseButton.vue'
 import ResetCourseButton from '@/components/buttons/ResetCourseButton.vue'
 import ModalButton from '@/components/buttons/ModalButton.vue'
-import { initFlowbite } from 'flowbite'
 
-
-// initialize components based on data attribute selectors
-onMounted(() => {
-    initFlowbite();
-})
 
 const menu = useDesignMenuStore()
 const course = useCourseStore()

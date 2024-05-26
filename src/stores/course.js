@@ -5,6 +5,29 @@ import { slugify } from '@/utils/utils';
 export const useCourseStore = defineStore('course', () => {
   const title = ref('');
   const weeks = ref([]);
+  
+
+// Define the learning outcomes and assessments
+const learningOutcomes = ref([
+  { label: "Outcome 1", value: "outcome1" },
+  { label: "Outcome 2", value: "outcome2" },
+  { label: "Outcome 3", value: "outcome3" }
+]);
+
+const assessments = ref([
+  { label: "Assessment 1", value: "assessment1" },
+  { label: "Assessment 2", value: "assessment2" },
+  { label: "Assessment 3", value: "assessment3" }
+]);
+
+// Combine the arrays into alignmentOptions with correct structure
+const alignmentOptions = computed(() => [
+  { group: 'Learning Outcomes', items: learningOutcomes.value },
+  { group: 'Assessments', items: assessments.value }
+]);
+
+
+
 
   // set Activity Types here
   const activityTypes = ref(["Acquisition", "Collaboration", "Discussion", "Investigation", "Practice", "Production"]);
@@ -36,29 +59,34 @@ const slug = computed(() => slugify(title.value));
   // Calculate the percentage of each type of activity for the whole course
   const activityTypePercentages = computed(() => {
     const activityTypeCounts = {};
-
+  
     // Initialize counts for each activity type to 0
     for (const type of activityTypes.value) {
       activityTypeCounts[type] = 0;
     }
-
+  
     // Count the occurrences of each activity type
     for (const week of weeks.value) {
       for (const activity of week.activities) {
-        const type = activity.activityType;
-        if (activityTypeCounts[type] !== undefined) {
-          activityTypeCounts[type]++;
+        // Assuming activity.selectedActivityTypes is an array of types
+        for (const type of activity.selectedActivityTypes) {
+          if (activityTypeCounts[type] !== undefined) {
+            activityTypeCounts[type]++;
+          }
         }
       }
     }
-
+  
+    // Calculate the total number of activities considering multiple types per activity
+    const totalTypeOccurrences = Object.values(activityTypeCounts).reduce((sum, count) => sum + count, 0);
+  
     // Calculate the percentage of each activity type
     const percentages = activityTypes.value.map(type => {
       const count = activityTypeCounts[type] || 0;
-      const percentage = (count / totalActivities.value) * 100;
+      const percentage = (count / totalTypeOccurrences) * 100;
       return Number(percentage.toFixed(2));
     });
-
+  
     return percentages;
   });
 
@@ -104,17 +132,21 @@ const activityTypePercentagesPerWeek = computed(() => {
 
     // Count the occurrences of each activity type in the current week
     for (const activity of week.activities) {
-      const type = activity.activityType;
-      if (activityTypeCounts[type] !== undefined) {
-        activityTypeCounts[type]++;
+      // Assuming activity.selectedActivityTypes is an array of types
+      for (const type of activity.selectedActivityTypes) {
+        if (activityTypeCounts[type] !== undefined) {
+          activityTypeCounts[type]++;
+        }
       }
     }
 
+    // Calculate the total number of type occurrences in the current week
+    const totalWeekTypeOccurrences = Object.values(activityTypeCounts).reduce((sum, count) => sum + count, 0);
+
     // Calculate the percentage of each activity type for the current week
-    const totalWeekActivities = week.activities.length;
     const percentages = activityTypes.value.map(type => {
       const count = activityTypeCounts[type] || 0;
-      const percentage = (count / totalWeekActivities) * 100;
+      const percentage = totalWeekTypeOccurrences > 0 ? (count / totalWeekTypeOccurrences) * 100 : 0;
       return Number(percentage.toFixed(2));
     });
 
@@ -125,8 +157,7 @@ const activityTypePercentagesPerWeek = computed(() => {
   });
 });
 
- // Method to get a single week's data by index and include activity type percentages
- const getWeekTypeByIndex = (index) => {
+const getWeekTypeByIndex = (index) => {
   const week = weeks.value[index] || null;
   if (week) {
     const activityTypeCounts = {};
@@ -138,17 +169,21 @@ const activityTypePercentagesPerWeek = computed(() => {
 
     // Count the occurrences of each activity type in the current week
     for (const activity of week.activities) {
-      const type = activity.activityType;
-      if (activityTypeCounts[type] !== undefined) {
-        activityTypeCounts[type]++;
+      // Assuming activity.selectedActivityTypes is an array of types
+      for (const type of activity.selectedActivityTypes) {
+        if (activityTypeCounts[type] !== undefined) {
+          activityTypeCounts[type]++;
+        }
       }
     }
 
+    // Calculate the total number of type occurrences in the current week
+    const totalWeekTypeOccurrences = Object.values(activityTypeCounts).reduce((sum, count) => sum + count, 0);
+
     // Calculate the percentage of each activity type for the current week
-    const totalWeekActivities = week.activities.length;
     const percentages = activityTypes.value.map(type => {
       const count = activityTypeCounts[type] || 0;
-      const percentage = (count / totalWeekActivities) * 100;
+      const percentage = totalWeekTypeOccurrences > 0 ? (count / totalWeekTypeOccurrences) * 100 : 0;
       return Number(percentage.toFixed(2));
     });
 
@@ -159,11 +194,15 @@ const activityTypePercentagesPerWeek = computed(() => {
   }
   return null;
 };
+
   
   return {
     title,
     slug,
     weeks,
+    alignmentOptions,
+    learningOutcomes,
+    assessments,
     activityTypes,
     activityColors,
     numberOfWeeks,

@@ -26,7 +26,6 @@ const isDesignActive = computed(() => route.path === '/design' || route.path.sta
     <Transition>
     <TransitionGroup v-if="isDesignActive" class="flex flex-col" name="list" tag="ul" id="draggable-list">
             <WeekLink
-            
             v-for="(week, index) in course.weeks"
             :key="index"
             :week="week"
