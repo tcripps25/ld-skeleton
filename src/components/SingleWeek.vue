@@ -28,16 +28,23 @@ onMounted(() => {
     </h2>
 </div>
 <div class="flex gap-7">
-<Panel title="Overview">
+<Panel title="Activity Overview">
     <PieChart :dataseries="weekStats.activityTypePercentages" :datalabels="course.activityTypes" :colors="course.activityColors">
       <p class="mb-3">An overview of the Activity types you have used in this week of your course.</p>
       </PieChart>
 </Panel>
+<div class="flex gap-7">
 <Panel title="Module Learning Objectives">
    <ol class="flex flex-col gap-2 list-decimal p-10">
     <li v-for="(outcome, index) in course.learningOutcomes">{{ outcome.label }}</li>
    </ol>
 </Panel>
+<Panel title="Module Assessments">
+   <ol class="flex flex-col gap-2 list-decimal p-10 whitespace-nowrap">
+    <li v-for="(outcome, index) in course.assessments">{{ outcome.label }}</li>
+   </ol>
+</Panel>
+</div>
 </div>
     <Week :week="week" :week-index="index" :showTitle=false />
 </div>
