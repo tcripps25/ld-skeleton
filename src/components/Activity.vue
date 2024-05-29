@@ -109,17 +109,17 @@ const isAligned = (item) => {
       <span class="sr-only">Activity duration</span>
       <ClockIcon title="Activity duration" class="w-5 h-5 text-slate-500" />{{ activity.minutes }} mins
     </div>
-    <div class="w-full">
-    <div class="flex justify-between gap-4 items-center my-1">
-      <label class="w-max font-medium" :for="activityIndex + '-studentNumber'">Participants:</label>
-      <input type="number" class="w-16 p-1 px-2 rounded" v-model="activity.students" :id="activityIndex + '-studentNumber'" min="0" :step="1" >
-    </input>
+    <div class="w-full flex flex-col gap-5">
+          <div class="flex justify-between gap-4 items-center ">
+            <label class="w-max font-medium" :for="activityIndex + '-studentNumber'">Participants:</label>
+            <input type="number" class="w-16 p-1 px-2 rounded" v-model="activity.students" :id="activityIndex + '-studentNumber'" min="0" :step="1" >
+          </input>
+          </div>
           <div class="flex justify-between gap-4">
             <label class="w-max font-medium" :for="activityIndex + '-group-toggle'">Group Activity:</label>
             <InputSwitch v-model="activity.isGroup" :inputId="activityIndex + '-group-toggle'"/>
           </div>
       </div>
-    </div>
   </div>
   <div v-if="activity.description" class="flex gap-2 justify-between">
     <div class="p-2 bg-slate-100 rounded items-start flex gap-2 grow">
