@@ -94,15 +94,18 @@ const isAligned = (item) => {
         <EllipsisHorizontalIcon class="text-slate-600"/>
       </Button>
     </div>
-    <div class="flex justify-between items-center mb-3">
+    <div class="flex justify-between items-center">
       <h4 class="text-xl font-semibold"> {{ activity.title || 'Untitled Activity ' + (activityIndex + 1) }} </h4>
         <Button @click="toggleEditSummary" class="!p-1 h-max bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
           <span class="sr-only">Edit Activity title</span>
           <PencilIcon class="w-4 h-4 text-slate-700"></PencilIcon>
-        </Button>
-         
+        </Button>  
     </div>
-      
+    <div v-if="activity.description" class="flex gap-2 justify-between mb-2">
+      <div class="p-2 bg-slate-100 rounded items-start flex gap-2 grow">
+        <p class="w-full">{{  activity.description }}</p>
+      </div>
+    </div>
   
   <div class="flex">
     <div v-if="activity.minutes" class="p-2 flex gap-2 items-center bg-slate-100 rounded">
@@ -121,13 +124,7 @@ const isAligned = (item) => {
           </div>
       </div>
   </div>
-  <div v-if="activity.description" class="flex gap-2 justify-between">
-    <div class="p-2 bg-slate-100 rounded items-start flex gap-2 grow">
-    <p class="w-full">{{  activity.description }}</p>
-  </div>
-   
  
-  </div>
     <div class="">
       <div class="flex justify-between items-center mb-2 border-b pb-1 border-slate-300">
       <h4 class="text-lg font-medium">Type<span v-if="activity.selectedActivityTypes && activity.selectedActivityTypes.length > 1" >s</span></h4>
