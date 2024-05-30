@@ -31,7 +31,7 @@ console.log(course.title);
 
 <template>
   
-  <div id="sidebar" class="px-7 py-5 flex flex-col gap-5 border-r">
+  <div id="sidebar" class="px-7 py-5 flex flex-col gap-5 border-r bg-white">
     <header class="text-slate-800 flex flex-col">
       <div class="flex justify-between mb-3">
         <img :src="Logo" class="w-12" alt="University of Portsmouth Logo"></img>
@@ -82,7 +82,7 @@ console.log(course.title);
   </div>
 
   </div>
-  <main class="h-screen p-5 bg-white rounded-ss-lg w-full overflow-scroll">
+  <main class="h-screen p-5 bg-slate-100 rounded-ss-lg w-full overflow-scroll">
     <!-- Render the Design view with the imported data -->
     <RouterView v-slot="{ Component }">
       <transition name="fade">

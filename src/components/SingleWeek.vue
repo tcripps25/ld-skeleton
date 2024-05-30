@@ -31,7 +31,7 @@ onMounted(() => {
 <Panel title="Activity Overview">
     <PieChart :dataseries="weekStats.activityTypePercentages" :datalabels="course.activityTypes" :colors="course.activityColors">
       <p class="mb-3">An overview of the Activity types you have used in this week of your course.</p>
-      </PieChart>
+    </PieChart>
 </Panel>
 <div class="flex gap-7">
 <Panel title="Module Learning Objectives">

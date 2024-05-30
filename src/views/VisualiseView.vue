@@ -9,7 +9,9 @@ import Panel from '@/components/ui/Panel.vue';
 import PieChart from '@/components/charts/PieChart.vue';
 const course = useCourseStore()
 
-
+onMounted(() => {
+  console.log(course.activityTypePercentages);
+});
 </script>
 
 <template>
