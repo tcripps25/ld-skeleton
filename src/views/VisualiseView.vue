@@ -12,6 +12,8 @@ const course = useCourseStore()
 onMounted(() => {
   console.log(course.activityTypePercentages);
 });
+
+
 </script>
 
 <template>

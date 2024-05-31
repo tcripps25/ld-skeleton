@@ -35,6 +35,11 @@ const router = createRouter({
       path: '/visualise',
       name: 'visualise',
       component: VisualiseView
+    },
+    {
+      path: '/publish',
+      name: 'publish',
+      component: VisualiseView
     }
   ]
 })

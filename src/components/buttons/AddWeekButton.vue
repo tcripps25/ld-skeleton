@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { useCourseStore } from '@/stores/course.js'
 import { PlusCircleIcon } from '@heroicons/vue/24/solid'; 
 const course = useCourseStore()
-import PrimeButton from "primevue/button";
+import Button from "primevue/button";
 
 
 const currentWeeks = ref(course.numberOfWeeks);
@@ -28,5 +28,5 @@ const handleAddWeek = () => {
 </script>
 
 <template>
-    <Button @click="(handleAddWeek)" class="bg-blue-600 hover:bg-blue-500 text-blue-50 border px-4 py-2 rounded-md flex items-center gap-1">Add Week <PlusCircleIcon class="w-5 h-5"/> </Button>
+    <Button @click="(handleAddWeek)" pt:root:class="bg-blue-600 hover:bg-blue-500" class="text-blue-50 border px-4 py-2 rounded-md flex items-center gap-1">Add Week <PlusCircleIcon class="w-5 h-5"/> </Button>
 </template>

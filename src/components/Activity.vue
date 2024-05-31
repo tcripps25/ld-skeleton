@@ -1,7 +1,7 @@
 <script setup>
-import { XMarkIcon, ChevronDownIcon, ChevronUpIcon, EllipsisHorizontalIcon, ArrowUturnLeftIcon, ClockIcon, DocumentTextIcon, PlusIcon, PencilIcon, CheckCircleIcon } from '@heroicons/vue/24/solid'
+import { XMarkIcon, ChevronDownIcon, ChevronUpIcon, TrashIcon, EllipsisHorizontalIcon, ArrowUturnLeftIcon, ClockIcon, DocumentTextIcon, PlusIcon, PencilIcon, CheckCircleIcon } from '@heroicons/vue/24/solid'
 import { useCourseStore } from '@/stores/course.js'
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import MultiSelect from 'primevue/multiselect';
 import Listbox from 'primevue/listbox'
 import Button from 'primevue/button';
@@ -51,6 +51,14 @@ const toggleEditTitle = () => {
   editTitle.value = !editTitle.value;
 }
 
+const manageActivity = ref(false);
+
+const togglemanageActivity = () => {
+  manageActivity.value = !manageActivity.value;
+  editMode.value = !editMode.value;
+}
+
+
 // Define state for the toggles
 const isGroup = ref(props.activity.isGroup ?? true);
 const isAcademicPresent = ref(props.activity.isAcademicPresent ?? false);
@@ -94,8 +102,8 @@ const isAligned = (item) => {
       
         <h3 class="text-md font-semibold text-slate-900">Activity {{ activityIndex + 1}}</h3>
        
-      <Button @click="toggleEditMode" rounded class="!p-0 !absolute right-2 top-2 bg-transparent border-0 ring-0 !ring-blue-300 hover:border-0 hover:bg-slate-100 hover:border-slate-200 w-8 h-8">
-        <span class="sr-only">Edit Activity</span>
+      <Button @click="togglemanageActivity" rounded class="!p-0 !absolute right-2 top-2 bg-transparent border-0 ring-0 !ring-blue-300 hover:border-0 hover:bg-slate-100 hover:border-slate-200 w-8 h-8">
+        <span class="sr-only">Manage Activity</span>
         <EllipsisHorizontalIcon class="text-slate-900"/>
       </Button>
     </div>
@@ -148,7 +156,7 @@ const isAligned = (item) => {
           </div>
           <div class="flex justify-between gap-4 items-center">
           <label  class="w-max font-semibold">Delivery method:</label>
-          <SelectButton v-model="activity.delivery" :options="['Sync', 'Async']" class="method-select-button" aria-labelledby="multiple" pt:root:class="flex rounded-lg overflow-hidden" pt:button:class="group cursor-pointer p-[.3rem] px-1 bg-slate-200" pt:label:class="group-aria-checked:bg-white group-aria-checked:font-semibold py-1 px-2 rounded transition-all" />
+          <SelectButton v-model="activity.delivery" :options="['Sync', 'Async']" class="method-select-button" aria-labelledby="multiple" pt:root:class="flex rounded-lg overflow-hidden" pt:button:class="group cursor-pointer p-[.3rem] px-1 bg-slate-200" pt:label:class="group-aria-checked:bg-white group-aria-checked:font-semibold py-1 px-2 hover:bg-slate-100 rounded transition-all" />
         </div>
         </div>
   </div>
@@ -199,11 +207,6 @@ const isAligned = (item) => {
         <ArrowUturnLeftIcon class="text-slate-600"/>
     </Button>
     </div>
-  
-
-    
-    
-    
     
     <div class="flex gap-5 mt-4">
       
@@ -247,7 +250,7 @@ const isAligned = (item) => {
       <h3 class="font-semibold mb-1 mt-3">{{ option.group }}</h3>
       <ul class="flex flex-col divide-y divide-slate-300 ml-4">
         <li v-for="(item, index) in option.items" :key="index" class="-ml-5 flex gap-5 justify-between hover:bg-slate-100 px-2 py-3 hover:rounded transition">
-          <span class="p-1 w-9 h-max text-sm font-medium flex items-center justify-center bg-cyan-700 text-white rounded-full">{{ (index +++ 1) }}</span>
+          <span class="min-w-6 max-h-6 text-sm font-medium flex items-center justify-center bg-cyan-700 text-white rounded-full">{{ (index +++ 1) }}</span>
           <label class="w-full mr-2" :for="item.value + '-switch-' + index">{{ item.label }}</label>
           <div class="w-max">
             <InputSwitch v-model="isAligned(item).value" :inputId="item.value + '-switch-' + index"/>
@@ -260,14 +263,13 @@ const isAligned = (item) => {
 </Transition>
 
 <Transition>
-  <SettingsPanel v-if="editSummary" :title="'Edit Summary'" :class="{'z-10': editAlign}" @close-panel="toggleEditSummary" id="activity-alignment-select">
+  <SettingsPanel v-if="manageActivity" :title="'Manage ' + (activity.title)" :class="{'z-10': editAlign}" @close-panel="togglemanageActivity" :id="'manage-activity-' + (activityIndex +++ 1)">
     <template v-slot:description>
-      <p>Edit the title, instructions, number of students and other general settings for this Activity.</p>
+      <p>Once you have deleted this Activity it cannot be recovered.</p>
   </template>
-  
-     
-
-    
+  <Button @click="$emit('removeActivity')" class="w-full flex gap-2" severity="danger" >
+    <TrashIcon class="w-5 h-5" />Delete Activity
+  </Button>
   </SettingsPanel>
 </Transition>
   </div>

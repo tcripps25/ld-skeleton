@@ -7,20 +7,22 @@ import { useCourseStore } from '@/stores/course.js'
 
 const props = defineProps({
   week: Object,
-  index: String
+  index: Number
 });
 
 const course = useCourseStore();
-const weekStats = computed(() => course.getWeekTypeByIndex(props.index));
+const weekStats = computed(() => course.getActivityTypePercentagesForWeek(props.index));
 
 onMounted(() => {
   console.log(weekStats.value);
+  console.log(course.activityTypePercentages);
 });
 
 
 </script>
 
 <template>
+  <div v-if="week" class="">
 <div class="flex flex-col gap-7">
     <div>
     <h2 class="text-2xl font-semibold mb-5 flex flex-col"><span class="text-base text-slate-500 font-medium">Teaching Week {{ index +++ 1 }}</span>
@@ -47,5 +49,11 @@ onMounted(() => {
 </div>
 </div>
     <Week :week="week" :week-index="index" :showTitle=false />
+</div>
+</div>
+<div v-else class="">
+  <Panel title="Error">
+    <p>Selected Week not found</p>
+  </Panel>
 </div>
 </template>

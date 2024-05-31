@@ -1,5 +1,5 @@
 <script setup>
-import { TransitionGroup, computed } from 'vue';
+import { TransitionGroup, computed, onMounted } from 'vue';
 import Activity from '@/components/Activity.vue';
 import { useCourseStore } from '@/stores/course.js'
 import { PlusCircleIcon, XMarkIcon } from '@heroicons/vue/24/solid';
@@ -32,10 +32,12 @@ const panelTitle = computed(() => {
   return props.showTitle ? props.week.title : '';
 });
 
+
+
 </script>
 
 <template>
-    <Panel :title="panelTitle">
+    <Panel v-if="week" :title="panelTitle">
             <div class="week-header pt-0 flex justify-end">
               <button @click="removeWeek(weekIndex)" class="text-red-500 flex gap-1"><span class="sr-only">Remove Week</span><XMarkIcon class="w-5 h-5"/></button>
             </div>
