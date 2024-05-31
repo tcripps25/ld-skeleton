@@ -170,9 +170,9 @@ const isAligned = (item) => {
     </div>
       <ul v-if="activity && activity.selectedActivityTypes && activity.selectedActivityTypes.length > 0" class="grid grid-cols-3 grid-flow-row gap-2 py-1">
         <li v-for="(type, index) in activity.selectedActivityTypes" class="p-1 px-2 text-sm rounded bg-white border flex gap-2 items-center">
-          <div :style="{ backgroundColor: type.color }" class="w-4 h-4 min-w-4 min-h-4 bg-slate-600 rounded-full">
+          <div :style="{ backgroundColor: course.getColorByLabel(type) }" class="w-4 h-4 min-w-4 min-h-4 bg-slate-600 rounded-full">
           </div>
-          {{ type.type }}
+          {{ type }}
         </li>
       </ul>
       <p class="p-2 text-center text-sm bg-slate-200/80 text-slate-600 italic rounded" v-else>There are no associated types for this Activity yet.</p>
@@ -189,7 +189,8 @@ const isAligned = (item) => {
         <li v-for="(alignment, index) in activity.alignments" class="py-2">
           <div class="flex gap-3 items-center">
             <CheckCircleIcon class="text-teal-500 w-5 h-5 min-w-5" />
-            <p class="">{{ alignment.label }}</p>
+            <p v-if="alignment.nickname" class="">{{ alignment.nickname }}</p>
+            <p v-else class="">{{ alignment.label }}</p>
           </div>
         </li>
       </ul>
@@ -235,7 +236,7 @@ const isAligned = (item) => {
     </template>    
     <div class="gap-5 mt-4">
           <div>
-            <Listbox v-model="activity.selectedActivityTypes" :options="course.activityTypesColors" optionLabel="type" multiple class="w-full" />
+            <Listbox v-model="activity.selectedActivityTypes" :options="course.activityTypesColors" optionLabel="type" optionValue="type" multiple class="w-full" />
           </div>
         </div>
   </SettingsPanel>
@@ -251,12 +252,14 @@ const isAligned = (item) => {
       <ul class="flex flex-col divide-y divide-slate-300 ml-4">
         <li v-for="(item, index) in option.items" :key="index" class="-ml-5 flex gap-5 justify-between hover:bg-slate-100 px-2 py-3 hover:rounded transition">
           <span class="min-w-6 max-h-6 text-sm font-medium flex items-center justify-center bg-cyan-700 text-white rounded-full">{{ (index +++ 1) }}</span>
-          <label class="w-full mr-2" :for="item.value + '-switch-' + index">{{ item.label }}</label>
+          <label class="w-full mr-2" :for="item.value + '-switch-' + index">
+            <span v-if="item.nickname">{{ item.nickname }}</span>
+            <span v-else>{{ item.label }}</span>
+          </label>
           <div class="w-max">
             <InputSwitch v-model="isAligned(item).value" :inputId="item.value + '-switch-' + index"/>
           </div>
         </li>
-       
       </ul>
     </div>
   </SettingsPanel>
@@ -267,7 +270,7 @@ const isAligned = (item) => {
     <template v-slot:description>
       <p>Once you have deleted this Activity it cannot be recovered.</p>
   </template>
-  <Button @click="$emit('removeActivity')" class="w-full flex gap-2" severity="danger" >
+  <Button @click="() => { $emit('removeActivity'); togglemanageActivity() }" class="w-full flex gap-2" severity="danger" >
     <TrashIcon class="w-5 h-5" />Delete Activity
   </Button>
   </SettingsPanel>

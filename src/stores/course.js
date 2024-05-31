@@ -32,9 +32,9 @@ export const useCourseStore = defineStore("course", () => {
   ]);
 
   const assessments = ref([
-    { label: "Assessment 1", value: "assessment1" },
-    { label: "Assessment 2", value: "assessment2" },
-    { label: "Assessment 3", value: "assessment3" },
+    { label: "Assessment 1", value: "assessment1", nickname: "" },
+    { label: "Assessment 2", value: "assessment2", nickname: "" },
+    { label: "Assessment 3", value: "assessment3", nickname: "" },
   ]);
 
   // Combine the arrays into alignmentOptions with correct structure
@@ -52,6 +52,12 @@ export const useCourseStore = defineStore("course", () => {
     { type: "Practice", color: "#3173b6" },
     { type: "Production", color: "#2b3a8b" },
   ]);
+
+  function getColorByLabel(type) {
+    const activityType = activityTypesColors.value.find((activity) => activity.type === type);
+    return activityType ? activityType.color : null;
+  }
+  
 
   const activityTypes = computed(() =>
     activityTypesColors.value.map((activity) => activity.type)
@@ -113,6 +119,36 @@ const maxMinsInActivity = computed(() => {
   return maxMins;
 });
 
+const activityTypeCount = computed(() => {
+  const activityTypeCounts = {};
+
+  // Initialize counts for each activity type to 0
+  for (const type of activityTypes.value) {
+    activityTypeCounts[type] = 0;
+  }
+
+  // Count the occurrences of each activity type
+  for (const week of weeks.value) {
+    for (const activity of week.activities) {
+      // Check if selectedActivityTypes is defined
+      if (activity.selectedActivityTypes) {
+        for (const type of activity.selectedActivityTypes) {
+          if (activityTypeCounts[type] !== undefined) {
+            activityTypeCounts[type]++;
+          }
+        }
+      }
+    }
+  }
+
+  // Return the counts of each activity type as an array
+  const countsArray = activityTypes.value.map((type) => {
+    return activityTypeCounts[type] || 0;
+  });
+
+  return countsArray;
+});
+
 const activityTypePercentages = computed(() => {
   const activityTypeCounts = {};
 
@@ -151,83 +187,82 @@ const activityTypePercentages = computed(() => {
   return percentages;
 });
 
-
-  
-
-  const activityTypePercentagesPerWeek = computed(() => {
-    const percentagesPerWeek = weeks.value.map((week) => {
-      const activityTypeCounts = {};
-      // Initialize counts for each activity type to 0
-      for (const type of activityTypes.value) {
-        activityTypeCounts[type] = 0;
-      }
-      // Count the occurrences of each activity type in the current week
-      for (const activity of week.activities) {
-        // Check if selectedActivityTypes is defined
-        if (activity.selectedActivityTypes) {
-          for (const type of activity.selectedActivityTypes) {
-            if (activityTypeCounts[type] !== undefined) {
-              activityTypeCounts[type]++;
-            }
-          }
-        }
-      }
-      // Calculate the total number of activities considering multiple types per activity
-      const totalTypeOccurrences = Object.values(activityTypeCounts).reduce(
-        (sum, count) => sum + count,
-        0
-      );
-      // Calculate the percentage of each activity type for the current week
-      const percentages = activityTypes.value.map((type) => {
-        const count = activityTypeCounts[type] || 0;
-        const percentage = (count / totalTypeOccurrences) * 100 || 0;
-        return Number(percentage.toFixed(2));
-      });
-      return percentages;
-    });
-    return percentagesPerWeek;
-  });
-  
-
-  const getActivityTypePercentagesForWeek = (weekIndex) => {
-    if (weekIndex >= 0 && weekIndex < weeks.value.length) {
-      const week = weeks.value[weekIndex];
-      const activityTypeCounts = {};
-  
-      // Initialize counts for each activity type to 0
-      for (const type of activityTypes.value) {
-        activityTypeCounts[type] = 0;
-      }
-  
-      // Count the occurrences of each activity type in the specified week
-      for (const activity of week.activities) {
-        // Check if selectedActivityTypes is defined
-        if (activity.selectedActivityTypes) {
-          for (const type of activity.selectedActivityTypes) {
-            if (activityTypeCounts[type] !== undefined) {
-              activityTypeCounts[type]++;
-            }
-          }
-        }
-      }
-  
-      // Calculate the total number of activities considering multiple types per activity
-      const totalTypeOccurrences = Object.values(activityTypeCounts).reduce(
-        (sum, count) => sum + count,
-        0
-      );
-  
-      // Calculate the percentage of each activity type for the specified week
-      const percentages = activityTypes.value.map((type) => {
-        const count = activityTypeCounts[type] || 0;
-        const percentage = (count / totalTypeOccurrences) * 100 || 0;
-        return Number(percentage.toFixed(2));
-      });
-      return percentages;
-    } else {
-      return [];
+const activityTypePercentagesPerWeek = computed(() => {
+  const percentagesPerWeek = weeks.value.map((week) => {
+    const activityTypeCounts = {};
+    // Initialize counts for each activity type to 0
+    for (const type of activityTypes.value) {
+      activityTypeCounts[type] = 0;
     }
-  };
+    // Count the occurrences of each activity type in the current week
+    for (const activity of week.activities) {
+      // Check if selectedActivityTypes is defined
+      if (activity.selectedActivityTypes) {
+        for (const type of activityTypes.value) {
+          if (activity.selectedActivityTypes.includes(type)) {
+            activityTypeCounts[type]++;
+          }
+        }
+      }
+    }
+    // Calculate the total number of activities considering multiple types per activity
+    const totalTypeOccurrences = Object.values(activityTypeCounts).reduce(
+      (sum, count) => sum + count,
+      0
+    );
+    // Calculate the percentage of each activity type for the current week
+    const percentages = activityTypes.value.map((type) => {
+      const count = activityTypeCounts[type] || 0;
+      const percentage = (count / totalTypeOccurrences) * 100 || 0;
+      return Number(percentage.toFixed(2));
+    });
+    return percentages;
+  });
+  return percentagesPerWeek;
+});
+
+  
+
+const getActivityTypePercentagesForWeek = (weekIndex) => {
+  if (weekIndex >= 0 && weekIndex < weeks.value.length) {
+    const week = weeks.value[weekIndex];
+    const activityTypeCounts = {};
+
+    // Initialize counts for each activity type to 0
+    for (const type of activityTypes.value) {
+      activityTypeCounts[type] = 0;
+    }
+
+    // Count the occurrences of each activity type in the specified week
+    for (const activity of week.activities) {
+      // Check if selectedActivityTypes is defined
+      if (activity.selectedActivityTypes) {
+        for (const type of activityTypes.value) {
+          if (activity.selectedActivityTypes.includes(type)) {
+            activityTypeCounts[type]++;
+          }
+        }
+      }
+    }
+
+    // Calculate the total number of activities considering multiple types per activity
+    const totalTypeOccurrences = Object.values(activityTypeCounts).reduce(
+      (sum, count) => sum + count,
+      0
+    );
+
+    // Calculate the percentage of each activity type for the specified week
+    const percentages = activityTypes.value.map((type) => {
+      const count = activityTypeCounts[type] || 0;
+      const percentage = (count / totalTypeOccurrences) * 100 || 0;
+      return Number(percentage.toFixed(2));
+    });
+    return percentages;
+  } else {
+    return [];
+  }
+};
+
   
 
   return {
@@ -250,5 +285,7 @@ const activityTypePercentages = computed(() => {
     maxStudentsInActivity,
     maxMinsInActivity,
     getActivityTypePercentagesForWeek,
+    getColorByLabel,
+    activityTypeCount
   };
 });

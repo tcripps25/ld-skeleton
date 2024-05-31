@@ -34,6 +34,13 @@ const course = useCourseStore()
             <ul class="list-decimal list-inside ml-4">
                 <li v-for="(assessment, index) in course.assessments">
                     {{ assessment.label }}
+                    <input
+          :id="'assessment- ' + index + '-nickname-input'"
+          v-model="assessment.nickname"
+          type="text"
+          class="text-lg mb-0 rounded p-1 border border-slate-300 bg-slate-50 text-slate-800 w-full"
+          @keyup.enter="submitTitle"
+        />
                 </li>
             </ul>
         </Panel>
