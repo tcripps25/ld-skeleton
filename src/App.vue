@@ -37,7 +37,7 @@ console.log(course.title);
         <img :src="Logo" class="w-12" alt="University of Portsmouth Logo"></img>
     <a href="#" class="flex flex-col">
         <h1 class="text-2xl font-semibold">Module Designer</h1>
-        <p>Experimental May 2024</p>
+        <p>Beta 0.1 June 2024</p>
     </a>
     </div>
     <hr class="my-3">

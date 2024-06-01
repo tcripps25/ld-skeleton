@@ -1,5 +1,5 @@
 <script setup>
-import { XMarkIcon, ChevronDownIcon, ChevronUpIcon, TrashIcon, EllipsisHorizontalIcon, ArrowUturnLeftIcon, ClockIcon, DocumentTextIcon, PlusIcon, PencilIcon, CheckCircleIcon } from '@heroicons/vue/24/solid'
+import { XMarkIcon, ChevronDownIcon, ChevronRightIcon, TrashIcon, EllipsisHorizontalIcon, ArrowUturnLeftIcon, ClockIcon, DocumentTextIcon, PlusIcon, PencilIcon, CheckCircleIcon } from '@heroicons/vue/24/solid'
 import { useCourseStore } from '@/stores/course.js'
 import { ref, computed, watch, onMounted } from 'vue';
 import MultiSelect from 'primevue/multiselect';
@@ -58,6 +58,14 @@ const togglemanageActivity = () => {
   editMode.value = !editMode.value;
 }
 
+// Initialize an array to track the visibility of each group
+const showAlignments = ref(course.alignmentOptions.map(() => true));
+
+const toggleShowAlignments = (index) => {
+  showAlignments.value[index] = !showAlignments.value[index];
+};
+
+
 
 // Define state for the toggles
 const isGroup = ref(props.activity.isGroup ?? true);
@@ -93,6 +101,8 @@ const isAligned = (item) => {
   });
 };
 
+
+
 </script>
 <template>
   <div id="activity-container" class="relative w-full h-[32rem] shadow-sm rounded-lg max-w-md mb-5">
@@ -100,24 +110,24 @@ const isAligned = (item) => {
   <div id="activity-summary" :class="{'scale-95 bg-slate-200 -translate-x-5': editMode}" class="bg-slate-100 overflow-y-auto px-4 pb-4 transition relative rounded-lg h-full flex flex-col gap-5 border border-slate-300">
     <div :class="{'!bg-slate-300': editMode}" class="transition flex justify-center border-b border-slate-300 shadow-sm py-3 sticky top-0 bg-slate-200 -mx-4 z-20">
       
-        <h3 class="text-md font-semibold text-slate-900">Activity {{ activityIndex + 1}}</h3>
+      <div class="flex justify-between items-center gap-2">
+      <div v-if="editTitle" class="flex flex-col w-full">
+        <label :for="'name' + props.weekIndex + '-' + activityIndex" class="sr-only block text-gray-700">Activity name:</label>
+        <input :id="'name' + props.weekIndex + '-' + activityIndex" v-model="activity.title" type="text" class="border form-input mt-1 block p-1 w-full rounded" :placeholder="'Activity ' + (activityIndex + 1)" />
+      </div>
+      <h3 v-else class="text-md font-semibold"> {{ activity.title || 'Activity ' + (activityIndex + 1) }} </h3>
+        <Button @click="toggleEditTitle" class="!p-1 h-max bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
+          <span class="sr-only">Edit Activity title</span>
+          <PencilIcon class="w-4 h-4 text-slate-700"></PencilIcon>
+        </Button>  
+    </div>
        
       <Button @click="togglemanageActivity" rounded class="!p-0 !absolute right-2 top-2 bg-transparent border-0 ring-0 !ring-blue-300 hover:border-0 hover:bg-slate-100 hover:border-slate-200 w-8 h-8">
         <span class="sr-only">Manage Activity</span>
         <EllipsisHorizontalIcon class="text-slate-900"/>
       </Button>
     </div>
-    <div class="flex justify-between items-center gap-2">
-      <div v-if="editTitle" class="flex flex-col w-full">
-        <label :for="'name' + props.weekIndex + '-' + activityIndex" class="sr-only block text-gray-700">Activity name:</label>
-        <input :id="'name' + props.weekIndex + '-' + activityIndex" v-model="activity.title" type="text" class="border form-input mt-1 block p-1 w-full rounded" :placeholder="'Activity ' + (activityIndex + 1)" />
-      </div>
-      <h4 v-else class="text-xl font-semibold"> {{ activity.title || 'Untitled Activity ' + (activityIndex + 1) }} </h4>
-        <Button @click="toggleEditTitle" class="!p-1 h-max bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
-          <span class="sr-only">Edit Activity title</span>
-          <PencilIcon class="w-4 h-4 text-slate-700"></PencilIcon>
-        </Button>  
-    </div>
+    
     <div class="flex justify-between gap-2" :id="'activity-' + activityIndex + '-instructions'">
       <div v-if="activity.description || editInstructions" class="flex justify-between items-start grow">
         <div class="flex gap-2 justify-between mb-2 w-full">
@@ -163,7 +173,7 @@ const isAligned = (item) => {
  
     <div class="">
       <div class="flex justify-between items-center mb-2 border-b pb-1 border-slate-300">
-      <h4 class="font-semibold">Type<span v-if="activity.selectedActivityTypes && activity.selectedActivityTypes.length > 1" >s</span></h4>
+      <h4 class="font-semibold">Learning Type<span v-if="activity.selectedActivityTypes && activity.selectedActivityTypes.length > 1" >s</span>:</h4>
       <Button @click="toggleEditTypes" title="Add an associated Activity type" class="!p-0 bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
       <PlusIcon class="w-5 h-5 text-slate-700" />
     </Button>
@@ -179,7 +189,7 @@ const isAligned = (item) => {
     </div>
     <div class="">
       <div class="flex justify-between items-center mb-2 border-b pb-1 border-slate-300">
-      <h4 class="font-semibold">Alignment<span v-if="activity && activity.alignments && activity.alignments.length > 1" >s</span></h4>
+      <h4 class="font-semibold">Alignment<span v-if="activity && activity.alignments && activity.alignments.length > 1" >s</span>:</h4>
     <Button @click="toggleEditAlign" title="Add an associated alignment" class="!p-0 bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
       <PlusIcon class="w-5 h-5 text-slate-700" />
     </Button>
@@ -230,9 +240,9 @@ const isAligned = (item) => {
   </div>
 </Transition>
 <Transition>
-  <SettingsPanel v-if="editTypes" :title="'Edit Activity Types'" :class="{'z-10': editTypes}" @close-panel="toggleEditTypes" id="activity-type-select">
+  <SettingsPanel v-if="editTypes" :title="'Edit Learning Types'" :class="{'z-10': editTypes}" @close-panel="toggleEditTypes" id="activity-type-select">
     <template v-slot:description>
-      <p>Associate Activity Types here.</p>
+      <p>Associate Learning Types here.</p>
     </template>    
     <div class="gap-5 mt-4">
           <div>
@@ -248,8 +258,18 @@ const isAligned = (item) => {
       <p>Select which Objectives and/or Assessments this Activity aligns with.</p>
   </template>
     <div v-for="(option, index) in course.alignmentOptions" :key="index">
-      <h3 class="font-semibold mb-1 mt-3">{{ option.group }}</h3>
-      <ul class="flex flex-col divide-y divide-slate-300 ml-4">
+      <div class="flex justify-between items-center mt-3 mb-1">
+        <label class="w-full" :for="'alignment-group-' + index">
+          <h3 class="font-semibold">{{ option.group }}</h3>
+        </label>
+        
+        <Button @click="toggleShowAlignments(index)" :id="'alignment-group-' + index" :pt:root:class="'!p-0 transition rounded bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2'">
+          <ChevronDownIcon v-if="showAlignments[index]" class="h-5 w-5" />
+          <ChevronRightIcon v-if="!showAlignments[index]" class="h-5 w-5" />
+        </Button>
+      </div>
+     <Transition name="fade">
+      <ul v-show="showAlignments[index]" class="flex flex-col divide-y divide-slate-300 ml-4">
         <li v-for="(item, index) in option.items" :key="index" class="-ml-5 flex gap-5 justify-between hover:bg-slate-100 px-2 py-3 hover:rounded transition">
           <span class="min-w-6 max-h-6 text-sm font-medium flex items-center justify-center bg-cyan-700 text-white rounded-full">{{ (index +++ 1) }}</span>
           <label class="w-full mr-2" :for="item.value + '-switch-' + index">
@@ -261,6 +281,7 @@ const isAligned = (item) => {
           </div>
         </li>
       </ul>
+    </Transition>
     </div>
   </SettingsPanel>
 </Transition>
@@ -291,6 +312,16 @@ const isAligned = (item) => {
   transform: translateX(5px);
 }
 
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
 
 
 ::deep .custom-select-button .p-button {
