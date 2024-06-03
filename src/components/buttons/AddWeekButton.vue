@@ -21,7 +21,7 @@ const handleAddWeek = () => {
 
 <template>
   <Button @click="handleAddWeek" pt:root:class="bg-blue-600 hover:bg-blue-500 text-blue-50 border px-4 py-2 rounded-md flex items-center gap-1" >
-    Add Week new
+    Add Week
     <PlusCircleIcon class="w-5 h-5"/> 
   </Button>
 </template>
