@@ -38,15 +38,14 @@ const panelTitle = computed(() => {
 
 <template>
     <Panel v-if="week" :title="panelTitle">
-            <div class="week-header pt-0 flex justify-end">
-              <button @click="removeWeek(weekIndex)" class="text-red-500 flex gap-1"><span class="sr-only">Remove Week</span><XMarkIcon class="w-5 h-5"/></button>
-            </div>
+      <template v-slot:action>
+        <button @click="removeWeek(weekIndex)" class="text-red-500 flex gap-1"><span class="sr-only">Remove Week</span><XMarkIcon class="w-5 h-5"/></button>
+      </template>
             <TransitionGroup name="list" tag="div" class="flex flex-wrap gap-5 ">
               <Activity v-for="(activity, activityIndex) in week.activities" :key="activityIndex" :week="week" :weekIndex="weekIndex" :activity="activity" :activityIndex="activityIndex" @remove-activity="handleRemoveActivity(weekIndex, activityIndex)" />
             </TransitionGroup>
             <button @click="addActivity(weekIndex)" class="bg-blue-600 hover:bg-blue-500 text-blue-50 px-4 py-2 rounded-md flex items-center gap-1 w-max">Add Activity <PlusCircleIcon class="w-5 h-5"/></button>
-    
-        </Panel>
+      </Panel>
 </template>
 
 <style scoped>

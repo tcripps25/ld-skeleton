@@ -13,19 +13,8 @@ import Logo from '@/assets/uop_logo.png';
 
 const course = useCourseStore();
 const designMenu = useDesignMenuStore();
-const courseTitle = ref('');
-const editTitle = ref(false);
 
-const toggleTitleEdit = () => {
-  editTitle.value = !editTitle.value;
-};
 
-const submitTitle = () => {
-  if (courseTitle.value.trim() !== '') {
-    course.title = courseTitle.value.trim();
-    editTitle.value = false;
-  }
-};
 console.log(course.title);
 </script>
 
@@ -37,43 +26,19 @@ console.log(course.title);
         <img :src="Logo" class="w-12" alt="University of Portsmouth Logo"></img>
     <a href="#" class="flex flex-col">
         <h1 class="text-2xl font-semibold">Module Designer</h1>
-        <p>Beta 0.1 June 2024</p>
+        <p>v0.1 June 2024</p>
     </a>
     </div>
-    <hr class="my-3">
-    <div class="flex gap-3 justify-around">
+    
+    <div class="flex gap-3 py-2 my-3 bg-slate-100 rounded justify-around">
       <ImportCourseButton />
       <ResetCourseButton />
       <ExportCourseButton />
     </div>
-    <hr class="my-3">
+    
   </header>
  
-    <div class="flex flex-col gap-1 text-slate-200">
-      <Transition>
-      <div v-if="course?.title" class="flex items-center gap-3 justify-between">
-        <h2 @click="toggleTitleEdit" class="text-slate-600 font-semibold text-xl">{{ course.title }}</h2>
-        <button name="Edit course title" id="course-title-edit" title="Edit Course Title" @click="toggleTitleEdit">
-          <PencilIcon
-            :class="{'bg-sky-400 text-slate-700 hover:!bg-sky-300': editTitle}"
-            class="w-7 h-7 p-2 text-slate-700 hover:bg-slate-300 rounded-full transition"
-          />
-        </button>
-      </div>
-    </Transition>
-    <Transition class="bg-slate-200 p-2 rounded border border-slate-300 shadow">
-      <div class="block overflow-hidden" v-if="!course?.title || editTitle">
-        <label class="text-slate-800 mb-1 block" for="course-title-input">Edit course title: </label>
-        <input
-          id="course-title-input"
-          v-model="courseTitle"
-          type="text"
-          class="text-lg mb-0 rounded p-1 border-slate-300 bg-slate-50 text-slate-800 w-full"
-          @keyup.enter="submitTitle"
-        />
-      </div>
-    </Transition>
-    </div>
+    
  
     <div class="text-slate-200">
     

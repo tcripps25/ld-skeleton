@@ -152,14 +152,11 @@ const isAligned = (item) => {
     </div>
   
   <div class="flex">
-    <div v-if="activity.minutes" class="p-2 flex gap-2 items-center bg-slate-100 rounded">
-      <span class="sr-only">Activity duration</span>
-      <ClockIcon title="Activity duration" class="w-5 h-5 text-slate-500" />{{ activity.minutes }} mins
-    </div>
+    
     <div class="w-full flex flex-col gap-5">
           <div class="flex justify-between gap-4 items-center ">
-            <label class="w-max font-semibold" :for="activityIndex + '-studentNumber'">Participants:</label>
-            <input type="number" class="border w-16 p-1 px-2 rounded" v-model="activity.students" :id="activityIndex + '-studentNumber'" min="0" :step="1" >
+            <label class="w-max font-semibold" :for="activityIndex + '-activity-duration'">Activity duration (mins):</label>
+            <input type="number" class="border w-20 p-1 px-2 rounded" v-model="activity.minutes" :id="activityIndex + '-activity-duration'" min="0" :step="1" >
           </input>
           </div>
           <div class="flex justify-between gap-4 items-center">
@@ -176,7 +173,7 @@ const isAligned = (item) => {
     <div class="">
       <div class="flex justify-between items-center mb-2 border-b pb-1 border-slate-300">
       <h4 class="font-semibold">Learning Type<span v-if="activity.selectedActivityTypes && activity.selectedActivityTypes.length > 1" >s</span>:</h4>
-      <Button @click="toggleEditTypes" title="Add an associated Activity type" class="!p-0 bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
+      <Button @click="toggleEditTypes" title="Add or edit associated Learning Types" class="!p-0 bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
       <PlusIcon class="w-5 h-5 text-slate-700" />
     </Button>
     </div>
@@ -192,7 +189,7 @@ const isAligned = (item) => {
     <div class="">
       <div class="flex justify-between items-center mb-2 border-b pb-1 border-slate-300">
       <h4 class="font-semibold">Alignment<span v-if="activity && activity.alignments && activity.alignments.length > 1" >s</span>:</h4>
-    <Button @click="toggleEditAlign" title="Add an associated alignment" class="!p-0 bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
+    <Button @click="toggleEditAlign" title="Add or edit associated Alignments" class="!p-0 bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
       <PlusIcon class="w-5 h-5 text-slate-700" />
     </Button>
     </div>
