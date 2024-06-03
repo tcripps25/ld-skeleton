@@ -18,6 +18,8 @@ const props = defineProps({
   weekIndex: Number
 });
 
+
+
 const editMode = ref(false);
 
 const toggleEditMode = () => {
@@ -208,37 +210,7 @@ const isAligned = (item) => {
     </div>
   </div>
   
-  <Transition>
-    
-  <div id="activity-options" class="w-full hidden rounded-lg absolute top-0 h-full overflow-y-scroll border p-4 pt-0 bg-slate-200 shadow-sm">
-    <div class="flex items-center justify-between mb-2 border-b border-slate-300 -mx-4 px-4 py-2 sticky z-20 shadow-sm top-0 bg-slate-200">
-    <h3 class="text-xl relative font-semibold">Editing: {{ activity.title || 'Untitled Activity ' + (activityIndex +++ 1) }}</h3>
-    <Button @click="toggleEditMode" rounded class="!p-1 bg-slate-300 border-slate-200 border-2 hover:bg-slate-300 hover:border-2 hover:border-slate-400 w-8 h-8">
-      <span class="sr-only">Stop Editing Activity</span>
-        <ArrowUturnLeftIcon class="text-slate-600"/>
-    </Button>
-    </div>
-    
-    <div class="flex gap-5 mt-4">
-      
-      <div class="mt-4">
-        <label class="block sr-only text-gray-700 whitespace-nowrap">Instructor Present:</label>
-        <button @click="activity.isAcademicPresent = !activity.isAcademicPresent" :class="{'bg-blue-600': activity.isAcademicPresent, 'bg-gray-300': !activity.isAcademicPresent}" class="px-4 py-2 rounded transition text-white">
-          {{ activity.isAcademicPresent ? 'Instructor Present' : 'Instructor Absent' }}
-        </button>
-      </div>
-    </div>
-
-    
-    <div class="mt-4">
-      <label :for="'notes-' + props.weekIndex + '-' + activityIndex" class="block text-gray-700">Notes:</label>
-      <textarea v-model="activity.notes" :id="'notes-' + props.weekIndex + '-' + activityIndex" :name="'notes-' + props.weekIndex + '-' + activityIndex" rows="2" class="form-textarea mt-1 block w-full rounded-sm p-1 border-0"></textarea>
-    </div>
-    <Button @click="$emit('removeActivity')" severity="danger" class="w-full mt-5 !rounded">
-      Remove this activity
-    </Button>
-  </div>
-</Transition>
+  
 <Transition>
   <SettingsPanel v-if="editTypes" :title="'Edit Learning Types'" :class="{'z-10': editTypes}" @close-panel="toggleEditTypes" id="activity-type-select">
     <template v-slot:description>
@@ -287,7 +259,7 @@ const isAligned = (item) => {
 </Transition>
 
 <Transition>
-  <SettingsPanel v-if="manageActivity" :title="'Manage ' + (activity.title)" :class="{'z-10': editAlign}" @close-panel="togglemanageActivity" :id="'manage-activity-' + (activityIndex +++ 1)">
+  <SettingsPanel v-if="manageActivity" :title="'Manage ' + (activity.title)" :class="{'z-10': editAlign}" @close-panel="togglemanageActivity" :id="'manage-activity-' + (activityIndex + 1)">
     <template v-slot:description>
       <p>Once you have deleted this Activity it cannot be recovered.</p>
   </template>

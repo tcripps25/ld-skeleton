@@ -22,7 +22,7 @@ const isActiveLink = computed(() => route.path === to.value);
     <RouterLink
       :to="to"
       :active-class="'aria-current:font-semibold'"
-      :class="['transition  peer-hover:bg-slate-300 flex gap-3 p-2 items-center  grow peer', $attrs.class]"
+      :class="['transition peer-hover:bg-slate-300 flex gap-3 p-2 items-center  grow peer', $attrs.class]"
       v-bind="$attrs"
     >
     <Transition name="btn-icon">
@@ -30,10 +30,13 @@ const isActiveLink = computed(() => route.path === to.value);
     </Transition>
     <slot :week="week" :index="index"></slot>
     </RouterLink>
+    <!-- hide this for now
     <div class="group-hover:opacity-100 opacity-0 transition flex items-center bg-slate-200 rounded mr-2">
         <MoveWeekButton :index="index" class="" />
         <RemoveWeekButton :index="index" class="" />
+        
     </div>
+    -->
 </li>
   </template>
   
