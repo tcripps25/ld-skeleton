@@ -8,7 +8,6 @@ export default defineConfig({
   plugins: [
     vue(),
   ],
-  base: "https://tcripps25.github.io/ld-skeleton/",
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
