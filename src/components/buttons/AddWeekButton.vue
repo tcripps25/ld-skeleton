@@ -5,29 +5,32 @@ import { PlusCircleIcon } from '@heroicons/vue/24/solid';
 const course = useCourseStore();
 import Button from "primevue/button";
 
-// Make sure to initialize currentWeeks based on the reactive store value
+// Initialize currentWeeks based on the reactive store value
 const currentWeeks = ref(course.numberOfWeeks);
 
-// Handle add week function
 const handleAddWeek = () => {
-  const weekNumber = currentWeeks.value + 1; // Increment currentWeeks value
-  currentWeeks.value++; // Increment currentWeeks for next use
+  console.log('Adding a new week');  // Debugging log
 
-  // Ensure the course store is updated reactively
-  course.weeks.push({ 
-    title: "Week " + weekNumber, // Concatenate "Week " with the incremented week number
-    activities: [{ 
-      title: '', 
-      activityTypes: [], 
-      description: '', 
-      notes: '', 
-      minutes: '', 
+  const weekNumber = currentWeeks.value + 1;
+  currentWeeks.value++;
+
+  console.log('Current Weeks:', currentWeeks.value);  // Debugging log
+
+  course.weeks.push({
+    title: "Week " + weekNumber,
+    activities: [{
+      title: '',
+      selectedActivityTypes: [],
+      description: '',
+      notes: '',
+      minutes: '',
       students: '',
       isGroup: false
-    }] 
+    }]
   });
-};
 
+  console.log('New week added:', course.weeks[course.weeks.length - 1]);  // Debugging log
+};
 </script>
 
 <template>
