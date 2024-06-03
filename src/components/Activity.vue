@@ -1,10 +1,11 @@
 <script setup>
-import { XMarkIcon, ChevronDownIcon, ChevronRightIcon, TrashIcon, EllipsisHorizontalIcon, ArrowUturnLeftIcon, ClockIcon, DocumentTextIcon, PlusIcon, PencilIcon, CheckCircleIcon } from '@heroicons/vue/24/solid'
+import { ArrowRightIcon, ChevronDownIcon, ChevronRightIcon, TrashIcon, EllipsisHorizontalIcon, ArrowUturnLeftIcon, ClockIcon, DocumentTextIcon, PlusIcon, PencilIcon, CheckCircleIcon } from '@heroicons/vue/24/solid'
 import { useCourseStore } from '@/stores/course.js'
 import { ref, computed, watch, onMounted } from 'vue';
 import MultiSelect from 'primevue/multiselect';
 import Listbox from 'primevue/listbox'
 import Button from 'primevue/button';
+import InfoButton from '@/components/buttons/InfoButton.vue'
 import SettingsPanel from '@/components/ui/SettingsPanel.vue'
 import InputSwitch from 'primevue/inputswitch';
 import SelectButton from 'primevue/selectbutton';
@@ -57,6 +58,13 @@ const manageActivity = ref(false);
 
 const togglemanageActivity = () => {
   manageActivity.value = !manageActivity.value;
+  editMode.value = !editMode.value;
+}
+
+const suggestMoodle = ref(false);
+
+const toggleSuggestMoodle = () => {
+  suggestMoodle.value = !suggestMoodle.value;
   editMode.value = !editMode.value;
 }
 
@@ -164,8 +172,11 @@ const isAligned = (item) => {
             <InputSwitch v-model="activity.isGroup" :inputId="activityIndex + '-group-toggle'"/>
           </div>
           <div class="flex justify-between gap-4 items-center">
-          <label  class="w-max font-semibold">Delivery method:</label>
-          <SelectButton v-model="activity.delivery" :options="['Sync', 'Async']" class="method-select-button" aria-labelledby="multiple" pt:root:class="flex rounded-lg overflow-hidden" pt:button:class="group cursor-pointer p-[.3rem] px-1 bg-slate-200" pt:label:class="group-aria-checked:bg-white group-aria-checked:font-semibold py-1 px-2 hover:bg-slate-100 rounded transition-all" />
+          <div class="flex gap-1 items-center">
+            <label :for="'activity-' + activityIndex + '-method-select'" class="w-max font-semibold">Delivery method:</label>
+            <InfoButton />
+          </div>
+          <SelectButton :id="'activity-' + activityIndex + '-method-select'" v-model="activity.delivery" :options="['Sync', 'Async']" class="method-select-button" aria-labelledby="multiple" pt:root:class="flex rounded-lg overflow-hidden" pt:button:class="group cursor-pointer p-[.3rem] px-1 bg-slate-200" pt:label:class="group-aria-checked:bg-white group-aria-checked:font-semibold py-1 px-2 hover:bg-slate-100 rounded transition-all" />
         </div>
         </div>
   </div>
@@ -194,7 +205,6 @@ const isAligned = (item) => {
     </Button>
     </div>
       <ul v-if="activity && activity.alignments && activity.alignments.length > 0" class="divide-slate-200 divide-y ml-1 flex flex-col">
-      
         <li v-for="(alignment, index) in activity.alignments" class="py-2">
           <div class="flex gap-3 items-center">
             <CheckCircleIcon class="text-teal-500 w-5 h-5 min-w-5" />
@@ -205,6 +215,15 @@ const isAligned = (item) => {
       </ul>
       <p class="p-2 text-center text-sm bg-slate-200/80 text-slate-600 italic rounded" v-else>There are no associated alignments for this Activity yet.</p>
     </div>
+    <div class="">
+      <div class="flex justify-between items-center mb-2 border-b pb-1 border-slate-300">
+      <h4 class="font-semibold">Suggested Moodle activities:</h4>
+      <Button @click="toggleSuggestMoodle" title="See more about your suggested Moodle activities" class="!p-0 bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
+        <ArrowRightIcon class="w-5 h-5 text-slate-700" />
+      </Button>
+    </div>
+  </div>
+
   </div>
   
   
@@ -252,6 +271,19 @@ const isAligned = (item) => {
       </ul>
     </Transition>
     </div>
+  </SettingsPanel>
+</Transition>
+
+<Transition>
+  <SettingsPanel v-if="suggestMoodle" :title="'Suggested Moodle Activities'" :class="{'z-10': editTypes}" @close-panel="toggleSuggestMoodle" id="activity-type-select">
+    <template v-slot:description>
+      <p>Based on your selections this activity would be suitable for use with the following Moodle activity types:</p>
+    </template>    
+    <div class="gap-5 mt-4">
+          <div>
+            
+          </div>
+        </div>
   </SettingsPanel>
 </Transition>
 
