@@ -34,6 +34,21 @@ export const useCourseStore = defineStore("course", () => {
     { label: "Assessment 3", value: "assessment3", nickname: "" },
   ]);
 
+  const moodleActivities = ref([
+    { name: "Book", value: "book", image: "#" },
+    { name: "Quiz", value: "quiz", image: "#" },
+    { name: "Wiseflow", value: "wiseflow", image: "#" },
+    { name: "Chat", value: "chat", image: "#" },
+    { name: "Forum", value: "forum", image: "#" },
+    { name: "Lesson", value: "lesson", image: "#" },
+    { name: "Choice", value: "choice", image: "#" },
+    { name: "Database", value: "database", image: "#" },
+    { name: "Feedback", value: "feedback", image: "#" },
+    { name: "Glossary", value: "glossary", image: "#" },
+    { name: "Wiki", value: "wiki", image: "#" },
+    { name: "Workshop", value: "workshop", image: "#" },
+  ]);
+
   // Alignment options combining learning outcomes and assessments
   const alignmentOptions = computed(() => [
     { group: "Learning Outcomes", items: learningOutcomes.value },
@@ -290,5 +305,6 @@ export const useCourseStore = defineStore("course", () => {
     activityTypeCount,
     incrementWeek,
     addWeek,
+    moodleActivities,
   };
 });

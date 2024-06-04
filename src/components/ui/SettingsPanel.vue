@@ -21,7 +21,7 @@ const props = defineProps({
             <h3 class="text-md w-max font-semibold">{{ title }}</h3>
         </div>
     </div>
-    <div v-if="$slots.description" class="mb-5 p-3 rounded bg-slate-100">
+    <div v-if="$slots.description" class="mb-5 py-3 rounded bg-slate-100">
         <slot name="description"></slot>
     </div>
         <slot></slot>

@@ -9,6 +9,7 @@ import InfoButton from '@/components/buttons/InfoButton.vue'
 import SettingsPanel from '@/components/ui/SettingsPanel.vue'
 import InputSwitch from 'primevue/inputswitch';
 import SelectButton from 'primevue/selectbutton';
+import MoodleActivity from '@/components/ui/MoodleActivity.vue';
 
 const course = useCourseStore();
 
@@ -111,7 +112,32 @@ const isAligned = (item) => {
   });
 };
 
+function getRandomActivities(array, maxNumberOfItems) {
+  // Step 1: Copy the array
+  const newArray = array
+  // Step 2: Shuffle the array
+  const shuffledArray = newArray.sort(() => 0.5 - Math.random());
 
+  // Step 3: Determine a random number of items to select, up to the maximum specified
+  const numberOfItems = Math.floor(Math.random() * Math.min(maxNumberOfItems, newArray.length)) + 1;
+
+  // Step 4: Slice the first `numberOfItems` elements
+  return shuffledArray.slice(0, numberOfItems);
+}
+
+const suggestMoodleActivities = getRandomActivities(course.moodleActivities, 3);
+
+function removeSuggestedActivities(array1, array2) {
+  // Step 1: Create a Set from the second array
+  const set2 = new Set(array2);
+
+  // Step 2: Filter the first array to exclude elements that are present in the Set
+  const filteredArray = array1.filter(item => !set2.has(item));
+
+  return filteredArray;
+}
+
+const additionalActivities = ref(removeSuggestedActivities(course.moodleActivities, suggestMoodleActivities));
 
 </script>
 <template>
@@ -218,7 +244,7 @@ const isAligned = (item) => {
     </Button>
     </div>
       <ul v-if="activity && activity.alignments && activity.alignments.length > 0" class="divide-slate-200 divide-y ml-1 flex flex-col">
-        <li v-for="(alignment, index) in activity.alignments" class="py-2">
+        <li v-for="(alignment, index) in activity.alignments" class="py-2" :key="index">
           <div class="flex gap-3 items-center">
             <CheckCircleIcon class="text-teal-500 w-5 h-5 min-w-5" />
             <p v-if="alignment.nickname" class="">{{ alignment.nickname }}</p>
@@ -230,11 +256,22 @@ const isAligned = (item) => {
     </div>
     <div class="">
       <div class="flex justify-between items-center mb-2 border-b pb-1 border-slate-300">
-      <h4 class="font-semibold">Suggested Moodle activities:</h4>
-      <Button @click="toggleSuggestMoodle" title="See more about your suggested Moodle activities" class="!p-0 bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
-        <ArrowRightIcon class="w-5 h-5 text-slate-700" />
-      </Button>
-    </div>
+        <div class="flex items-center gap-2">
+      <h4 class="font-semibold">Moodle activities:</h4>
+      <InfoButton help-title="Moodle activities">
+        Select Moodle activities here. These will be created with a sensible set of defaults in your new Module which you can then modify to suit your teaching.
+      </InfoButton>
+      </div>
+        <Button @click="toggleSuggestMoodle" title="Add or edit suggested Moodle activities" class="!p-0 bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
+          <PlusIcon class="w-5 h-5 text-slate-700" />
+        </Button>
+        
+      </div>
+      <ul class="grid grid-cols-3 gap-2">
+        <li v-for="(moodleActivity, index) in activity.selectedMoodleActivities" :key="index">
+          <MoodleActivity :activity="activity" :moodle-activity="moodleActivity" />
+        </li>
+      </ul>
   </div>
 
   </div>
@@ -288,14 +325,27 @@ const isAligned = (item) => {
 </Transition>
 
 <Transition>
-  <SettingsPanel v-if="suggestMoodle" :title="'Suggested Moodle Activities'" :class="{'z-10': editTypes}" @close-panel="toggleSuggestMoodle" id="activity-type-select">
+  <SettingsPanel v-if="suggestMoodle" :title="'Moodle Activities'" :class="{'z-10': editTypes}" @close-panel="toggleSuggestMoodle" id="activity-type-select">
+    
     <template v-slot:description>
-      <p>Based on your selections this activity would be suitable for use with the following Moodle activity types:</p>
-    </template>    
+      <h4 class="font-semibold mb-3">Suggestions:</h4>
+      <p class="mb-3">Based on your selections this activity would be suitable for use with the following Moodle activity types:</p>
+      <ul class="grid grid-cols-3 grid-flow-row gap-2">
+        <li v-for="(moodleActivity, index) in suggestMoodleActivities" :key="index">
+          <MoodleActivity :activity="activity" :moodleActivity="moodleActivity" />
+        </li>
+      </ul>
+      <hr class="mt-4 -mb-5" />
+    </template>
+    <h4 class="font-semibold mb-3">Additional Moodle activities:</h4>
+    <p class="mb-3">If you would like to add other types of Moodle activity choose from the list below:</p>
+      
     <div class="gap-5 mt-4">
-          <div>
-            
-          </div>
+            <ul class="grid grid-cols-3 grid-flow-row gap-2">
+              <li v-for="(moodleActivity, index) in additionalActivities" :key="index">
+                <MoodleActivity :activity="activity" :moodleActivity="moodleActivity" />
+            </li>
+          </ul>
         </div>
   </SettingsPanel>
 </Transition>

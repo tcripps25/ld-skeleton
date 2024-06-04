@@ -20,7 +20,7 @@ const removeWeek = (weekIndex) => {
 };
 
 const addActivity = (weekIndex) => {
-  course.weeks[weekIndex].activities.push({ title: '', selectedActivityTypes: [], description: '', notes: '', minutes: '', students: '', isGroup: false, alignments: [] });
+  course.weeks[weekIndex].activities.push({ title: '', selectedActivityTypes: [], selectedMoodleActivities: [], description: '', notes: '', minutes: '', students: '', isGroup: false, alignments: [] });
 };
 
 const handleRemoveActivity = (weekIndex, activityIndex) => {
