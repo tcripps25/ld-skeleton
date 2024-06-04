@@ -85,7 +85,7 @@ const submitTitle = () => {
                 <li v-for="(assessment, index) in course.assessments" class="p-2 mt-2 flex flex-col">
                     <span class="font-semibold">{{ assessment.label }}</span>
                     <div class="ml-4 mt-3">
-                        <label :for="'assessment- ' + index + '-nickname-input'" class="text-sm">Alternative Title for {{ assessment.label }}: </label>
+                        <label :for="'assessment- ' + index + '-nickname-input'" class="text-sm">Alternative title for {{ assessment.label }}: </label>
                         <input
                             :id="'assessment- ' + index + '-nickname-input'"
                             v-model="assessment.nickname"
