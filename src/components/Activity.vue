@@ -174,8 +174,8 @@ const isAligned = (item) => {
           <div class="flex justify-between gap-4 items-center">
           <div class="flex gap-1 items-center">
             <label :for="'activity-' + activityIndex + '-method-select'" class="w-max font-semibold">Delivery method:</label>
-            <InfoButton>
-              All about Delivery Methods
+            <InfoButton help-title="Delivery method">
+              All about Delivery Method
             </InfoButton>
           </div>
           <SelectButton :id="'activity-' + activityIndex + '-method-select'" v-model="activity.delivery" :options="['Sync', 'Async']" class="method-select-button" aria-labelledby="multiple" pt:root:class="flex rounded-lg overflow-hidden" pt:button:class="group cursor-pointer p-[.3rem] px-1 bg-slate-200" pt:label:class="group-aria-checked:bg-white group-aria-checked:font-semibold py-1 px-2 hover:bg-slate-100 rounded transition-all" />
@@ -187,7 +187,7 @@ const isAligned = (item) => {
       <div class="flex justify-between items-center mb-2 border-b pb-1 border-slate-300">
         <div class="flex gap-1 items-center">
       <h4 class="font-semibold">Learning Type<span v-if="activity.selectedActivityTypes && activity.selectedActivityTypes.length > 1" >s</span>:</h4>
-            <InfoButton>
+            <InfoButton help-title="Learning Types">
               All about Learning Types
             </InfoButton>  
     </div>
@@ -208,7 +208,7 @@ const isAligned = (item) => {
       <div class="flex justify-between items-center mb-2 border-b pb-1 border-slate-300">
         <div class="flex items-center gap-1">
       <h4 class="font-semibold">Alignment<span v-if="activity && activity.alignments && activity.alignments.length > 1" >s</span>:</h4>
-      <InfoButton>
+      <InfoButton help-title="Alignments">
               All about Alignments
         </InfoButton>
           </div>
