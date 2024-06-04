@@ -152,10 +152,10 @@ const isAligned = (item) => {
       </div>
       <div v-else class="text-sm bg-slate-200/80 text-slate-600 p-2 rounded text-center italic w-full">No Activity instructions added yet.</div>
       <div>
-      <Button @click="toggleEditInstructions" class="!p-1 h-max bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
-          <span class="sr-only">Edit instructions</span>
-          <PencilIcon class="w-4 h-4 text-slate-700"></PencilIcon>
-        </Button> 
+        <Button @click="toggleEditInstructions" class="!p-1 h-max bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
+            <span class="sr-only">Edit instructions</span>
+            <PencilIcon class="w-4 h-4 text-slate-700"></PencilIcon>
+        </Button>
       </div>
     </div>
   
@@ -174,7 +174,9 @@ const isAligned = (item) => {
           <div class="flex justify-between gap-4 items-center">
           <div class="flex gap-1 items-center">
             <label :for="'activity-' + activityIndex + '-method-select'" class="w-max font-semibold">Delivery method:</label>
-            <InfoButton />
+            <InfoButton>
+              All about Delivery Methods
+            </InfoButton>
           </div>
           <SelectButton :id="'activity-' + activityIndex + '-method-select'" v-model="activity.delivery" :options="['Sync', 'Async']" class="method-select-button" aria-labelledby="multiple" pt:root:class="flex rounded-lg overflow-hidden" pt:button:class="group cursor-pointer p-[.3rem] px-1 bg-slate-200" pt:label:class="group-aria-checked:bg-white group-aria-checked:font-semibold py-1 px-2 hover:bg-slate-100 rounded transition-all" />
         </div>
@@ -183,7 +185,12 @@ const isAligned = (item) => {
  
     <div class="">
       <div class="flex justify-between items-center mb-2 border-b pb-1 border-slate-300">
+        <div class="flex gap-1 items-center">
       <h4 class="font-semibold">Learning Type<span v-if="activity.selectedActivityTypes && activity.selectedActivityTypes.length > 1" >s</span>:</h4>
+            <InfoButton>
+              All about Learning Types
+            </InfoButton>  
+    </div>
       <Button @click="toggleEditTypes" title="Add or edit associated Learning Types" class="!p-0 bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
       <PlusIcon class="w-5 h-5 text-slate-700" />
     </Button>
@@ -199,8 +206,13 @@ const isAligned = (item) => {
     </div>
     <div class="">
       <div class="flex justify-between items-center mb-2 border-b pb-1 border-slate-300">
+        <div class="flex items-center gap-1">
       <h4 class="font-semibold">Alignment<span v-if="activity && activity.alignments && activity.alignments.length > 1" >s</span>:</h4>
-    <Button @click="toggleEditAlign" title="Add or edit associated Alignments" class="!p-0 bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
+      <InfoButton>
+              All about Alignments
+        </InfoButton>
+          </div>
+      <Button @click="toggleEditAlign" title="Add or edit associated Alignments" class="!p-0 bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
       <PlusIcon class="w-5 h-5 text-slate-700" />
     </Button>
     </div>

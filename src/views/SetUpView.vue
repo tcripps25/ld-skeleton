@@ -29,8 +29,9 @@ const submitTitle = () => {
     <Page class="max-w-4xl mx-auto flex flex-col gap-5">
         <Panel class="flex flex-col gap-5" :title="'Module Information'">
             <div class="flex flex-col gap-1">
-      <Transition>
-      <div v-if="course?.title" class="font-semibold flex items-center gap-3 justify-start">
+              
+      
+      <div v-if="!editTitle" class="font-semibold flex items-center gap-3 justify-start">
         Module Title:
         <p class="font-normal" @click="toggleTitleEdit">{{ course.title }}</p>
         <button name="Edit module title" id="course-title-edit" title="Edit Module Title" @click="toggleTitleEdit">
@@ -40,38 +41,36 @@ const submitTitle = () => {
           />
         </button>
       </div>
-    </Transition>
-    <Transition class="bg-slate-200 p-2 rounded border border-slate-300 shadow">
-      <div class="block overflow-hidden" v-if="!course?.title || editTitle">
-        <label class="text-slate-800 mb-1 block" for="course-title-input">Edit course title: </label>
+      <div v-else class="flex gap-2 items-center">
+        <label class="text-slate-800 mb-1 font-semibold whitespace-nowrap" for="module-title-input">Module title: </label>
         <input
-          id="course-title-input"
+          id="module-title-input"
           v-model="courseTitle"
           type="text"
-          class="text-lg mb-0 rounded p-1 border-slate-300 bg-slate-50 text-slate-800 w-full"
+          class="text-lg mb-0 rounded p-1 border-slate-300 bg-white border text-slate-800l"
           @keyup.enter="submitTitle"
         />
       </div>
-    </Transition>
-    
+   
     </div>
+  
     <div class="flex items-center gap-2">
-        <label class="mb-1 font-semibold w-max" for="course-code-input">Module Code: </label>
+        <label for="module-code-input" class="mb-1 font-semibold w-max" >Module Code: </label>
         <input
-          id="course-code-input"
+          id="module-code-input"
           v-model="courseCode"
           type="text"
           class="text-lg mb-0 rounded p-1 border-slate-300 bg-white border"
         />
-    </div>
+        </div>
             <div class="flex items-center gap-2 font-semibold">
-                Start Date:
-                <Calendar v-model="course.startDate" />
+                <label for="module-start-date-input">Start Date:</label>
+                <Calendar v-model="course.startDate" pt:root:class="font-normal focus:ring-blue-600" itemid="module-start-date-input" />
             </div>
         </Panel>
         <Panel :title="'Learning Outcomes'">
             <p class="my-5 p-3 bg-slate-100 border rounded">
-                Learning Outcomes have been populated automatically and are unable to be modified from the Designer.
+                Learning Outcomes have been populated automatically and are unable to be modified from Module Designer.
             </p>
             <ul class="list-decimal list-inside ml-4">
                 <li v-for="(outcome, index) in course.learningOutcomes" class="p-3">
