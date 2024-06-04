@@ -200,9 +200,9 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
           </div>
           <div class="flex justify-between gap-4 items-center">
           <div class="flex gap-1 items-center">
-            <label :for="'activity-' + activityIndex + '-method-select'" class="w-max font-semibold">Delivery method:</label>
-            <InfoButton help-title="Delivery method">
-              All about Delivery Method
+            <label :for="'activity-' + activityIndex + '-method-select'" class="w-max font-semibold">Mode:</label>
+            <InfoButton help-title="Delivery mode">
+              All about the Mode
             </InfoButton>
           </div>
           <SelectButton :id="'activity-' + activityIndex + '-method-select'" v-model="activity.delivery" :options="['Sync', 'Async']" class="method-select-button" aria-labelledby="multiple" pt:root:class="flex rounded-lg overflow-hidden" pt:button:class="group cursor-pointer p-[.3rem] px-1 bg-slate-200" pt:label:class="group-aria-checked:bg-white group-aria-checked:font-semibold py-1 px-2 hover:bg-slate-100 rounded transition-all" />
