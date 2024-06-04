@@ -25,7 +25,7 @@ const showInfoModal = (event) => {
 </Button>
 
 <OverlayPanel ref="infoModal">
-    <div class="flex flex-col gap-2 max-w-md bg-white">
+    <div class="flex flex-col gap-2 max-w-xs bg-white text-sm">
         <slot>
 
         </slot>

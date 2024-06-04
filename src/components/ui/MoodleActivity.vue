@@ -43,7 +43,7 @@ const toggleSelected = () => {
   >
     <div class="flex gap-2">
       <Transition name="fade">
-        <CheckCircleIcon v-if="selected" class="w-5 h-5 absolute text-blue-600" />
+        <CheckCircleIcon v-if="selected" class="w-5 h-5 absolute text-blue-500" />
       </Transition>
       <div class="w-5 h-5 bg-slate-100 rounded-full border"></div>
       <span>{{ moodleActivity.name }}</span>
