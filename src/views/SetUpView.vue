@@ -11,6 +11,7 @@ const course = useCourseStore()
 
 const editTitle = ref(false);
 const courseTitle = ref('');
+const courseCode = ref('M20529');
 const toggleTitleEdit = () => {
   editTitle.value = !editTitle.value;
 };
@@ -79,12 +80,12 @@ const submitTitle = () => {
             </ul>
         </Panel>
         <Panel :title="'Assessments'">
-            <p class="my-5 p-3 bg-slate-100 border rounded">Assessments shown below have been populated automatically. You might prefer to refer to these throughout the Designer with a more memorable name than the automatically populated one, if so add a nickname in the field below.</p>
+            <p class="my-5 p-3 bg-slate-100 border rounded">Assessments shown below have been populated automatically. You might prefer to refer to these throughout the Designer with a more memorable name than the automatically populated one, if so add an alternative title in the field below.</p>
             <ul class="list-decimal list-inside">
                 <li v-for="(assessment, index) in course.assessments" class="p-2 mt-2 flex flex-col">
                     <span class="font-semibold">{{ assessment.label }}</span>
                     <div class="ml-4 mt-3">
-                        <label :for="'assessment- ' + index + '-nickname-input'" class="text-sm">Nickname for {{ assessment.label }}: </label>
+                        <label :for="'assessment- ' + index + '-nickname-input'" class="text-sm">Alternative Title for {{ assessment.label }}: </label>
                         <input
                             :id="'assessment- ' + index + '-nickname-input'"
                             v-model="assessment.nickname"

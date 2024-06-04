@@ -4,7 +4,7 @@ import { slugify } from "@/utils/utils";
 
 export const useCourseStore = defineStore("course", () => {
   // Reactive state
-  const title = ref("");
+  const title = ref('Contemporary Issues In Cyber Security');
   const weeks = ref([]);
   const startDate = ref(new Date());
 
