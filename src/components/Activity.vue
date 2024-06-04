@@ -137,8 +137,9 @@ const isAligned = (item) => {
         <EllipsisHorizontalIcon class="text-slate-900"/>
       </Button>
     </div>
-    
+    <h4 class="font-semibold border-b pb-1 border-slate-300">Instructions:</h4>
     <div class="flex justify-between gap-2" :id="'activity-' + activityIndex + '-instructions'">
+     
       <div v-if="activity.description || editInstructions" class="flex justify-between items-start grow">
         <div class="flex gap-2 justify-between mb-2 w-full">
           <div v-if="editInstructions" class="w-full" >
