@@ -256,7 +256,7 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
     </div>
     <div class="">
       <div class="flex justify-between items-center mb-2 border-b pb-1 border-slate-300">
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1">
       <h4 class="font-semibold">Moodle activities:</h4>
       <InfoButton help-title="Moodle activities">
         Select Moodle activities here. These will be created with a sensible set of defaults in your new Module which you can then modify to suit your teaching.
@@ -267,11 +267,12 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
         </Button>
         
       </div>
-      <ul class="grid grid-cols-3 gap-2">
+      <ul v-if="!activity.selectedMoodleActivities.length == 0" class="grid grid-cols-3 gap-2">
         <li v-for="(moodleActivity, index) in activity.selectedMoodleActivities" :key="index">
           <MoodleActivity :activity="activity" :moodle-activity="moodleActivity" />
         </li>
       </ul>
+      <p v-else class="p-2 text-center text-sm bg-slate-200/80 text-slate-600 italic rounded">There are no chosen Moodle activities yet.</p>
   </div>
 
   </div>
