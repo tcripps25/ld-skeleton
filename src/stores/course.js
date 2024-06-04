@@ -47,6 +47,7 @@ export const useCourseStore = defineStore("course", () => {
     { name: "Glossary", value: "glossary", image: "#" },
     { name: "Wiki", value: "wiki", image: "#" },
     { name: "Workshop", value: "workshop", image: "#" },
+    { name: "Reading List", value: "reading-list", image: "#" },
   ]);
 
   // Alignment options combining learning outcomes and assessments
