@@ -1,4 +1,3 @@
-
 <script setup>
 import Page from '@/components/Page.vue';
 import Button from 'primevue/button';
@@ -22,7 +21,7 @@ import MoodleLogo from '@/assets/moodle.png';
                         Save to file
                     </Button>
                 </div>
-                
+
             </div>
         </div>
     </Page>

@@ -24,7 +24,7 @@ const exportJSON = () => {
       }))
     }))
   };
-  
+
   const jsonData = JSON.stringify(data, null, 2);
   const filename = slugify(course.title);
 
@@ -38,8 +38,9 @@ const exportJSON = () => {
 </script>
 
 <template>
-  <button :title="name" @click="exportJSON" class="rounded-full text-slate-700 hover:bg-slate-300 px-2 py-2 h-max flex items-center gap-1 transition">
+  <button :title="name" @click="exportJSON"
+    class="rounded-full text-slate-700 hover:bg-slate-300 px-2 py-2 h-max flex items-center gap-1 transition">
     <span class="sr-only">{{ name }}</span>
-    <ArrowUpOnSquareIcon class="w-5 h-5"/>
+    <ArrowUpOnSquareIcon class="w-5 h-5" />
   </button>
 </template>

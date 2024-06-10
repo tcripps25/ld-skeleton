@@ -28,13 +28,15 @@ onMounted(() => {
       <div>
         <h2 class="text-2xl font-semibold mb-5 flex flex-col">
           <span class="text-base text-slate-500 font-medium">Teaching Week {{ index + 1 }}</span>
-          <input v-model="week.title" type="text" class="text-2xl font-semibold mb-5 border-0 w-max p-0 rounded-sm bg-transparent" :placeholder="'Week ' + (index + 1)" />    
+          <input v-model="week.title" type="text"
+            class="text-2xl font-semibold mb-5 border-0 w-max p-0 rounded-sm bg-transparent"
+            :placeholder="'Week ' + (index + 1)" />
         </h2>
       </div>
       <div class="flex gap-7">
         <Panel title="Activity Overview">
           <PieChart :dataseries="weekStats" :datalabels="course.activityTypes" :colors="course.activityColors">
-            <p class="mb-3">An overview of the Activity types you have used in this week of your course.</p>
+            <p class="mb-3">An overview of the Learning Types you have used in this week of your course.</p>
           </PieChart>
         </Panel>
         <div class="flex gap-7">

@@ -14,8 +14,9 @@ const removeWeek = (weekIndex) => {
 </script>
 
 <template>
-<button @click="removeWeek(index)" :title="'Remove week ' + (index +++ 1)" class="w-7 h-7 p-1 rounded hover:bg-slate-50 hover:text-red-900 relative transition z-10">
-    <TrashIcon class="w-5 h-5"/>
-</button>
+  <button @click="removeWeek(index)" :title="'Remove week ' + (index + 1)"
+    class="w-6 h-6 p-1 rounded hover:bg-slate-50 hover:text-red-900 relative transition z-10">
+    <TrashIcon class="w-4 h-4" />
+  </button>
 
 </template>

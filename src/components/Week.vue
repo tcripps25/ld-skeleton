@@ -4,15 +4,15 @@ import Activity from '@/components/Activity.vue';
 import { useCourseStore } from '@/stores/course.js'
 import { PlusCircleIcon, XMarkIcon } from '@heroicons/vue/24/solid';
 import Panel from './ui/Panel.vue';
-
+import Button from 'primevue/button';
 
 const course = useCourseStore()
 
 // Define props
 const props = defineProps({
-    week: Object,
-    weekIndex: Number,
-    showTitle: Boolean,
+  week: Object,
+  weekIndex: Number,
+  showTitle: Boolean,
 });
 
 const removeWeek = (weekIndex) => {
@@ -32,20 +32,27 @@ const panelTitle = computed(() => {
   return props.showTitle ? props.week.title : '';
 });
 
-
-
 </script>
 
 <template>
-    <Panel v-if="week" :title="panelTitle">
-      <template v-slot:action>
-        <button @click="removeWeek(weekIndex)" class="text-red-500 flex gap-1"><span class="sr-only">Remove Week</span><XMarkIcon class="w-5 h-5"/></button>
-      </template>
-            <TransitionGroup name="list" tag="div" class="flex flex-wrap gap-5 ">
-              <Activity v-for="(activity, activityIndex) in week.activities" :key="activityIndex" :week="week" :weekIndex="weekIndex" :activity="activity" :activityIndex="activityIndex" @remove-activity="handleRemoveActivity(weekIndex, activityIndex)" />
-            </TransitionGroup>
-            <button @click="addActivity(weekIndex)" class="bg-blue-600 hover:bg-blue-500 text-blue-50 px-4 py-2 rounded-md flex items-center gap-1 w-max">Add Activity <PlusCircleIcon class="w-5 h-5"/></button>
-      </Panel>
+  <Panel v-if="week" :title="panelTitle">
+    <template v-slot:action>
+      <button @click="removeWeek(weekIndex)" class="text-red-500 flex gap-1"><span class="sr-only">Remove Week</span>
+        <XMarkIcon class="w-5 h-5" />
+      </button>
+    </template>
+    <TransitionGroup name="list" tag="div" class="flex flex-wrap gap-5 ">
+      <Activity v-for="(activity, activityIndex) in week.activities" :key="activityIndex" :week="week"
+        :weekIndex="weekIndex" :activity="activity" :activityIndex="activityIndex"
+        @remove-activity="handleRemoveActivity(weekIndex, activityIndex)" />
+    </TransitionGroup>
+    <Button @click="addActivity(weekIndex)"
+      pt:root:class="bg-blue-600 hover:bg-blue-500 text-blue-50 px-3 py-2 rounded-md flex items-center gap-1 w-max">
+      Add
+      Activity
+      <PlusCircleIcon class="w-5 h-5" />
+    </Button>
+  </Panel>
 </template>
 
 <style scoped>
@@ -53,6 +60,7 @@ const panelTitle = computed(() => {
 .list-leave-active {
   transition: all 0.5s ease;
 }
+
 .list-enter-from,
 .list-leave-to {
   opacity: 0;

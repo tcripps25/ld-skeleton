@@ -52,5 +52,9 @@ const importFromFile = () => {
 </script>
 
 <template>
-    <button :title="name" @click="importFromFile" class="rounded-full  text-slate-700 hover:bg-slate-300 px-2 py-2 h-max flex items-center gap-1 transition"><span class="sr-only">{{ name }} </span><ArrowDownOnSquareIcon class="w-5 h-5"/></button>
+  <button :title="name" @click="importFromFile"
+    class="rounded-full  text-slate-700 hover:bg-slate-300 px-2 py-2 h-max flex items-center gap-1 transition"><span
+      class="sr-only">{{ name }} </span>
+    <ArrowDownOnSquareIcon class="w-5 h-5" />
+  </button>
 </template>

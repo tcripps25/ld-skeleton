@@ -37,10 +37,8 @@ const toggleSelected = () => {
 </script>
 
 <template>
-  <Button 
-    @click="() => { $emit('selected'); toggleSelected(); }" 
-    pt:root:class="bg-white border p-1 text-sm w-full rounded"
-  >
+  <Button @click="() => { $emit('selected'); toggleSelected(); }"
+    pt:root:class="bg-white border p-1 text-sm w-full rounded">
     <div class="flex gap-2">
       <Transition name="fade">
         <CheckCircleIcon v-if="selected" class="w-5 h-5 absolute text-blue-500" />

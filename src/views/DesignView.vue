@@ -29,15 +29,15 @@ const isDesignPage = computed(() => route.path === '/design');
 <template>
   <div>
     <PageHeader :title="'Design'" :message="message">
-    <AddWeekButton />
+      <AddWeekButton />
     </PageHeader>
     <Page>
       <div v-if="isDesignPage" class="w-100">
-        <Week v-for="(week, weekIndex) in course.weeks" :key="weekIndex" :week="week" :weekIndex="weekIndex" :showTitle=true class="flex flex-col gap-5 mb-8" />
+        <Week v-for="(week, weekIndex) in course.weeks" :key="weekIndex" :week="week" :weekIndex="weekIndex"
+          :showTitle=true class="flex flex-col gap-5 mb-8" />
       </div>
       <router-view v-else></router-view>
-      
+
     </Page>
   </div>
 </template>
-

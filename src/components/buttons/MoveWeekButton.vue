@@ -13,7 +13,7 @@ const moveWeekUp = (weekIndex) => {
     const temp = [...course.weeks]; // Create a copy of the array
     const movedWeek = temp.splice(weekIndex, 1)[0];
     temp.splice(weekIndex - 1, 0, movedWeek);
-    course.weeks = temp; // Update the store with the modified array
+    course.updateWeeks(temp); // Use the store action to update the weeks
   }
 };
 
@@ -22,7 +22,7 @@ const moveWeekDown = (weekIndex) => {
     const temp = [...course.weeks]; // Create a copy of the array
     const movedWeek = temp.splice(weekIndex, 1)[0];
     temp.splice(weekIndex + 1, 0, movedWeek);
-    course.weeks = temp; // Update the store with the modified array
+    course.updateWeeks(temp); // Use the store action to update the weeks
   }
 };
 
@@ -30,11 +30,13 @@ const moveWeekDown = (weekIndex) => {
 
 <template>
   <div class="flex items-center relative z-10">
-    <button @click="moveWeekUp(index)" :title="'Move week ' + (index + 1) + ' up'" class="w-7 h-7 p-1 rounded peer-hover:bg-slate-200 hover:bg-slate-50 hover:text-blue-900 transition ">
-      <ArrowUpIcon class="w-5 h-5"/>
+    <button @click="moveWeekUp(index)" :title="'Move week ' + (index + 1) + ' up'"
+      class="w-6 h-6 p-1 rounded peer-hover:bg-slate-200 hover:bg-slate-50 hover:text-blue-900 transition ">
+      <ArrowUpIcon class="w-4 h-4" />
     </button>
-    <button @click="moveWeekDown(index)" :title="'Move week ' + (index + 1) + ' down'" class="w-7 h-7 p-1 rounded peer-hover:bg-slate-200 hover:bg-slate-50 hover:text-red-900 transition">
-      <ArrowDownIcon class="w-5 h-5"/>
+    <button @click="moveWeekDown(index)" :title="'Move week ' + (index + 1) + ' down'"
+      class="w-6 h-6 p-1 rounded peer-hover:bg-slate-200 hover:bg-slate-50 hover:text-red-900 transition">
+      <ArrowDownIcon class="w-4 h-4" />
     </button>
   </div>
 </template>

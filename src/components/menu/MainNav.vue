@@ -1,10 +1,13 @@
 <script setup>
 import { RouterLink, useRoute } from 'vue-router';
-import { PaintBrushIcon, HomeIcon, ChartPieIcon, Cog8ToothIcon, ArrowUpOnSquareIcon } from '@heroicons/vue/24/solid';
+import { PaintBrushIcon, HomeIcon, ChartPieIcon, Cog8ToothIcon, ArrowUpOnSquareIcon, PlusIcon } from '@heroicons/vue/24/solid';
 import { useCourseStore } from '@/stores/course.js';
 import { computed } from 'vue';
 import WeekLink from '@/components/menu/WeekLink.vue';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
+import MenuItem from './MenuItem.vue';
+import Button from 'primevue/button';
+import AddWeekButton from '../buttons/AddWeekButton.vue';
 
 const course = useCourseStore();
 const route = useRoute();
@@ -16,32 +19,30 @@ const isDesignActive = computed(() => route.path === '/design' || route.path.sta
 
 <template>
   <nav id="main-nav" class="flex flex-col gap-2 text-slate-600 relative">
-    <RouterLink :active-class="'bg-blue-600 text-blue-50 hover:!bg-blue-600'" class="transition hover:bg-slate-300 gap-3 aria-current:font-semibold flex p-2 rounded items-center" to="/">
-      <Cog8ToothIcon class="w-5 h-5" /> Set Up
-    </RouterLink>
-    <RouterLink :active-class="'bg-blue-600 text-blue-50 hover:!bg-blue-600'" class="transition hover:bg-slate-300 aria-current:font-semibold flex gap-3 p-2 rounded items-center" to="/design">
-      <PaintBrushIcon class="w-5 h-5" /> Design
-    </RouterLink>
+    <MenuItem title="Set Up" to="/">
+    <Cog8ToothIcon class="w-5 h-5" />
+    </MenuItem>
+    <MenuItem title="Design" to="/design">
+    <PaintBrushIcon class="w-5 h-5" />
+    </MenuItem>
+    <Transition v-if="isDesignActive && course.weeks.length > 0">
+      <div class="flex justify-between items-center p-1 border-b">
+        <h3>Module Schedule</h3>
+        <AddWeekButton />
+      </div>
+    </Transition>
     <Transition>
-    <TransitionGroup v-if="isDesignActive" class="flex flex-col" name="list" tag="ul" id="draggable-list">
-            <WeekLink
-            v-for="(week, index) in course.weeks"
-            :key="index"
-            :week="week"
-            :index="index"
-            >
-            <template #default="{ week }">
-            {{ week.title }}
-            </template>
-            </WeekLink>
-  </TransitionGroup>
-</Transition>
-    <RouterLink :active-class="'bg-blue-600 text-blue-50 hover:!bg-blue-600'" class="transition hover:bg-slate-300 gap-3 aria-current:font-semibold flex p-2 rounded items-center" to="/visualise">
-      <ChartPieIcon class="w-5 h-5" /> Visualise
-    </RouterLink>
-    <RouterLink :active-class="'bg-blue-600 text-blue-50 hover:!bg-blue-600'" class="transition hover:bg-slate-300 gap-3 aria-current:font-semibold flex p-2 rounded items-center" to="/publish">
-      <ArrowUpOnSquareIcon class="w-5 h-5" /> Publish
-    </RouterLink>
+      <TransitionGroup v-if="isDesignActive && course.weeks.length > 0" class="flex flex-col" name="list" tag="ul">
+        <WeekLink v-for="(week, index) in course.weeks" :key="index" :week="week" :index="index">
+        </WeekLink>
+      </TransitionGroup>
+    </Transition>
+    <MenuItem title="Visualise" to="/visualise">
+    <ChartPieIcon class="w-5 h-5" />
+    </MenuItem>
+    <MenuItem title="Publish" to="/publish">
+    <ArrowUpOnSquareIcon class="w-5 h-5" />
+    </MenuItem>
   </nav>
 </template>
 
@@ -50,11 +51,13 @@ const isDesignActive = computed(() => route.path === '/design' || route.path.sta
 .list-leave-active {
   transition: all 0.5s ease;
 }
+
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
   transform: translateX(-5px);
 }
+
 .v-enter-active,
 .v-leave-active {
   transition: all 0.2s ease;
