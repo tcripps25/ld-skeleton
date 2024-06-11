@@ -232,7 +232,7 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
         <div class="flex justify-between items-center mb-2 border-b pb-1 border-slate-300">
           <div class="flex gap-1 items-center">
             <h4 class="font-semibold">Learning Type<span
-                v-if="activity.selectedActivityTypes && activity.selectedActivityTypes.length > 1">s</span>:</h4>
+                v-if="activity.selectedTypes && activity.selectedTypes.length > 1">s</span>:</h4>
             <InfoButton help-title="Learning Types">
               All about Learning Types
             </InfoButton>

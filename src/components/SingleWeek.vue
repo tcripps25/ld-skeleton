@@ -19,7 +19,6 @@ watch(weekStats, (newStats) => {
 
 onMounted(() => {
   console.log(props.week);
-  console.log(props.week.date)
 });
 </script>
 

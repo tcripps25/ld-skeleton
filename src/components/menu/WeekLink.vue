@@ -20,26 +20,35 @@ const isActiveLink = computed(() => route.path === to.value);
 </script>
 
 <template>
-  <li class="flex justify-between group items-center ml-6 hover:bg-slate-200 rounded group transition">
+  <li class="flex justify-between group items-center ml-8 hover:bg-slate-200 rounded group transition relative">
+    <div
+      class="w-1 h-full absolute bg-slate-300 transition-all -translate-x-5 bg-gradient-to-b from-slate-300 to-slate-300"
+      :class="{ 'via-blue-600': isActiveLink }">
+    </div>
     <RouterLink :to="to" :active-class="'aria-current:font-semibold'"
-      :class="['transition peer-hover:bg-slate-300 flex gap-3 p-2 items-center  grow peer', $attrs.class]"
+      :class="['transition peer-hover:bg-slate-300 flex gap-3 p-2 items-center grow peer', $attrs.class]"
       v-bind="$attrs">
 
-      <div class="flex flex-col w-full">
-        <div class="flex justify-between items-center">
-          <div class="flex gap-2 items-center">
-            <Transition name="btn-icon">
-              <PlayIcon v-if="isActiveLink" class="-translate-x-8 h-4 w-4 absolute text-blue-500" />
-            </Transition>
-            <span class="max-w-28 whitespace-nowrap text-ellipsis overflow-hidden">{{ week.name }}</span>
+      <div class="flex w-full">
+        <div class="flex items-center">
+          <div
+            class="h-7 w-7 flex transition-all text-sm justify-center items-center text-slate-500 font-medium rounded-full absolute bg-white border-4 border-slate-300 -translate-x-10"
+            :class="{ '!border-blue-600 !bg-blue-600 !text-blue-50 !font-medium scale-105 shadow': isActiveLink }">
+            <div><span class="sr-only">Week Number</span>{{ index + 1 }}</div>
           </div>
-          <span class="text-xs text-slate-400 font-normal group-hover:hidden">{{ week.activities.length }}</span>
         </div>
-        <div class="flex gap-2 justify-start text-xs font-normal items-center text-slate-500">
-          <span>Week {{ index + 1 }}:</span>
-          <span class="">{{ week.formattedDate }}</span>
+        <div class="flex flex-col grow">
+          <div class="flex justify-between items-center">
+            <div class="max-w-28 whitespace-nowrap text-ellipsis overflow-hidden">{{ week.name }}</div>
+            <div class="text-xs text-slate-500 font-normal group-hover:hidden">{{ week.activities.length }}</div>
+          </div>
+          <div class="flex gap-2 justify-start text-xs font-normal items-center text-slate-500">
+            <span class="">{{ week.formattedDate }}</span>
+          </div>
         </div>
       </div>
+
+
 
     </RouterLink>
 
@@ -51,18 +60,3 @@ const isActiveLink = computed(() => route.path === to.value);
 
   </li>
 </template>
-
-
-<style scoped>
-.btn-icon-enter-active,
-.btn-icon-leave-active {
-  transition: all 0.2s ease;
-}
-
-.btn-icon-enter-from,
-.btn-icon-leave-to {
-  opacity: 0;
-  transform: translateX(-40px);
-
-}
-</style>

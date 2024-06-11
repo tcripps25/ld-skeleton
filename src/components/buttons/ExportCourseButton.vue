@@ -13,11 +13,12 @@ const exportJSON = () => {
     title: course.title,
     weeks: course.weeks.map(week => ({
       title: week.title,
+      date: week.date,
       description: week.description,
       activities: week.activities.map(activity => ({
         title: activity.title,
         instructions: activity.instructions,
-        selectedTypes: activity.activityType,
+        selectedTypes: activity.selectedTypes,
         selectedMoodle: activity.selectedMoodle,
         selectedAlignments: activity.selectedAlignments,
         mode: activity.mode,

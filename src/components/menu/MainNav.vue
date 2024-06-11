@@ -24,7 +24,7 @@ const isDesignActive = computed(() => route.path === '/design' || route.path.sta
 </script>
 
 <template>
-  <nav id="main-nav" class="flex flex-col gap-2 text-slate-600 relative">
+  <nav id="main-nav" class="flex flex-col gap-2 text-slate-600 grow">
     <MenuItem title="Set Up" to="/">
     <Cog8ToothIcon class="w-5 h-5" />
     </MenuItem>
@@ -35,28 +35,29 @@ const isDesignActive = computed(() => route.path === '/design' || route.path.sta
         <h3 :class="{ 'font-semibold': showDesign }">Design</h3>
       </Button>
     </div>
-    <Transition>
-      <ul v-if="showDesign" class="ml-7">
+    <Transition name="drawer">
+      <ul v-if="showDesign" class="px-5 flex-col bg-slate-50 py-4 border-y shadow-inner -mx-5">
         <li>
           <MenuItem title="Overview" to="/design/overview">
-
           </MenuItem>
         </li>
-        <li class="mt-3 mb-3">
-          <div class="flex justify-between items-center p-1 border-b ml-1">
-            <h3>Module Schedule</h3>
-            <AddWeekButton />
+        <li class="mb-3 relative">
+          <div class="flex justify-between p-2 items-center border-b">
+            <h3>Weeks</h3>
+            <AddWeekButton class="-mr-1" />
           </div>
         </li>
-        <TransitionGroup v-if="course.weeks.length > 0" class="flex flex-col" name="list" tag="ul">
+        <TransitionGroup v-if="course.weeks.length > 0" class="flex flex-col relative" name="list" tag="ul">
+          <div class="w-1 h-5 rounded-t absolute translate-x-3 -translate-y-1 bg-slate-300">
+          </div>
           <WeekLink v-for="(week, index) in course.weeks" :key="index" :week="week" :index="index">
           </WeekLink>
+          <div class="w-1 h-1 rounded-b bottom-0 absolute translate-x-3 translate-y-1 bg-slate-300 ">
+          </div>
         </TransitionGroup>
-
-
       </ul>
-    </Transition>
 
+    </Transition>
     <MenuItem title="Visualise" to="/visualise">
     <ChartPieIcon class="w-5 h-5" />
     </MenuItem>
@@ -65,6 +66,25 @@ const isDesignActive = computed(() => route.path === '/design' || route.path.sta
     </MenuItem>
   </nav>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      showDesign: false,
+      course: {
+        weeks: [] // your data here
+      }
+    };
+  },
+  methods: {
+    toggleShowDesign() {
+      this.showDesign = !this.showDesign;
+    }
+  }
+};
+</script>
+
 
 <style scoped>
 .list-enter-active,
@@ -75,7 +95,7 @@ const isDesignActive = computed(() => route.path === '/design' || route.path.sta
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
-  transform: translateX(-5px);
+  transform: translateY(-5px);
 }
 
 .v-enter-active,
@@ -89,5 +109,19 @@ const isDesignActive = computed(() => route.path === '/design' || route.path.sta
   height: 0px;
   position: absolute;
   top: 6rem;
+}
+
+.drawer-enter-active,
+.drawer-leave-active {
+  transition: all 0.2s ease;
+}
+
+.drawer-enter-from,
+.drawer-leave-to {
+  opacity: 0;
+  height: 0px;
+  overflow: hidden;
+  margin-top: -1.3rem;
+  margin-bottom: -1.3rem;
 }
 </style>

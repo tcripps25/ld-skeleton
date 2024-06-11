@@ -139,9 +139,9 @@ export const useCourseStore = defineStore('course', () => {
     // Count the occurrences of each activity type
     for (const week of weeks.value) {
       for (const activity of week.activities) {
-        // Check if selectedActivityTypes is defined
-        if (activity.selectedActivityTypes) {
-          for (const type of activity.selectedActivityTypes) {
+        // Check if selectedTypes is defined
+        if (activity.selectedTypes) {
+          for (const type of activity.selectedTypes) {
             if (activityTypeCounts[type] !== undefined) {
               activityTypeCounts[type]++
             }
@@ -169,9 +169,9 @@ export const useCourseStore = defineStore('course', () => {
     // Count the occurrences of each activity type
     for (const week of weeks.value) {
       for (const activity of week.activities) {
-        // Check if selectedActivityTypes is defined
-        if (activity.selectedActivityTypes) {
-          for (const type of activity.selectedActivityTypes) {
+        // Check if selectedTypes is defined
+        if (activity.selectedTypes) {
+          for (const type of activity.selectedTypes) {
             if (activityTypeCounts[type] !== undefined) {
               activityTypeCounts[type]++
             }
@@ -205,10 +205,10 @@ export const useCourseStore = defineStore('course', () => {
       }
       // Count the occurrences of each activity type in the current week
       for (const activity of week.activities) {
-        // Check if selectedActivityTypes is defined
-        if (activity.selectedActivityTypes) {
+        // Check if selectedTypes is defined
+        if (activity.selectedTypes) {
           for (const type of activityTypes.value) {
-            if (activity.selectedActivityTypes.includes(type)) {
+            if (activity.selectedTypes.includes(type)) {
               activityTypeCounts[type]++
             }
           }
@@ -242,10 +242,10 @@ export const useCourseStore = defineStore('course', () => {
 
       // Count the occurrences of each activity type in the specified week
       for (const activity of week.activities) {
-        // Check if selectedActivityTypes is defined
-        if (activity.selectedActivityTypes) {
+        // Check if selectedTypes is defined
+        if (activity.selectedTypes) {
           for (const type of activityTypes.value) {
-            if (activity.selectedActivityTypes.includes(type)) {
+            if (activity.selectedTypes.includes(type)) {
               activityTypeCounts[type]++
             }
           }
