@@ -19,6 +19,7 @@ watch(weekStats, (newStats) => {
 
 onMounted(() => {
   console.log(props.week);
+  console.log(props.week.date)
 });
 </script>
 
@@ -27,8 +28,15 @@ onMounted(() => {
     <div class="flex flex-col gap-7">
       <div>
         <h2 class="text-2xl font-semibold mb-5 flex flex-col">
-          <span class="text-base text-slate-500 font-medium">Teaching Week {{ index + 1 }}</span>
-          <input v-model="week.title" type="text"
+          <div class="flex gap-2 text-base text-slate-600 font-medium">
+            <span>Teaching
+              Week {{ index
+                + 1 }}:</span>
+            <span class="font-normal">{{ week.formattedDate }}</span>
+
+          </div>
+
+          <input v-model="week.name" type="text"
             class="text-2xl font-semibold mb-5 border-0 w-max p-0 rounded-sm bg-transparent"
             :placeholder="'Week ' + (index + 1)" />
         </h2>

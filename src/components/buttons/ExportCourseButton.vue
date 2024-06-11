@@ -13,13 +13,15 @@ const exportJSON = () => {
     title: course.title,
     weeks: course.weeks.map(week => ({
       title: week.title,
+      description: week.description,
       activities: week.activities.map(activity => ({
         title: activity.title,
-        activityType: activity.activityType,
-        description: activity.description,
-        notes: activity.notes,
-        minutes: activity.minutes,
-        students: activity.students,
+        instructions: activity.instructions,
+        selectedTypes: activity.activityType,
+        selectedMoodle: activity.selectedMoodle,
+        selectedAlignments: activity.selectedAlignments,
+        mode: activity.mode,
+        duration: activity.duration,
         group: activity.isGroup
       }))
     }))

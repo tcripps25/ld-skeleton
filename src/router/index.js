@@ -3,7 +3,7 @@ import VisualiseView from '@/views/VisualiseView.vue'
 import DesignView from '@/views/DesignView.vue'
 import SetupView from '@/views/SetUpView.vue'
 import SingleWeek from '@/components/SingleWeek.vue'
-import { useCourseStore } from '@/stores/course.js' 
+import { useCourseStore } from '@/stores/course.js'
 import PublishView from '@/views/PublishView.vue'
 
 const router = createRouter({
@@ -16,21 +16,25 @@ const router = createRouter({
     },
     {
       path: '/design',
-      name: 'design',
       component: DesignView,
       children: [
+        {
+          path: 'overview',
+          name: 'design-overview',
+          component: DesignView
+        },
         {
           path: ':index',
           name: 'week-detail',
           component: SingleWeek,
-          props: route => {
-            const course = useCourseStore();
-            const index = parseInt(route.params.index);
-            const week = course.weeks[index];
-            return { index, week };
-          },
-        },
-      ],
+          props: (route) => {
+            const course = useCourseStore()
+            const index = parseInt(route.params.index)
+            const week = course.weeks[index]
+            return { index, week }
+          }
+        }
+      ]
     },
     {
       path: '/visualise',

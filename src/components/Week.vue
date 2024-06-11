@@ -5,6 +5,7 @@ import { useCourseStore } from '@/stores/course.js'
 import { PlusCircleIcon, XMarkIcon } from '@heroicons/vue/24/solid';
 import Panel from './ui/Panel.vue';
 import Button from 'primevue/button';
+import ActivityClass from '@/classes/Activity';
 
 const course = useCourseStore()
 
@@ -20,7 +21,10 @@ const removeWeek = (weekIndex) => {
 };
 
 const addActivity = (weekIndex) => {
-  course.weeks[weekIndex].activities.push({ title: '', selectedActivityTypes: [], selectedMoodleActivities: [], description: '', notes: '', minutes: '', students: '', isGroup: false, alignments: [] });
+
+  const newActivity = new ActivityClass;
+
+  course.weeks[weekIndex].activities.push(newActivity);
 };
 
 const handleRemoveActivity = (weekIndex, activityIndex) => {
@@ -29,7 +33,7 @@ const handleRemoveActivity = (weekIndex, activityIndex) => {
 
 
 const panelTitle = computed(() => {
-  return props.showTitle ? props.week.title : '';
+  return props.showTitle ? props.week.name : '';
 });
 
 </script>

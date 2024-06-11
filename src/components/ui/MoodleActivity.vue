@@ -8,24 +8,24 @@ const props = defineProps({
   activity: Object
 });
 
-// Ensure selectedMoodleActivities is reactive
-if (!props.activity.selectedMoodleActivities) {
-  props.activity.selectedMoodleActivities = ref([]);
+// Ensure selectedMoodle is reactive
+if (!props.activity.selectedMoodle) {
+  props.activity.selectedMoodle = ref([]);
 }
 
 const selected = computed({
   get() {
-    return props.activity.selectedMoodleActivities.includes(props.moodleActivity);
+    return props.activity.selectedMoodle.includes(props.moodleActivity);
   },
   set(value) {
     if (value) {
-      if (!props.activity.selectedMoodleActivities.includes(props.moodleActivity)) {
-        props.activity.selectedMoodleActivities.push(props.moodleActivity);
+      if (!props.activity.selectedMoodle.includes(props.moodleActivity)) {
+        props.activity.selectedMoodle.push(props.moodleActivity);
       }
     } else {
-      const index = props.activity.selectedMoodleActivities.indexOf(props.moodleActivity);
+      const index = props.activity.selectedMoodle.indexOf(props.moodleActivity);
       if (index !== -1) {
-        props.activity.selectedMoodleActivities.splice(index, 1);
+        props.activity.selectedMoodle.splice(index, 1);
       }
     }
   }

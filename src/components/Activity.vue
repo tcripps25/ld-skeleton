@@ -91,21 +91,21 @@ const isAligned = (item) => {
       if (!props.activity.alignments) {
         props.activity.alignments = [];
       }
-      return props.activity.alignments.some(alignment => alignment.value === item.value);
+      return props.activity.selectedAlignments.some(alignment => alignment.value === item.value);
     },
     set: (newValue) => {
-      if (!props.activity.alignments) {
-        props.activity.alignments = [];
+      if (!props.activity.selectedAlignments) {
+        props.activity.selectedAlignments = [];
       }
 
       if (newValue) {
-        if (!props.activity.alignments.some(alignment => alignment.value === item.value)) {
-          props.activity.alignments.push(item);
+        if (!props.activity.selectedAlignments.some(alignment => alignment.value === item.value)) {
+          props.activity.selectedAlignments.push(item);
         }
       } else {
-        const index = props.activity.alignments.findIndex(alignment => alignment.value === item.value);
+        const index = props.activity.selectedAlignments.findIndex(alignment => alignment.value === item.value);
         if (index > -1) {
-          props.activity.alignments.splice(index, 1);
+          props.activity.selectedAlignments.splice(index, 1);
         }
       }
     }
@@ -242,9 +242,9 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
             <PlusIcon class="w-5 h-5 text-slate-700" />
           </Button>
         </div>
-        <ul v-if="activity && activity.selectedActivityTypes && activity.selectedActivityTypes.length > 0"
+        <ul v-if="activity && activity.selectedTypes && activity.selectedTypes.length > 0"
           class="grid grid-cols-3 grid-flow-row gap-2 py-1">
-          <li v-for="(type, index) in activity.selectedActivityTypes"
+          <li v-for="(type, index) in activity.selectedTypes"
             class="p-1 px-2 text-sm rounded bg-white border flex gap-2 items-center">
             <div :style="{ backgroundColor: course.getColorByLabel(type) }"
               class="w-4 h-4 min-w-4 min-h-4 bg-slate-600 rounded-full">
@@ -269,9 +269,9 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
             <PlusIcon class="w-5 h-5 text-slate-700" />
           </Button>
         </div>
-        <ul v-if="activity && activity.alignments && activity.alignments.length > 0"
+        <ul v-if="activity && activity.selectedAlignments && activity.selectedAlignments.length > 0"
           class="divide-slate-200 divide-y ml-1 flex flex-col">
-          <li v-for="(alignment, index) in activity.alignments" class="py-2" :key="index">
+          <li v-for="(alignment, index) in activity.selectedAlignments" class="py-2" :key="index">
             <div class="flex gap-3 items-center">
               <CheckCircleIcon class="text-teal-500 w-5 h-5 min-w-5" />
               <p v-if="alignment.nickname" class="">{{ alignment.nickname }}</p>
@@ -297,8 +297,8 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
           </Button>
 
         </div>
-        <ul v-if="!activity.selectedMoodleActivities.length == 0" class="grid grid-cols-3 gap-2">
-          <li v-for="(moodleActivity, index) in activity.selectedMoodleActivities" :key="index">
+        <ul v-if="!activity.selectedMoodle.length == 0" class="grid grid-cols-3 gap-2">
+          <li v-for="(moodleActivity, index) in activity.selectedMoodle" :key="index">
             <MoodleActivity :activity="activity" :moodle-activity="moodleActivity" />
           </li>
         </ul>
@@ -317,7 +317,7 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
         </template>
         <div class="gap-5 mt-4">
           <div>
-            <Listbox v-model="activity.selectedActivityTypes" :options="course.activityTypesColors" optionLabel="type"
+            <Listbox v-model="activity.selectedTypes" :options="course.activityTypesColors" optionLabel="type"
               optionValue="type" multiple class="w-full" />
           </div>
         </div>

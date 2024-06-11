@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink, useRoute } from 'vue-router';
-import { PaintBrushIcon, HomeIcon, ChartPieIcon, Cog8ToothIcon, ArrowUpOnSquareIcon, PlusIcon } from '@heroicons/vue/24/solid';
+import { PaintBrushIcon, HomeIcon, ChartPieIcon, Cog8ToothIcon, ArrowUpOnSquareIcon, ChevronDownIcon } from '@heroicons/vue/24/solid';
 import { useCourseStore } from '@/stores/course.js';
 import { computed } from 'vue';
 import WeekLink from '@/components/menu/WeekLink.vue';
@@ -12,6 +12,12 @@ import AddWeekButton from '../buttons/AddWeekButton.vue';
 const course = useCourseStore();
 const route = useRoute();
 
+const showDesign = ref(false);
+
+const toggleShowDesign = () => {
+  showDesign.value = !showDesign.value;
+}
+
 const isDesignActive = computed(() => route.path === '/design' || route.path.startsWith('/design/'));
 
 
@@ -22,21 +28,35 @@ const isDesignActive = computed(() => route.path === '/design' || route.path.sta
     <MenuItem title="Set Up" to="/">
     <Cog8ToothIcon class="w-5 h-5" />
     </MenuItem>
-    <MenuItem title="Design" to="/design">
-    <PaintBrushIcon class="w-5 h-5" />
-    </MenuItem>
-    <Transition v-if="isDesignActive && course.weeks.length > 0">
-      <div class="flex justify-between items-center p-1 border-b">
-        <h3>Module Schedule</h3>
-        <AddWeekButton />
-      </div>
-    </Transition>
+    <div class="">
+      <Button label="Design" @click="toggleShowDesign" pt:root:class="p-1 flex justify-start gap-3 items-center w-full"
+        id="show-design-button">
+        <ChevronDownIcon class="w-4 h-4 ml-1 -rotate-90 transition" :class="{ '!rotate-0': showDesign }" />
+        <h3 :class="{ 'font-semibold': showDesign }">Design</h3>
+      </Button>
+    </div>
     <Transition>
-      <TransitionGroup v-if="isDesignActive && course.weeks.length > 0" class="flex flex-col" name="list" tag="ul">
-        <WeekLink v-for="(week, index) in course.weeks" :key="index" :week="week" :index="index">
-        </WeekLink>
-      </TransitionGroup>
+      <ul v-if="showDesign" class="ml-7">
+        <li>
+          <MenuItem title="Overview" to="/design/overview">
+
+          </MenuItem>
+        </li>
+        <li class="mt-3 mb-3">
+          <div class="flex justify-between items-center p-1 border-b ml-1">
+            <h3>Module Schedule</h3>
+            <AddWeekButton />
+          </div>
+        </li>
+        <TransitionGroup v-if="course.weeks.length > 0" class="flex flex-col" name="list" tag="ul">
+          <WeekLink v-for="(week, index) in course.weeks" :key="index" :week="week" :index="index">
+          </WeekLink>
+        </TransitionGroup>
+
+
+      </ul>
     </Transition>
+
     <MenuItem title="Visualise" to="/visualise">
     <ChartPieIcon class="w-5 h-5" />
     </MenuItem>

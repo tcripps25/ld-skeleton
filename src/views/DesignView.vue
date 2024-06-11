@@ -22,14 +22,14 @@ watch([totalActivities, numberOfWeeks], ([newTotalActivities, newNumberOfWeeks])
 });
 
 // Check if the current route is '/design' or any of its sub-routes
-const isDesignPage = computed(() => route.path === '/design');
+const isDesignPage = computed(() => route.path === '/design/overview');
 
 </script>
 
 <template>
   <div>
     <PageHeader :title="'Design'" :message="message">
-      <AddWeekButton />
+
     </PageHeader>
     <Page>
       <div v-if="isDesignPage" class="w-100">

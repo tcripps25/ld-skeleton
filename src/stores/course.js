@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { slugify } from '@/utils/utils'
+import Week from '@/classes/Week.js'
 
 export const useCourseStore = defineStore('course', () => {
   // Reactive state
@@ -96,7 +97,7 @@ export const useCourseStore = defineStore('course', () => {
   })
 
   // Get an array of all the names of the weeks
-  const weekNames = computed(() => weeks.value.map((week) => week.title))
+  const weekNames = computed(() => weeks.value.map((week) => week.name))
 
   // Get the number of activities each week in an array
   const activitiesPerWeek = computed(() => weeks.value.map((week) => week.activities.length))
@@ -270,11 +271,13 @@ export const useCourseStore = defineStore('course', () => {
   }
 
   // Store actions
-  const incrementWeek = () => {
-    weeks.value.push({
-      title: `Week ${weeks.value.length + 1}`,
-      activities: []
-    })
+  const incrementWeek = (name, description, activities) => {
+    const tempName = 'New Week'
+    const tempDescription = 'Describe this week.'
+    const tempActivities = []
+
+    const newWeek = new Week(tempName, tempDescription, startDate, tempActivities)
+    weeks.value.push(newWeek)
   }
 
   const addWeek = (week) => {

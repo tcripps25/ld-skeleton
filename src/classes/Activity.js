@@ -14,8 +14,8 @@ export default class Activity {
     this.duration = duration
     this.isGroup = isGroup
     this.mode = mode
-    this.selectedTypes = selectedTypes
-    this.selectedAlignments = selectedAlignments
-    this.selectedMoodle = selectedMoodle
+    this.selectedTypes = []
+    this.selectedAlignments = []
+    this.selectedMoodle = []
   }
 }

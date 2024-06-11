@@ -20,24 +20,24 @@ const isActiveLink = computed(() => route.path === to.value);
 </script>
 
 <template>
-  <li class="flex justify-between group items-center ml-8 hover:bg-slate-200 rounded group transition">
+  <li class="flex justify-between group items-center ml-6 hover:bg-slate-200 rounded group transition">
     <RouterLink :to="to" :active-class="'aria-current:font-semibold'"
       :class="['transition peer-hover:bg-slate-300 flex gap-3 p-2 items-center  grow peer', $attrs.class]"
       v-bind="$attrs">
 
       <div class="flex flex-col w-full">
         <div class="flex justify-between items-center">
-          <div class="flex gap-3 items-center">
+          <div class="flex gap-2 items-center">
             <Transition name="btn-icon">
-              <PlayIcon v-if="isActiveLink" class="-ml-6 h-3 w-3 relative text-teal-500" />
+              <PlayIcon v-if="isActiveLink" class="-translate-x-8 h-4 w-4 absolute text-blue-500" />
             </Transition>
-            {{ week.title }}
+            <span class="max-w-28 whitespace-nowrap text-ellipsis overflow-hidden">{{ week.name }}</span>
           </div>
           <span class="text-xs text-slate-400 font-normal group-hover:hidden">{{ week.activities.length }}</span>
         </div>
-        <div class="flex gap-2 text-xs font-normal items-center text-slate-400">
-          <span class="">28/9/24 {{ week.date }}</span>
-          <span>Week: {{ index + 1 }}</span>
+        <div class="flex gap-2 justify-start text-xs font-normal items-center text-slate-500">
+          <span>Week {{ index + 1 }}:</span>
+          <span class="">{{ week.formattedDate }}</span>
         </div>
       </div>
 
@@ -62,7 +62,7 @@ const isActiveLink = computed(() => route.path === to.value);
 .btn-icon-enter-from,
 .btn-icon-leave-to {
   opacity: 0;
-  transform: translateX(-5px);
+  transform: translateX(-40px);
 
 }
 </style>
