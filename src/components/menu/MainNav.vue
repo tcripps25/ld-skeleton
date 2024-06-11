@@ -36,7 +36,7 @@ const isDesignActive = computed(() => route.path === '/design' || route.path.sta
       </Button>
     </div>
     <Transition name="drawer">
-      <ul v-if="showDesign" class="px-5 flex-col bg-slate-50 py-4 border-y shadow-inner -mx-5">
+      <ul v-if="showDesign" class="px-5 flex-col bg-slate-50 py-4 border-y shadow-inner relative -mx-5">
         <li>
           <MenuItem title="Overview" to="/design/overview">
           </MenuItem>
@@ -47,14 +47,16 @@ const isDesignActive = computed(() => route.path === '/design' || route.path.sta
             <AddWeekButton class="-mr-1" />
           </div>
         </li>
+        <div v-if="course.weeks.length > 0"
+          class="w-1 h-5 rounded-t absolute translate-x-3 -translate-y-1 bg-slate-300">
+        </div>
         <TransitionGroup v-if="course.weeks.length > 0" class="flex flex-col relative" name="list" tag="ul">
-          <div class="w-1 h-5 rounded-t absolute translate-x-3 -translate-y-1 bg-slate-300">
-          </div>
           <WeekLink v-for="(week, index) in course.weeks" :key="index" :week="week" :index="index">
           </WeekLink>
-          <div class="w-1 h-1 rounded-b bottom-0 absolute translate-x-3 translate-y-1 bg-slate-300 ">
-          </div>
         </TransitionGroup>
+        <div v-if="course.weeks.length > 0" class="h-1 w-1 rounded-b bottom-0 absolute translate-x-3 -translate-y-3
+          bg-slate-300">
+        </div>
       </ul>
 
     </Transition>

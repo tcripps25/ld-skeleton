@@ -152,11 +152,11 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
           <div v-if="editTitle" class="flex flex-col w-full">
             <label :for="'name' + props.weekIndex + '-' + activityIndex" class="sr-only block text-gray-700">Activity
               name:</label>
-            <input :id="'name' + props.weekIndex + '-' + activityIndex" v-model="activity.title" type="text"
+            <input :id="'name' + props.weekIndex + '-' + activityIndex" v-model="activity.name" type="text"
               class="border form-input mt-1 block p-1 w-full rounded"
               :placeholder="'Activity ' + (activityIndex + 1)" />
           </div>
-          <h3 v-else class="text-md font-semibold"> {{ activity.title || 'Activity ' + (activityIndex + 1) }} </h3>
+          <h3 v-else class="text-md font-semibold"> {{ activity.name || 'Activity ' + (activityIndex + 1) }} </h3>
           <Button @click="toggleEditTitle"
             class="!p-1 h-max bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
             <span class="sr-only">Edit Activity title</span>
@@ -178,7 +178,7 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
             <div v-if="editInstructions" class="w-full">
               <label :for="'description-' + props.weekIndex + '-' + activityIndex"
                 class="sr-only block text-gray-700">Instructions:</label>
-              <textarea v-model="activity.description" :id="'description-' + props.weekIndex + '-' + activityIndex"
+              <textarea v-model="activity.instructions" :id="'description-' + props.weekIndex + '-' + activityIndex"
                 :name="'description-' + props.weekIndex + '-' + activityIndex" rows="4"
                 class="form-textarea mt-1 w-full rounded p-1 border"></textarea>
             </div>
@@ -204,7 +204,7 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
           <div class="flex justify-between gap-4 items-center ">
             <label class="w-max font-semibold" :for="activityIndex + '-activity-duration'">Activity duration
               (mins):</label>
-            <input type="number" class="border w-20 p-1 px-2 rounded" v-model="activity.minutes"
+            <input type="number" class="border w-20 p-1 px-2 rounded" v-model="activity.duration"
               :id="activityIndex + '-activity-duration'" min="0" :step="1">
             </input>
           </div>
@@ -219,7 +219,7 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
                 All about the Mode
               </InfoButton>
             </div>
-            <SelectButton :id="'activity-' + activityIndex + '-method-select'" v-model="activity.delivery"
+            <SelectButton :id="'activity-' + activityIndex + '-method-select'" v-model="activity.mode"
               :options="['Sync', 'Async']" class="method-select-button" aria-labelledby="multiple"
               pt:root:class="flex rounded-lg overflow-hidden"
               pt:button:class="group cursor-pointer p-[.3rem] px-1 bg-slate-200"
@@ -394,7 +394,7 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
     </Transition>
 
     <Transition>
-      <SettingsPanel v-if="manageActivity" :title="'Manage ' + (activity.title)" :class="{ 'z-10': editAlign }"
+      <SettingsPanel v-if="manageActivity" :title="'Manage ' + (activity.name)" :class="{ 'z-10': editAlign }"
         @close-panel="togglemanageActivity" :id="'manage-activity-' + (activityIndex + 1)">
         <template v-slot:description>
           <p>Once you have deleted this Activity it cannot be recovered.</p>

@@ -11,6 +11,7 @@ const props = defineProps({
 const exportJSON = () => {
   const data = {
     title: course.title,
+    startDate: course.startDate,
     weeks: course.weeks.map(week => ({
       title: week.title,
       date: week.date,

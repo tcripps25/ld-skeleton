@@ -20,6 +20,7 @@ const importJSON = (jsonData) => {
 
     // Set the imported data to the course store
     course.title = importedData.title;
+    course.startDate = importedData.startDate
     course.weeks = importedData.weeks;
   } catch (error) {
     console.error('Error importing JSON:', error.message);

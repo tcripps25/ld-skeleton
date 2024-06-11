@@ -32,9 +32,9 @@ const isDesignPage = computed(() => route.path === '/design/overview');
 
     </PageHeader>
     <Page>
-      <div v-if="isDesignPage" class="w-100">
+      <div v-if="isDesignPage" class="w-100 grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
         <Week v-for="(week, weekIndex) in course.weeks" :key="weekIndex" :week="week" :weekIndex="weekIndex"
-          :showTitle=true class="flex flex-col gap-5 mb-8" />
+          :showTitle=true class="flex flex-col gap-5 " />
       </div>
       <router-view v-else></router-view>
 

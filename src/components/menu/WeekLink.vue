@@ -39,7 +39,9 @@ const isActiveLink = computed(() => route.path === to.value);
         </div>
         <div class="flex flex-col grow">
           <div class="flex justify-between items-center">
-            <div class="max-w-28 whitespace-nowrap text-ellipsis overflow-hidden">{{ week.name }}</div>
+            <div class="max-w-28 whitespace-nowrap text-ellipsis overflow-hidden">{{ week.name || 'Week ' + (index + 1)
+              }}
+            </div>
             <div class="text-xs text-slate-500 font-normal group-hover:hidden">{{ week.activities.length }}</div>
           </div>
           <div class="flex gap-2 justify-start text-xs font-normal items-center text-slate-500">
