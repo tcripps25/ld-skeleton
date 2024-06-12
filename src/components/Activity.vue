@@ -173,7 +173,7 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
       <h4 class="font-semibold border-b pb-1 border-slate-300">Instructions:</h4>
       <div class="flex justify-between gap-2" :id="'activity-' + activityIndex + '-instructions'">
 
-        <div v-if="activity.description || editInstructions" class="flex justify-between items-start grow">
+        <div v-if="activity.instructions || editInstructions" class="flex justify-between items-start grow">
           <div class="flex gap-2 justify-between mb-2 w-full">
             <div v-if="editInstructions" class="w-full">
               <label :for="'description-' + props.weekIndex + '-' + activityIndex"
@@ -183,7 +183,7 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
                 class="form-textarea mt-1 w-full rounded p-1 border"></textarea>
             </div>
             <div v-else class="items-start flex gap-2 grow">
-              <p class="w-full">{{ activity.description }}</p>
+              <p class="w-full">{{ activity.instructions }}</p>
             </div>
           </div>
         </div>
