@@ -41,7 +41,8 @@ const removeWeek = (weekIndex) => {
             v-model="week.description" />
         <div class="flex p-5 -ml-5">
 
-            <Timeline :value="week.activities" align="right" class="shrink bg-slate-100 py-5 -ml-5 rounded">
+            <Timeline v-if="week.activities.length > 0" :value="week.activities" align="right"
+                class="shrink bg-slate-100 py-5 -ml-5 rounded">
                 <template #content="slotProps">
                     <div class="text-sm font-semibold">{{ slotProps.item.name || 'Untitled Activity ' + (slotProps.index
                         + 1) }}</div>
@@ -55,7 +56,7 @@ const removeWeek = (weekIndex) => {
 
                 </template>
             </Timeline>
-            <div class="grow">hdjskahdjk</div>
+
         </div>
     </Panel>
 </template>
