@@ -276,7 +276,7 @@ export const useCourseStore = defineStore('course', () => {
     const tempDescription = 'Describe this week.'
     const tempActivities = []
 
-    const newWeek = new Week(tempName, tempDescription, startDate, tempActivities)
+    const newWeek = new Week(tempName, startDate, tempDescription, tempActivities)
     weeks.value.push(newWeek)
   }
 

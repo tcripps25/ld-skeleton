@@ -10,7 +10,6 @@ const currentWeeks = computed(() => course.numberOfWeeks);
 const handleAddWeek = () => {
   console.log('Adding a new week');  // Debugging log
 
-  const weekNumber = currentWeeks.value + 1;
   course.incrementWeek(); // Use store action to increment the week
 
   console.log('Current Weeks:', course.numberOfWeeks);  // Debugging log

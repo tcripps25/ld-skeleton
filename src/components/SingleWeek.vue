@@ -4,11 +4,15 @@ import Week from './Week.vue';
 import Panel from './ui/Panel.vue';
 import PieChart from './charts/PieChart.vue';
 import { useCourseStore } from '@/stores/course.js'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
 
 const props = defineProps({
   week: Object,
   index: Number
 });
+
 
 const course = useCourseStore();
 const weekStats = computed(() => course.getActivityTypePercentagesForWeek(props.index));
@@ -18,7 +22,7 @@ watch(weekStats, (newStats) => {
 });
 
 onMounted(() => {
-  console.log(props.week);
+  console.log(props.index);
 });
 </script>
 
@@ -39,10 +43,14 @@ onMounted(() => {
             class="text-2xl font-semibold mb-5 border-0 w-max p-0 rounded-sm bg-transparent"
             :placeholder="'Week ' + (index + 1)" />
         </h2>
+        <label class="text-sm mb-3 flex ml-1" :for="'week-' + index + '-description'">Description:</label>
+        <textarea class="p-2 w-full rounded border" rows="2" :id="'week-' + index + '-description'" type="text"
+          v-model="week.description" />
       </div>
       <div class="flex gap-7">
-        <Panel title="Activity Overview">
-          <PieChart :dataseries="weekStats" :datalabels="course.activityTypes" :colors="course.activityColors">
+        <Panel>
+          <PieChart :dataseries="weekStats" :datalabels="course.activityTypes" :colors="course.activityColors"
+            title="Learning Types" :id="'week-' + (index + 1) + '-learning-types'">
             <p class="mb-3">An overview of the Learning Types you have used in this week of your course.</p>
           </PieChart>
         </Panel>

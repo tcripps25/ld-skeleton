@@ -47,6 +47,7 @@ const isDesignActive = computed(() => route.path === '/design' || route.path.sta
             <AddWeekButton class="-mr-1" />
           </div>
         </li>
+        <!-- Rounded top of week timeline -->
         <div v-if="course.weeks.length > 0"
           class="w-1 h-5 rounded-t absolute translate-x-3 -translate-y-1 bg-slate-300">
         </div>
@@ -54,6 +55,12 @@ const isDesignActive = computed(() => route.path === '/design' || route.path.sta
           <WeekLink v-for="(week, index) in course.weeks" :key="index" :week="week" :index="index">
           </WeekLink>
         </TransitionGroup>
+        <Transition v-else>
+          <div class="p-2 text-sm italic rounded">
+            There are no weeks in this Design yet, add one with the button above.
+          </div>
+        </Transition>
+        <!-- Rounded bottom of week timeline -->
         <div v-if="course.weeks.length > 0" class="h-1 w-1 rounded-b bottom-0 absolute translate-x-3 -translate-y-3
           bg-slate-300">
         </div>

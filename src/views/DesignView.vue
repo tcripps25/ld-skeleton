@@ -1,11 +1,13 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
-import Week from '@/components/Week.vue';
+import WeekSummary from '@/components/WeekSummary.vue';
 import PageHeader from '@/components/PageHeader.vue';
 import AddWeekButton from '@/components/buttons/AddWeekButton.vue'
 import Page from '@/components/Page.vue'
 import { useRoute, RouterView } from 'vue-router';
 import { useCourseStore } from '@/stores/course.js'
+import Button from 'primevue/button';
+import { PlusCircleIcon } from '@heroicons/vue/24/solid';
 
 const course = useCourseStore()
 const route = useRoute();
@@ -33,8 +35,15 @@ const isDesignPage = computed(() => route.path === '/design/overview');
     </PageHeader>
     <Page>
       <div v-if="isDesignPage" class="w-100 grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
-        <Week v-for="(week, weekIndex) in course.weeks" :key="weekIndex" :week="week" :weekIndex="weekIndex"
-          :showTitle=true class="flex flex-col gap-5 " />
+        <TransitionGroup>
+          <WeekSummary v-for="(week, weekIndex) in course.weeks" :key="weekIndex" :week="week" :weekIndex="weekIndex"
+            class="flex flex-col gap-5" />
+        </TransitionGroup>
+        <Button @click="course.incrementWeek();"
+          pt:root:class="ring group rounded-lg grow w-full h-full h-full flex justify-center items-center hover:shadow transition text-slate-800 p-5"
+          label="Add Week" title="Add Week">
+          <PlusCircleIcon class="h-10 w-10 text-blue-500 group-hover:text-blue-400 transition" />
+        </Button>
       </div>
       <router-view v-else></router-view>
 

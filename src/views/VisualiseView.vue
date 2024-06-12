@@ -37,10 +37,9 @@ onMounted(() => {
         </LineChart>
       </Panel>
 
-      <Panel :title="'Learning Types'">
-
+      <Panel>
         <PieChart :dataseries="course.activityTypeCount" :datalabels="course.activityTypes"
-          :colors="course.activityColors">
+          :colors="course.activityColors" title="Learning Types Module Overview" id="learning-types-overview">
           <p class="mb-3">This chart shows an overview of the Learning Types you have used across all weeks of your
             Course.</p>
         </PieChart>

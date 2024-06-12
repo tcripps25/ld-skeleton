@@ -2,16 +2,20 @@
 import { onMounted, watch, onUnmounted } from 'vue';
 import ApexCharts from 'apexcharts';
 import { useCourseStore } from '@/stores/course.js'
+import { slugify } from '@/utils/utils';
 
 const course = useCourseStore();
 
 const props = defineProps({
-    title: String,
-    information: String,
-    dataseries: Array, 
-    datalabels: Array,
-    colors: Array,
+  title: String,
+  id: String,
+  information: String,
+  dataseries: Array,
+  datalabels: Array,
+  colors: Array,
 });
+
+const slug = slugify(props.id);
 
 let chart;
 
@@ -60,7 +64,7 @@ const createChart = () => {
     xaxis: {
       labels: {
         formatter: function (value) {
-          return value  + "%"
+          return value + "%"
         },
       },
       axisTicks: {
@@ -72,7 +76,7 @@ const createChart = () => {
     },
   };
 
-  const chartElement = document.getElementById("pie-chart");
+  const chartElement = document.getElementById(slug + "-pie-chart");
   if (chartElement && typeof ApexCharts !== 'undefined') {
     chart = new ApexCharts(chartElement, options);
     chart.render();
@@ -104,7 +108,7 @@ onUnmounted(() => {
 
 
 <template>
-    <h3 v-if="title">{{ title }}</h3>
-    <slot></slot>
-    <div id="pie-chart" class=""></div>
-  </template>
+  <h3 class="font-semibold text-2xl mb-3" v-if="title">{{ title }}</h3>
+  <slot></slot>
+  <div :id="id + '-pie-chart'" class=""></div>
+</template>
