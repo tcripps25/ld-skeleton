@@ -24,7 +24,7 @@ const createChart = () => {
     series: props.dataseries,
     colors: props.colors,
     chart: {
-      height: 420,
+      height: 300,
       width: "100%",
       type: "pie",
     },
@@ -110,5 +110,7 @@ onUnmounted(() => {
 <template>
   <h3 class="font-semibold text-2xl mb-3" v-if="title">{{ title }}</h3>
   <slot></slot>
-  <div :id="id + '-pie-chart'" class=""></div>
+  <div class="">
+    <div :id="id + '-pie-chart'" class=""></div>
+  </div>
 </template>

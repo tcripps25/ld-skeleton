@@ -36,12 +36,10 @@ console.log(course.title);
     </header>
     <MainNav />
   </div>
-  <main class="h-screen p-5 bg-slate-100 w-full overflow-scroll">
+  <main class="h-screen p-5 bg-slate-100 w-full overflow-y-scroll">
     <!-- Render the Design view with the imported data -->
     <RouterView v-slot="{ Component }">
-      <transition name="fade">
-        <component :is="Component" />
-      </transition>
+      <component :is="Component" />
     </RouterView>
   </main>
 </template>

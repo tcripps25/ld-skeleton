@@ -3,9 +3,13 @@ import { ref } from 'vue';
 import PageHeader from '@/components/PageHeader.vue'
 import Page from '@/components/Page.vue';
 import Panel from '@/components/ui/Panel.vue';
+import PanelNotice from '@/components/ui/PanelNotice.vue'
 import { useCourseStore } from '@/stores/course.js'
 import Calendar from 'primevue/calendar';
+import InputText from 'primevue/inputtext';
 import { PencilIcon } from '@heroicons/vue/16/solid';
+import FloatLabel from 'primevue/floatlabel';
+import Fieldset from 'primevue/fieldset';
 
 const course = useCourseStore()
 
@@ -28,64 +32,85 @@ const submitTitle = () => {
   <div>
     <PageHeader :title="'Set Up'" />
     <Page class="max-w-4xl mx-auto flex flex-col gap-5">
-      <Panel class="flex flex-col gap-5" :title="'Module Information'">
-        <div class="flex flex-col gap-1">
+      <Panel :title="'Module Information'">
+        <template v-slot:subtitle>
+          <p>Basic information about your Module.</p>
+        </template>
+        <Fieldset legend="Enter Module Information">
+          <div class="flex flex-col gap-9 mt-5">
+            <div class="flex flex-col gap-2 w-full">
+              <div class="flex gap-2 items-center">
+                <FloatLabel class="w-full">
+                  <InputText type="text" id="module-title-input" v-model="course.title" @keyup.enter="submitTitle"
+                    class="w-full" />
+                  <label for="module-title-input">
+                    Module title
+                  </label>
+                </FloatLabel>
+              </div>
 
+            </div>
 
-          <div v-if="!editTitle" class="font-semibold flex items-center gap-3 justify-start">
-            Module Title:
-            <p class="font-normal" @click="toggleTitleEdit">{{ course.title }}</p>
-            <button name="Edit module title" id="course-title-edit" title="Edit Module Title" @click="toggleTitleEdit">
-              <PencilIcon :class="{ 'bg-sky-400 text-slate-700 hover:!bg-sky-300': editTitle }"
-                class="w-7 h-7 p-1 text-slate-700 hover:bg-slate-300 rounded-lg transition" />
-            </button>
+            <div class="flex items-center gap-2">
+              <FloatLabel class="w-full">
+                <InputText id="module-code-input" v-model="courseCode" type="text" class="w-54" />
+                <label for="module-code-input">Module Code</label>
+              </FloatLabel>
+            </div>
+            <div class="flex items-center gap-2 font-semibold">
+              <FloatLabel class="w-full">
+                <Calendar v-model="course.startDate" pt:root:class="font-normal" input-id="module-start-date-input" />
+                <label for="module-start-date-input" class="font-normal">Start Date</label>
+              </FloatLabel>
+
+            </div>
           </div>
-          <div v-else class="flex gap-2 items-center">
-            <label class="text-slate-800 mb-1 font-semibold whitespace-nowrap" for="module-title-input">Module title:
-            </label>
-            <input id="module-title-input" v-model="courseTitle" type="text"
-              class="text-lg mb-0 rounded p-1 border-slate-300 bg-white border text-slate-800l"
-              @keyup.enter="submitTitle" />
-          </div>
-
-        </div>
-
-        <div class="flex items-center gap-2">
-          <label for="module-code-input" class="mb-1 font-semibold w-max">Module Code: </label>
-          <input id="module-code-input" v-model="courseCode" type="text"
-            class="text-lg mb-0 rounded p-1 border-slate-300 bg-white border" />
-        </div>
-        <div class="flex items-center gap-2 font-semibold">
-          <label for="module-start-date-input">Start Date:</label>
-          <Calendar v-model="course.startDate" pt:root:class="font-normal focus:ring-blue-600"
-            itemid="module-start-date-input" />
-        </div>
+        </Fieldset>
       </Panel>
       <Panel :title="'Learning Outcomes'">
-        <p class="my-5 p-3 bg-slate-100 border rounded">
-          Learning Outcomes have been populated automatically and are unable to be modified from Module Designer.
-        </p>
-        <ul class="list-decimal list-inside ml-4">
-          <li v-for="(outcome, index) in course.learningOutcomes" class="p-3">
-            {{ outcome.label }}
-          </li>
-        </ul>
+        <template v-slot:subtitle>
+          <p>Learning outcomes information drawn from the SITS database.</p>
+        </template>
+        <PanelNotice info>
+          Learning Outcomes are unable to be modified directly from Module Designer.
+        </PanelNotice>
+        <Fieldset disabled legend="Check Learning Outcomes">
+          <div class="flex flex-col gap-9 pt-5">
+            <div v-for="(outcome, index) in course.learningOutcomes">
+              <FloatLabel class="w-full">
+                <InputText disabled id="module-code-input" v-model="outcome.label" type="text" class="w-full" />
+                <label for="module-code-input">Learning Outcome {{ index + 1 }}</label>
+              </FloatLabel>
+            </div>
+          </div>
+        </Fieldset>
+        <div class="flex justify-end mt-3 text-sm">
+          <a title="Report an error in Learning Outcome
+            Information" class="text-blue-600 underline underline-offset-4" href="#">Report an error in Learning
+            Outcome
+            Information</a>
+        </div>
       </Panel>
       <Panel :title="'Assessments'">
-        <p class="my-5 p-3 bg-slate-100 border rounded">Assessments shown below have been populated automatically. You
-          might prefer to refer to these throughout the Designer with a more memorable name than the automatically
-          populated one, if so add an alternative title in the field below.</p>
-        <ul class="list-decimal list-inside">
-          <li v-for="(assessment, index) in course.assessments" class="p-2 mt-2 flex flex-col">
-            <span class="font-semibold">{{ assessment.label }}</span>
-            <div class="ml-4 mt-3">
-              <label :for="'assessment- ' + index + '-nickname-input'" class="text-sm">Alternative title for {{
-                assessment.label }}: </label>
-              <input :id="'assessment- ' + index + '-nickname-input'" v-model="assessment.nickname" type="text"
-                class="text-lg mt-1 w-full block mb-0 rounded p-1 border border-slate-300 bg-slate-50 text-slate-800" />
+        <template v-slot:subtitle>
+          Assessments shown below have been populated automatically.
+        </template>
+        <PanelNotice info>
+          If you prefer to refer to your assessments with a more memorable name, you can choose to add
+          an alternative title in the field(s) below.
+        </PanelNotice>
+        <Fieldset legend="Set Assessment Name">
+          <div class="flex flex-col gap-9 pt-5">
+            <div v-for="(assessment, index) in course.assessments">
+              <FloatLabel class="w-full">
+                <InputText :id="'assessment- ' + index + '-nickname-input'" v-model="assessment.nickname" type="text"
+                  class="w-full" />
+                <label :for="'assessment- ' + index + '-nickname-input'">Alternative title for {{
+                  assessment.label }} </label>
+              </FloatLabel>
             </div>
-          </li>
-        </ul>
+          </div>
+        </Fieldset>
       </Panel>
     </Page>
   </div>
