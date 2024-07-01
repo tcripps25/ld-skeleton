@@ -71,7 +71,7 @@ const teachTimeItem = course.insightStates.find(item => item.name === 'teachingT
             <div v-if="show" class="mb-3 mt-5 flex gap-2">
                 <div v-for="(item, index) in course.insightStates" :key="index">
                     <ToggleButton v-model="item.ref" :onLabel="item.fullName" :offLabel="item.fullName"
-                        :pt:box:class="{ 'text-sky-600 flex font-medium items-center  transition': true, ' text-sky-50': item.ref }"
+                        :pt:box:class="{ 'text-sky-600 flex font-medium items-center  transition': true, ' !text-sky-50': item.ref }"
                         :pt:label:class="{ 'px-2 py-1 bg-transparent transition': true }"
                         :class="{ 'bg-slate-100 hover:!bg-slate-200 rounded transition': true, '!bg-sky-600 hover:!bg-sky-700': item.ref }" />
 
