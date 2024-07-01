@@ -39,7 +39,7 @@ const teachTimeItem = course.insightStates.find(item => item.name === 'teachingT
 
 
     <div :id="'week-' + (index + 1) + '-sidebar'"
-        class="bg-white p-5 border-l flex-initial overflow-y-auto overflow-x-hidden max-w-[35rem] min-w-[35rem] flex flex-col gap-4 transition-all duration-300"
+        class="bg-white p-5 border-l flex-initial overflow-y-auto overflow-x-hidden max-w-[30rem] min-w-[30rem] flex flex-col gap-4 transition-all duration-300"
         :class="{ '!max-w-[4.5rem] min-w-[4.5rem]': !show }">
         <div id="sidebar-header">
             <div class="flex justify-between items-start">
@@ -73,7 +73,7 @@ const teachTimeItem = course.insightStates.find(item => item.name === 'teachingT
                     <ToggleButton v-model="item.ref" :onLabel="item.fullName" :offLabel="item.fullName"
                         :pt:box:class="{ 'text-sky-600 flex font-medium items-center  transition': true, ' !text-sky-50': item.ref }"
                         :pt:label:class="{ 'px-2 py-1 bg-transparent transition': true }"
-                        :class="{ 'bg-slate-100 hover:!bg-slate-200 rounded transition': true, '!bg-sky-600 hover:!bg-sky-700': item.ref }" />
+                        :class="{ 'bg-slate-100 hover:!bg-slate-200 rounded transition text-sm': true, '!bg-sky-600 hover:!bg-sky-700': item.ref }" />
 
                 </div>
             </div>
