@@ -23,7 +23,7 @@ const isActiveLink = computed(() => route.path === to.value);
   <li class="flex justify-between group items-center ml-8 hover:bg-slate-200 rounded group transition relative">
     <div
       class="w-1 h-full absolute bg-slate-300 transition-all -translate-x-5 bg-gradient-to-b from-slate-300 to-slate-300"
-      :class="{ 'via-blue-600': isActiveLink }">
+      :class="{ 'via-sky-600': isActiveLink }">
     </div>
     <RouterLink :to="to" :active-class="'aria-current:font-semibold'"
       :class="['transition peer-hover:bg-slate-300 flex gap-3 p-2 items-center grow peer', $attrs.class]"
@@ -33,7 +33,7 @@ const isActiveLink = computed(() => route.path === to.value);
         <div class="flex items-center">
           <div
             class="h-7 w-7 flex transition-all text-sm justify-center items-center text-slate-500 font-medium rounded-full absolute bg-white border-4 border-slate-300 -translate-x-10"
-            :class="{ '!border-blue-600 !bg-blue-600 !text-blue-50 !font-medium scale-105 shadow': isActiveLink }">
+            :class="{ '!border-sky-600 !bg-sky-600 !text-sky-50 !font-medium scale-105 shadow': isActiveLink }">
             <div><span class="sr-only">Week Number</span>{{ index + 1 }}</div>
           </div>
         </div>

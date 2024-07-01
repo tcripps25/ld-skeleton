@@ -53,7 +53,7 @@ const panelTitle = computed(() => {
         @remove-activity="handleRemoveActivity(weekIndex, activityIndex)" />
     </TransitionGroup>
     <Button @click="addActivity(weekIndex)"
-      pt:root:class="bg-blue-600 hover:bg-blue-500 text-blue-50 px-3 py-2 rounded-md flex items-center gap-1 w-max">
+      pt:root:class="bg-sky-600 hover:bg-sky-500 text-sky-50 px-3 py-2 rounded-md flex items-center gap-1 w-max">
       Add
       Activity
       <PlusCircleIcon class="w-5 h-5" />
