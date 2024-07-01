@@ -6,10 +6,10 @@ import { useCourseStore } from '@/stores/course.js'
 const course = useCourseStore();
 
 const props = defineProps({
-    title: String,
-    information: String,
-    datax: Array, // Change Object to Array for x-axis data
-    datay: Array, // Change Object to Array for y-axis data
+  title: String,
+  information: String,
+  datax: Array, // Change Object to Array for x-axis data
+  datay: Array, // Change Object to Array for y-axis data
 });
 
 let chart;

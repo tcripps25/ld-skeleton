@@ -11,6 +11,9 @@ import Textarea from 'primevue/textarea';
 import Button from 'primevue/button';
 import { CheckCircleIcon } from '@heroicons/vue/24/solid';
 import PanelNotice from '@/components/ui/PanelNotice.vue'
+import DetailSidebar from '@/components/ui/DetailSidebar.vue'
+import Page from './Page.vue';
+import PageHeader from './PageHeader.vue';
 const route = useRoute()
 
 const props = defineProps({
@@ -20,11 +23,8 @@ const props = defineProps({
 
 
 const course = useCourseStore();
-const weekStats = computed(() => course.getActivityTypePercentagesForWeek(props.index));
 
-watch(weekStats, (newStats) => {
-  console.log('Week stats updated:', newStats);
-});
+
 
 onMounted(() => {
   console.log(props.index);
@@ -36,77 +36,61 @@ const toggleAddDescActive = () => {
   addDescActive.value = !addDescActive.value
 }
 
+
 </script>
 
 <template>
-  <div v-if="week" class="">
-    <div class="flex flex-col gap-7">
-      <div>
+  <Page class="grow">
+    <template v-slot:page-header>
+      <PageHeader title="Design">
 
-        <div class="my-5 flex justify-between">
-          <div class="flex items-center gap-3">
-            <FloatLabel>
-              <InputText id="week-title" v-model="week.name" type="text" class="text-2xl" />
-              <label for="week-title">{{ 'Teaching Week ' + (index + 1) + ' title' }}</label>
-            </FloatLabel>
-            <Button @click="toggleAddDescActive"
-              class="!p-2 !px-3 h-10 w-max text-sm flex gap-2 !bg-transparent border-0 !text-blue-700 hover:!bg-slate-200"
-              :class="{ '!bg-slate-200': addDescActive }">
-              Add description
-              <Transition>
-                <CheckCircleIcon v-if="week.description" class="h-5 w-5 text-blue-400" />
-              </Transition>
-            </Button>
+      </PageHeader>
+    </template>
+    <div v-if="week">
+
+      <div class="flex grow flex-col gap-7">
+        <div>
+          <div class="my-5 flex justify-between">
+            <div class="flex items-center gap-3">
+              <FloatLabel>
+                <InputText id="week-title" v-model="week.name" type="text" class="text-2xl" />
+                <label for="week-title">{{ 'Teaching Week ' + (index + 1) + ' title' }}</label>
+              </FloatLabel>
+              <Button @click="toggleAddDescActive"
+                class="!p-2 !px-3 h-10 w-max text-sm flex gap-2 !bg-transparent border-0 !text-blue-700 hover:!bg-slate-200"
+                :class="{ '!bg-slate-200': addDescActive }">
+                Add description
+                <Transition>
+                  <CheckCircleIcon v-if="week.description" class="h-5 w-5 text-blue-400" />
+                </Transition>
+              </Button>
+            </div>
+            <div class="font-normal -mt-5 flex flex-col"><span class="text-sm text-slate-500">Week Commencing</span>
+              <span class="text-2xl font-semibold">{{
+                week.formattedDate
+                }}</span>
+            </div>
           </div>
-          <div class="font-normal -mt-5 flex flex-col"><span class="text-sm text-slate-500">Week Commencing</span>
-            <span class="text-2xl font-semibold">{{
-              week.formattedDate
-              }}</span>
-          </div>
+          <Transition>
+            <div v-if="addDescActive" id="editWeek" class="">
+              <label class="text-sm mb-1 ml-3 flex" :for="'week-' + index + '-description'">Description:</label>
+              <Textarea class="p-2 w-full rounded border" rows="2" :id="'week-' + index + '-description'" type="text"
+                v-model="week.description" />
+            </div>
+          </Transition>
         </div>
-        <Transition>
-          <div v-if="addDescActive" id="editWeek" class="">
-            <label class="text-sm mb-1 ml-3 flex" :for="'week-' + index + '-description'">Description:</label>
-            <Textarea class="p-2 w-full rounded border" rows="2" :id="'week-' + index + '-description'" type="text"
-              v-model="week.description" />
-          </div>
-        </Transition>
+        <Week :week="week" :week-index="index" :showTitle="false" />
       </div>
 
-      <div class="flex gap-7">
-        <Panel class="max-w-2xl">
 
-          <PieChart :dataseries="weekStats" :datalabels="course.activityTypes" :colors="course.activityColors"
-            title="Learning Types" :id="'week-' + (index + 1) + '-learning-types'">
-            <p class="mb-3">An overview of the Learning Types you have used in this week of your course.</p>
-          </PieChart>
-          <PanelNotice enable>
-            A glance at your Learning Type mix for this week. These types will also determine which Moodle activities
-            will be suggested for each Activity you create.
-          </PanelNotice>
-        </Panel>
-        <div class="flex gap-7">
-          <Panel title="Module Learning Objectives" class="max-w-2xl">
-
-            <ol class="flex flex-col gap-2 list-decimal p-10">
-              <li v-for="(outcome, index) in course.learningOutcomes" :key="index">{{ outcome.label }}</li>
-            </ol>
-
-          </Panel>
-          <Panel title="Module Assessments" class="max-w-2xl">
-            <ol class="flex flex-col gap-2 list-decimal p-10 whitespace-nowrap">
-              <li v-for="(outcome, index) in course.assessments" :key="index">{{ outcome.label }}</li>
-            </ol>
-
-          </Panel>
-        </div>
-      </div>
-      <Week :week="week" :week-index="index" :showTitle="false" />
     </div>
-  </div>
-  <div v-else class="">
-    <Panel title="Not found">
-      <p>Selected Week can't be found, navigate to 'Set Up' and then refresh the page.</p>
-    </Panel>
-  </div>
+
+
+    <div v-else class="">
+      <Panel title="Not found">
+        <p>Selected Week can't be found, navigate to 'Set Up' and then refresh the page.</p>
+      </Panel>
+    </div>
+  </Page>
+  <DetailSidebar :week="week" :index="index" />
 </template>

@@ -36,9 +36,9 @@ console.log(course.title);
     </header>
     <MainNav />
   </div>
-  <main class="h-screen p-5 bg-slate-100 w-full overflow-y-scroll">
+  <main class="h-screen bg-slate-100 w-full">
     <!-- Render the Design view with the imported data -->
-    <RouterView v-slot="{ Component }">
+    <RouterView class="h-full grow" v-slot="{ Component }">
       <component :is="Component" />
     </RouterView>
   </main>

@@ -13,6 +13,14 @@ const props = defineProps({
   dataseries: Array,
   datalabels: Array,
   colors: Array,
+  legendPosition: {
+    type: String,
+    default: "left"
+  },
+  chartWidth: {
+    type: String,
+    default: "100%"
+  },
 });
 
 const slug = slugify(props.id);
@@ -25,7 +33,7 @@ const createChart = () => {
     colors: props.colors,
     chart: {
       height: 300,
-      width: "100%",
+      width: props.chartWidth,
       type: "pie",
     },
     stroke: {
@@ -51,7 +59,7 @@ const createChart = () => {
       },
     },
     legend: {
-      position: "bottom",
+      position: props.legendPosition,
       fontFamily: "Inter, sans-serif",
     },
     yaxis: {
@@ -108,7 +116,7 @@ onUnmounted(() => {
 
 
 <template>
-  <h3 class="font-semibold text-2xl mb-3" v-if="title">{{ title }}</h3>
+  <h4 class="font-semibold text-lg text-slate-600 mb-3" v-if="title">{{ title }}</h4>
   <slot></slot>
   <div class="">
     <div :id="id + '-pie-chart'" class=""></div>

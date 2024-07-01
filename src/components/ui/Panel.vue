@@ -1,11 +1,15 @@
 <script setup>
 const props = defineProps({
-    title: String
+    title: String,
+    borderless: Boolean,
+    flush: Boolean,
+    sidebar: Boolean,
 });
 </script>
 
 <template>
-    <div class="bg-white rounded-lg p-5 shadow grow border">
+    <div class="bg-white rounded-lg grow"
+        :class="{ 'border shadow': !borderless }, { 'p-5': !flush }, { 'bg-transparent -mx-5 px-5 pt-5 rounded-none': sidebar }">
         <div class="flex justify-between mb-3" v-if="$slots.title || title || $slots.action">
             <!-- for usage without using props -->
             <slot v-if="$slots.title || title" name="title">

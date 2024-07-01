@@ -6,9 +6,8 @@ const props = defineProps({
 })
 </script>
 <template>
-  <div
-    class="z-50 px-5 py-4 bg-white -mt-5 -mx-5 flex sticky -top-5 border-b border-slate-300 justify-between items-center min-h-12">
-    <h1 class="text-lg mb-0 font-semibold flex gap-2 items-center">{{ title }}</h1>
+  <div class="z-50 px-5 py-4 bg-white flex sticky top-0 border-b justify-between items-center min-h-20">
+    <h1 class="text-xl mb-0 font-semibold flex gap-2 items-center">{{ title }}</h1>
     <div class="flex flex-col items-center">
       <p class="text-sm">{{ message }}</p>
     </div>

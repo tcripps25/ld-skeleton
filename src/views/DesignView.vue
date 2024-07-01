@@ -29,12 +29,12 @@ const isDesignPage = computed(() => route.path === '/design/overview');
 </script>
 
 <template>
-  <div>
-    <PageHeader :title="'Design'" :message="message">
-
-    </PageHeader>
-    <Page>
-      <div v-if="isDesignPage" class="w-100 grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+  <div class="flex shrink">
+    <Page v-if="isDesignPage" class="w-full">
+      <template v-slot:page-header>
+        <PageHeader title="Design" />
+      </template>
+      <div class="w-100 grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
         <TransitionGroup>
           <WeekSummary v-for="(week, weekIndex) in course.weeks" :key="weekIndex" :week="week" :weekIndex="weekIndex"
             class="flex flex-col gap-5" />
@@ -45,8 +45,8 @@ const isDesignPage = computed(() => route.path === '/design/overview');
           <PlusCircleIcon class="h-10 w-10 text-blue-500 group-hover:text-blue-400 transition" />
         </Button>
       </div>
-      <router-view v-else></router-view>
-
     </Page>
+    <router-view v-else></router-view>
+
   </div>
 </template>

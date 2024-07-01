@@ -2,6 +2,7 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { slugify } from '@/utils/utils'
 import Week from '@/classes/Week.js'
+import { graphColors } from '@/data/graphColors'
 
 export const useCourseStore = defineStore('course', () => {
   // Reactive state
@@ -72,6 +73,7 @@ export const useCourseStore = defineStore('course', () => {
     { type: 'Production', color: '#2b3a8b' }
   ])
 
+  // get the colour of the activity type by it's label
   const getColorByLabel = (type) => {
     const activityType = activityTypesColors.value.find((activity) => activity.type === type)
     return activityType ? activityType.color : null
@@ -102,19 +104,6 @@ export const useCourseStore = defineStore('course', () => {
   // Get the number of activities each week in an array
   const activitiesPerWeek = computed(() => weeks.value.map((week) => week.activities.length))
 
-  // Compute the largest number of students in any activity
-  const maxStudentsInActivity = computed(() => {
-    let maxStudents = 0
-    for (const week of weeks.value) {
-      for (const activity of week.activities) {
-        if (activity.students > maxStudents) {
-          maxStudents = activity.students
-        }
-      }
-    }
-    return maxStudents
-  })
-
   // Compute the largest number of minutes in any activity
   const maxMinsInActivity = computed(() => {
     let maxMins = 0
@@ -127,6 +116,37 @@ export const useCourseStore = defineStore('course', () => {
     }
     return maxMins
   })
+
+  // Function to compute the total number of minutes for a specific week
+  const totalMinsInWeekActivities = (weekIndex) => {
+    const week = weeks.value[weekIndex]
+
+    if (!week || !Array.isArray(week.activities)) {
+      return 0
+    }
+
+    return week.activities.reduce((total, activity) => {
+      const minutes = activity.duration
+      return total + (typeof minutes === 'number' && !isNaN(minutes) ? minutes : 0)
+    }, 0)
+  }
+
+  const getActivityColorByTitle = (index) => {
+    return graphColors[index]
+  }
+  const getActivitiesForWeek = (weekIndex) => {
+    const week = weeks.value[weekIndex]
+
+    if (!week || !Array.isArray(week.activities)) {
+      return []
+    }
+
+    return week.activities.map((activity) => ({
+      label: activity.name,
+      value: activity.duration,
+      color: getActivityColorByTitle(weekIndex)
+    }))
+  }
 
   const activityTypeCount = computed(() => {
     const activityTypeCounts = {}
@@ -270,6 +290,45 @@ export const useCourseStore = defineStore('course', () => {
     }
   }
 
+  const activityTypeColorAndCount = computed(() => {
+    const activityTypeCounts = {}
+    const activityTypeColors = {}
+
+    // Initialize counts and colors for each activity type
+    for (const activityType of activityTypesColors.value) {
+      activityTypeCounts[activityType.type] = 0
+      activityTypeColors[activityType.type] = activityType.color
+    }
+
+    // Count the occurrences of each activity type
+    for (const week of weeks.value) {
+      for (const activity of week.activities) {
+        if (activity.selectedTypes) {
+          for (const type of activity.selectedTypes) {
+            if (activityTypeCounts[type] !== undefined) {
+              activityTypeCounts[type]++
+            }
+          }
+        }
+      }
+    }
+
+    // Calculate total activities for percentage calculation
+    const totalActivities = Object.values(activityTypeCounts).reduce((sum, count) => sum + count, 0)
+
+    // Create an array with each activity type, its color, count, and percentage
+    return Object.keys(activityTypeCounts).map((type) => {
+      const count = activityTypeCounts[type]
+      const percentage = totalActivities > 0 ? (count / totalActivities) * 100 : 0
+      return {
+        type,
+        color: activityTypeColors[type],
+        count,
+        percentage: percentage.toFixed(0)
+      }
+    })
+  })
+
   // Store actions
   const incrementWeek = (name, description, activities) => {
     const tempName = 'New Week'
@@ -282,6 +341,20 @@ export const useCourseStore = defineStore('course', () => {
 
   const addWeek = (week) => {
     weeks.value.push(week)
+  }
+
+  const insightStates = [
+    { name: 'teachingTime', ref: ref(true), fullName: 'Activity Duration' },
+    { name: 'typeMix', ref: ref(true), fullName: 'Learning Type Mix' },
+    { name: 'moodleMix', ref: ref(false), fullName: 'Moodle Activity Mix' }
+  ]
+
+  // Function to toggle a ref by name
+  const toggleInsightState = (name) => {
+    const item = insightStates.find((item) => item.name === name)
+    if (item) {
+      item.ref.value = !item.ref.value
+    }
   }
 
   return {
@@ -301,14 +374,19 @@ export const useCourseStore = defineStore('course', () => {
     activitiesPerWeek,
     activityTypePercentagesPerWeek,
     activityTypePercentages,
-    maxStudentsInActivity,
     maxMinsInActivity,
+    totalMinsInWeekActivities,
     getActivityTypePercentagesForWeek,
     getColorByLabel,
     activityTypeCount,
     incrementWeek,
     addWeek,
     moodleActivities,
-    updateWeeks
+    updateWeeks,
+    activityTypeColorAndCount,
+    insightStates,
+    toggleInsightState,
+    getActivitiesForWeek,
+    getActivityColorByTitle
   }
 })

@@ -30,88 +30,94 @@ const submitTitle = () => {
 
 <template>
   <div>
-    <PageHeader :title="'Set Up'" />
-    <Page class="max-w-4xl mx-auto flex flex-col gap-5">
-      <Panel :title="'Module Information'">
-        <template v-slot:subtitle>
-          <p>Basic information about your Module.</p>
-        </template>
-        <Fieldset legend="Enter Module Information">
-          <div class="flex flex-col gap-9 mt-5">
-            <div class="flex flex-col gap-2 w-full">
-              <div class="flex gap-2 items-center">
-                <FloatLabel class="w-full">
-                  <InputText type="text" id="module-title-input" v-model="course.title" @keyup.enter="submitTitle"
-                    class="w-full" />
-                  <label for="module-title-input">
-                    Module title
-                  </label>
-                </FloatLabel>
+
+    <Page>
+      <template v-slot:page-header>
+        <PageHeader :title="'Set Up'" />
+      </template>
+
+      <div class="max-w-4xl mx-auto flex flex-col gap-5">
+        <Panel :title="'Module Information'">
+          <template v-slot:subtitle>
+            <p>Basic information about your Module.</p>
+          </template>
+          <Fieldset legend="Enter Module Information">
+            <div class="flex flex-col gap-9 mt-5">
+              <div class="flex flex-col gap-2 w-full">
+                <div class="flex gap-2 items-center">
+                  <FloatLabel class="w-full">
+                    <InputText type="text" id="module-title-input" v-model="course.title" @keyup.enter="submitTitle"
+                      class="w-full" />
+                    <label for="module-title-input">
+                      Module title
+                    </label>
+                  </FloatLabel>
+                </div>
+
               </div>
 
-            </div>
+              <div class="flex items-center gap-2">
+                <FloatLabel class="w-full">
+                  <InputText id="module-code-input" v-model="courseCode" type="text" class="w-54" />
+                  <label for="module-code-input">Module Code</label>
+                </FloatLabel>
+              </div>
+              <div class="flex items-center gap-2 font-semibold">
+                <FloatLabel class="w-full">
+                  <Calendar v-model="course.startDate" pt:root:class="font-normal" input-id="module-start-date-input" />
+                  <label for="module-start-date-input" class="font-normal">Start Date</label>
+                </FloatLabel>
 
-            <div class="flex items-center gap-2">
-              <FloatLabel class="w-full">
-                <InputText id="module-code-input" v-model="courseCode" type="text" class="w-54" />
-                <label for="module-code-input">Module Code</label>
-              </FloatLabel>
+              </div>
             </div>
-            <div class="flex items-center gap-2 font-semibold">
-              <FloatLabel class="w-full">
-                <Calendar v-model="course.startDate" pt:root:class="font-normal" input-id="module-start-date-input" />
-                <label for="module-start-date-input" class="font-normal">Start Date</label>
-              </FloatLabel>
-
+          </Fieldset>
+        </Panel>
+        <Panel :title="'Learning Outcomes'">
+          <template v-slot:subtitle>
+            <p>Learning outcomes information drawn from the SITS database.</p>
+          </template>
+          <PanelNotice info>
+            Learning Outcomes are unable to be modified directly from Module Designer.
+          </PanelNotice>
+          <Fieldset disabled legend="Check Learning Outcomes">
+            <div class="flex flex-col gap-9 pt-5">
+              <div v-for="(outcome, index) in course.learningOutcomes">
+                <FloatLabel class="w-full">
+                  <InputText disabled id="module-code-input" v-model="outcome.label" type="text" class="w-full" />
+                  <label for="module-code-input">Learning Outcome {{ index + 1 }}</label>
+                </FloatLabel>
+              </div>
             </div>
-          </div>
-        </Fieldset>
-      </Panel>
-      <Panel :title="'Learning Outcomes'">
-        <template v-slot:subtitle>
-          <p>Learning outcomes information drawn from the SITS database.</p>
-        </template>
-        <PanelNotice info>
-          Learning Outcomes are unable to be modified directly from Module Designer.
-        </PanelNotice>
-        <Fieldset disabled legend="Check Learning Outcomes">
-          <div class="flex flex-col gap-9 pt-5">
-            <div v-for="(outcome, index) in course.learningOutcomes">
-              <FloatLabel class="w-full">
-                <InputText disabled id="module-code-input" v-model="outcome.label" type="text" class="w-full" />
-                <label for="module-code-input">Learning Outcome {{ index + 1 }}</label>
-              </FloatLabel>
-            </div>
-          </div>
-        </Fieldset>
-        <div class="flex justify-end mt-3 text-sm">
-          <a title="Report an error in Learning Outcome
+          </Fieldset>
+          <div class="flex justify-end mt-3 text-sm">
+            <a title="Report an error in Learning Outcome
             Information" class="text-blue-600 underline underline-offset-4" href="#">Report an error in Learning
-            Outcome
-            Information</a>
-        </div>
-      </Panel>
-      <Panel :title="'Assessments'">
-        <template v-slot:subtitle>
-          Assessments shown below have been populated automatically.
-        </template>
-        <PanelNotice info>
-          If you prefer to refer to your assessments with a more memorable name, you can choose to add
-          an alternative title in the field(s) below.
-        </PanelNotice>
-        <Fieldset legend="Set Assessment Name">
-          <div class="flex flex-col gap-9 pt-5">
-            <div v-for="(assessment, index) in course.assessments">
-              <FloatLabel class="w-full">
-                <InputText :id="'assessment- ' + index + '-nickname-input'" v-model="assessment.nickname" type="text"
-                  class="w-full" />
-                <label :for="'assessment- ' + index + '-nickname-input'">Alternative title for {{
-                  assessment.label }} </label>
-              </FloatLabel>
-            </div>
+              Outcome
+              Information</a>
           </div>
-        </Fieldset>
-      </Panel>
+        </Panel>
+        <Panel :title="'Assessments'">
+          <template v-slot:subtitle>
+            Assessments shown below have been populated automatically.
+          </template>
+          <PanelNotice info>
+            If you prefer to refer to your assessments with a more memorable name, you can choose to add
+            an alternative title in the field(s) below.
+          </PanelNotice>
+          <Fieldset legend="Set Assessment Name">
+            <div class="flex flex-col gap-9 pt-5">
+              <div v-for="(assessment, index) in course.assessments">
+                <FloatLabel class="w-full">
+                  <InputText :id="'assessment- ' + index + '-nickname-input'" v-model="assessment.nickname" type="text"
+                    class="w-full" />
+                  <label :for="'assessment- ' + index + '-nickname-input'">Alternative title for {{
+                    assessment.label }} </label>
+                </FloatLabel>
+              </div>
+            </div>
+          </Fieldset>
+        </Panel>
+      </div>
     </Page>
   </div>
 </template>

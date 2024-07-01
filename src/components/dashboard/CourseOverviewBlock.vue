@@ -2,20 +2,28 @@
 import { useCourseStore } from '@/stores/course.js'
 import Panel from '../ui/Panel.vue';
 import LineChart from '@/components/charts/LineChart.vue'
+import MeterGroup from 'primevue/metergroup';
+import Button from 'primevue/button';
+import { onMounted } from 'vue';
+import PieChart from '@/components/charts/PieChart.vue';
 const course = useCourseStore()
 
+onMounted(() => {
+    console.log(course.activityTypeColorAndCount);
+});
+
+onMounted(() => {
+    console.log(course.activityTypePercentages);
+});
 </script>
 
 <template>
     <div class="flex gap-5">
-        <Panel :title="'Overview for: ' + course.title">
-            <div class="flex gap-7">
-                <div class="flex flex-col my-3">
-                    The longest Activity: <div class="mt-3"><span class="text-4xl font-semibold">{{
-                            course.maxMinsInActivity }}</span> minutes</div>
-                </div>
+        <Panel :title="'Module Overview'">
+            <template v-slot:subtitle>
+                <p class="text-lg">{{course.title}}</p>
+            </template>
 
-            </div>
         </Panel>
 
     </div>
