@@ -39,7 +39,7 @@ const teachTimeItem = course.insightStates.find(item => item.name === 'teachingT
 
 
     <div :id="'week-' + (index + 1) + '-sidebar'"
-        class="bg-white p-5 border-l flex-initial overflow-y-auto overflow-x-hidden max-w-[30rem] min-w-[30rem] flex flex-col gap-4 transition-all duration-300"
+        class="bg-white p-5 border-l flex-initial overflow-y-auto overflow-x-hidden max-w-[26rem] min-w-[26rem] flex flex-col gap-4 transition-all duration-300"
         :class="{ '!max-w-[4.5rem] min-w-[4.5rem]': !show }">
         <div id="sidebar-header">
             <div class="flex justify-between items-start">
@@ -68,12 +68,12 @@ const teachTimeItem = course.insightStates.find(item => item.name === 'teachingT
             <p v-if="show" class="text-sm text-slate-600">{{ course.title }}: {{ week.name || 'Week ' + (index + 1) }}
             </p>
 
-            <div v-if="show" class="mb-3 mt-5 flex gap-2">
+            <div v-if="show" class="mb-3 mt-5 flex gap-2 overflow-x-scroll -mx-5 px-5 no-scrollbar">
                 <div v-for="(item, index) in course.insightStates" :key="index">
                     <ToggleButton v-model="item.ref" :onLabel="item.fullName" :offLabel="item.fullName"
-                        :pt:box:class="{ 'text-sky-600 flex font-medium items-center  transition': true, ' !text-sky-50': item.ref }"
+                        :pt:box:class="{ 'text-sky-600 flex font-medium items-center transition': true, ' !text-sky-50': item.ref }"
                         :pt:label:class="{ 'px-2 py-1 bg-transparent transition': true }"
-                        :class="{ 'bg-slate-100 hover:bg-slate-200 rounded transition text-sm': true, '!bg-sky-600 hover:!bg-sky-700': item.ref }" />
+                        :class="{ 'bg-slate-100 hover:bg-slate-200 rounded transition text-sm whitespace-nowrap': true, '!bg-sky-600 hover:!bg-sky-700': item.ref }" />
 
                 </div>
             </div>
@@ -102,7 +102,7 @@ const teachTimeItem = course.insightStates.find(item => item.name === 'teachingT
                 </Transition>
                 <Transition name="fade">
                     <Panel v-if="typeMixItem.ref" borderless flush sidebar>
-                        <PieChart chartWidth="400" legendPosition="left" :dataseries="weekStats"
+                        <PieChart chartWidth="350" legendPosition="left" :dataseries="weekStats"
                             :datalabels="course.activityTypes" :colors="course.activityColors" title="Learning Type Mix"
                             :id="'week-' + (index + 1) + '-learning-types'">
                             <p class="mb-3">An overview of the Learning Types you have used in this week of your course.
@@ -142,7 +142,7 @@ const teachTimeItem = course.insightStates.find(item => item.name === 'teachingT
 
 .slide-fade-enter-from,
 .slide-fade-leave-to {
-    margin-right: -35rem;
+    margin-right: -26rem;
     opacity: 0;
     position: absolute;
 }
