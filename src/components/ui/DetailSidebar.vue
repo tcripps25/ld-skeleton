@@ -65,8 +65,7 @@ const teachTimeItem = course.insightStates.find(item => item.name === 'teachingT
 
 
 
-            <p v-if="show" class="text-sm text-slate-600">{{ course.title }}: {{ week.name || 'Week ' + (index + 1) }}
-            </p>
+
 
             <div v-if="show" class="mb-3 mt-5 flex gap-2 overflow-x-scroll -mx-5 px-5 no-scrollbar">
                 <div v-for="(item, index) in course.insightStates" :key="index">
