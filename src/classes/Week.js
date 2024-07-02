@@ -3,7 +3,7 @@ import { useCourseStore } from '@/stores/course.js'
 import Activity from '@/classes/Activity.js'
 
 export default class Week {
-  constructor(name, startDate, description, activities) {
+  constructor(name, startDate, description, activities = []) {
     this.name = name
     this.startDate = new Date(startDate)
     this.description = description

@@ -9,11 +9,12 @@ import InputText from 'primevue/inputtext';
 import FloatLabel from 'primevue/floatlabel';
 import Textarea from 'primevue/textarea';
 import Button from 'primevue/button';
-import { CheckCircleIcon } from '@heroicons/vue/24/solid';
+import { CheckCircleIcon, PlusCircleIcon } from '@heroicons/vue/24/solid';
 import PanelNotice from '@/components/ui/PanelNotice.vue'
 import DetailSidebar from '@/components/ui/DetailSidebar.vue'
 import Page from './Page.vue';
 import PageHeader from './PageHeader.vue';
+import ActivityClass from '@/classes/Activity';
 const route = useRoute()
 
 const props = defineProps({
@@ -36,14 +37,24 @@ const toggleAddDescActive = () => {
   addDescActive.value = !addDescActive.value
 }
 
+const addActivity = (weekIndex) => {
 
+  const newActivity = new ActivityClass();
+
+  course.weeks[weekIndex].activities.push(newActivity);
+};
 </script>
 
 <template>
   <Page class="grow">
     <template v-slot:page-header>
       <PageHeader title="Design">
-
+        <Button @click="addActivity(index)"
+          pt:root:class="bg-sky-600 hover:bg-sky-500 text-sky-50 px-3 py-2 rounded-md flex items-center gap-1 w-max">
+          Add
+          Activity
+          <PlusCircleIcon class="w-5 h-5" />
+        </Button>
       </PageHeader>
     </template>
     <div v-if="week">

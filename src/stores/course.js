@@ -131,9 +131,11 @@ export const useCourseStore = defineStore('course', () => {
     }, 0)
   }
 
-  const getActivityColorByTitle = (index) => {
-    return graphColors[index]
+  const getActivityColor = () => {
+    const randomIndex = Math.floor(Math.random() * graphColors.length)
+    return graphColors[randomIndex]
   }
+
   const getActivitiesForWeek = (weekIndex) => {
     const week = weeks.value[weekIndex]
 
@@ -144,7 +146,7 @@ export const useCourseStore = defineStore('course', () => {
     return week.activities.map((activity) => ({
       label: activity.name,
       value: activity.duration,
-      color: getActivityColorByTitle(weekIndex)
+      color: activity.color
     }))
   }
 
@@ -343,20 +345,6 @@ export const useCourseStore = defineStore('course', () => {
     weeks.value.push(week)
   }
 
-  const insightStates = [
-    { name: 'teachingTime', ref: ref(true), fullName: 'Activity Duration' },
-    { name: 'typeMix', ref: ref(true), fullName: 'Learning Type Mix' },
-    { name: 'moodleMix', ref: ref(false), fullName: 'Moodle Activity Mix' }
-  ]
-
-  // Function to toggle a ref by name
-  const toggleInsightState = (name) => {
-    const item = insightStates.find((item) => item.name === name)
-    if (item) {
-      item.ref.value = !item.ref.value
-    }
-  }
-
   return {
     title,
     startDate,
@@ -384,9 +372,7 @@ export const useCourseStore = defineStore('course', () => {
     moodleActivities,
     updateWeeks,
     activityTypeColorAndCount,
-    insightStates,
-    toggleInsightState,
     getActivitiesForWeek,
-    getActivityColorByTitle
+    getActivityColor
   }
 })

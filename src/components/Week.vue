@@ -5,7 +5,7 @@ import { useCourseStore } from '@/stores/course.js'
 import { PlusCircleIcon, XMarkIcon } from '@heroicons/vue/24/solid';
 import Panel from './ui/Panel.vue';
 import Button from 'primevue/button';
-import ActivityClass from '@/classes/Activity';
+
 
 const course = useCourseStore()
 
@@ -20,12 +20,7 @@ const removeWeek = (weekIndex) => {
   course.weeks.splice(weekIndex, 1);
 };
 
-const addActivity = (weekIndex) => {
 
-  const newActivity = new ActivityClass;
-
-  course.weeks[weekIndex].activities.push(newActivity);
-};
 
 const handleRemoveActivity = (weekIndex, activityIndex) => {
   course.weeks[weekIndex].activities.splice(activityIndex, 1);
@@ -52,12 +47,7 @@ const panelTitle = computed(() => {
         :weekIndex="weekIndex" :activity="activity" :activityIndex="activityIndex"
         @remove-activity="handleRemoveActivity(weekIndex, activityIndex)" />
     </TransitionGroup>
-    <Button @click="addActivity(weekIndex)"
-      pt:root:class="bg-sky-600 hover:bg-sky-500 text-sky-50 px-3 py-2 rounded-md flex items-center gap-1 w-max">
-      Add
-      Activity
-      <PlusCircleIcon class="w-5 h-5" />
-    </Button>
+
   </Panel>
 </template>
 
