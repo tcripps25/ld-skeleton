@@ -2,7 +2,7 @@ import { useCourseStore } from '@/stores/course.js'
 
 export default class Activity {
   constructor(
-    title = 'New Activity',
+    title,
     instructions,
     duration,
     isGroup,

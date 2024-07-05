@@ -144,7 +144,7 @@ export const useCourseStore = defineStore('course', () => {
     }
 
     return week.activities.map((activity) => ({
-      label: activity.name,
+      label: activity.title,
       value: activity.duration,
       color: activity.color
     }))

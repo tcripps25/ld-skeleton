@@ -157,11 +157,11 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
           <div v-if="editTitle" class="flex flex-col w-full">
             <label :for="'name' + props.weekIndex + '-' + activityIndex" class="sr-only block text-gray-700">Activity
               name:</label>
-            <input :id="'name' + props.weekIndex + '-' + activityIndex" v-model="activity.name" type="text"
+            <input :id="'name' + props.weekIndex + '-' + activityIndex" v-model="activity.title" type="text"
               class="border form-input mt-1 block p-1 w-full rounded"
               :placeholder="'Activity ' + (activityIndex + 1)" />
           </div>
-          <h3 v-else class="text-md font-medium"> {{ activity.name || 'Activity ' + (activityIndex + 1) }} </h3>
+          <h3 v-else class="text-md font-medium"> {{ activity.title || 'Activity ' + (activityIndex + 1) }} </h3>
           <Button @click="toggleEditTitle"
             class="!p-1 h-max bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
             <span class="sr-only">Edit Activity title</span>
@@ -176,7 +176,7 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
         </Button>
       </div>
       <div :id="'activity-' + activityIndex + '-content'"
-        class="bg-slate-50 -mx-4 -my-4 relative p-4  overflow-y-auto flex flex-col gap-3"
+        class="bg-white -mx-4 -my-4 relative p-4  overflow-y-auto flex flex-col gap-3"
         :class="{ '!bg-slate-200': editMode }">
         <h4 class="font-semibold border-b pb-1 border-slate-300">Instructions:</h4>
         <div class="flex justify-between gap-2" :id="'activity-' + activityIndex + '-instructions'">
@@ -405,7 +405,7 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
     </Transition>
 
     <Transition>
-      <SettingsPanel v-if="manageActivity" :title="'Manage ' + (activity.name)" :class="{ 'z-10': editAlign }"
+      <SettingsPanel v-if="manageActivity" :title="'Manage ' + (activity.title)" :class="{ 'z-10': editAlign }"
         @close-panel="togglemanageActivity" :id="'manage-activity-' + (activityIndex + 1)">
         <template v-slot:description>
           <p>Once you have deleted this Activity it cannot be recovered.</p>
