@@ -9,12 +9,15 @@ import InputText from 'primevue/inputtext';
 import FloatLabel from 'primevue/floatlabel';
 import Textarea from 'primevue/textarea';
 import Button from 'primevue/button';
-import { CheckCircleIcon, PlusCircleIcon } from '@heroicons/vue/24/solid';
+import { CheckCircleIcon, ChevronDownIcon, PlusCircleIcon } from '@heroicons/vue/24/solid';
 import PanelNotice from '@/components/ui/PanelNotice.vue'
 import DetailSidebar from '@/components/ui/DetailSidebar.vue'
 import Page from './Page.vue';
 import PageHeader from './PageHeader.vue';
 import ActivityClass from '@/classes/Activity';
+import { PencilIcon } from '@heroicons/vue/16/solid';
+import OverlayPanel from 'primevue/overlaypanel';
+
 const route = useRoute()
 
 const props = defineProps({
@@ -40,33 +43,59 @@ const toggleAddDescActive = () => {
 const addActivity = (weekIndex) => {
 
   const newActivity = new ActivityClass();
+  newActivity.duration = 0
 
+  if (props.week.activities.length >= 0) {
+    newActivity.name = 'New Activity ' + (props.week.activities.length + 1)
+  }
   course.weeks[weekIndex].activities.push(newActivity);
 };
+
+const editTitle = ref(false)
+
+const toggleEditTitle = () => {
+  editTitle.value = !editTitle.value
+}
 </script>
 
 <template>
   <Page class="grow">
     <template v-slot:page-header>
-      <PageHeader title="Design">
+      <PageHeader :title="week.name">
+        <template v-slot:title>
+          <div class="flex gap-1">
+            <h1 v-if="!editTitle" class="text-xl mb-0 font-semibold flex gap-2 items-center">{{ week.name }}</h1>
+            <div class="flex items-center gap-2">
+              <label v-if="editTitle" class="sr-only" for="week-title">{{ 'Teaching Week ' + (index + 1) + ' title'
+                }}</label>
+              <InputText v-if="editTitle" id="week-title" v-model="week.name" type="text" class="text-xl" />
+              <Button @click="toggleEditTitle" class="bg-transparent text-slate-700 !rounded-lg hover:bg-slate-200 border-none min-w-7 max-w-7 min-h-7 max-h-7 !p-0
+              flex justify-center items-center">
+                <PencilIcon class="text-slate-500 w-4 h-4>" />
+              </Button>
+            </div>
+
+          </div>
+        </template>
         <Button @click="addActivity(index)"
           pt:root:class="bg-sky-600 hover:bg-sky-500 text-sky-50 px-3 py-2 rounded-md flex items-center gap-1 w-max">
           Add
           Activity
           <PlusCircleIcon class="w-5 h-5" />
         </Button>
+        <template v-slot:toolbar>
+          <div class="font-normal flex flex-col text-sm"> Week Commencing: {{ week.formattedDate }} </div>
+        </template>
       </PageHeader>
     </template>
+
     <div v-if="week">
 
       <div class="flex grow flex-col gap-7">
         <div>
           <div class="my-5 flex justify-between">
             <div class="flex items-center gap-3">
-              <FloatLabel>
-                <InputText id="week-title" v-model="week.name" type="text" class="text-2xl" />
-                <label for="week-title">{{ 'Teaching Week ' + (index + 1) + ' title' }}</label>
-              </FloatLabel>
+
               <Button @click="toggleAddDescActive"
                 class="!p-2 !px-3 h-10 w-max text-sm flex gap-2 !bg-transparent border-0 !text-blue-700 hover:!bg-slate-200"
                 :class="{ '!bg-slate-200': addDescActive }">
@@ -76,11 +105,7 @@ const addActivity = (weekIndex) => {
                 </Transition>
               </Button>
             </div>
-            <div class="font-normal -mt-5 flex flex-col"><span class="text-sm text-slate-500">Week Commencing</span>
-              <span class="text-2xl font-semibold">{{
-                week.formattedDate
-                }}</span>
-            </div>
+
           </div>
           <Transition>
             <div v-if="addDescActive" id="editWeek" class="">

@@ -6,7 +6,7 @@ import PanelNotice from './PanelNotice.vue';
 import { useCourseStore } from '@/stores/course.js'
 import Button from 'primevue/button';
 import ToggleButton from 'primevue/togglebutton';
-import { XMarkIcon, ArrowRightEndOnRectangleIcon, ArrowLeftStartOnRectangleIcon, CloudArrowDownIcon, ClockIcon } from '@heroicons/vue/24/solid';
+import { XMarkIcon, ChevronRightIcon, ChevronLeftIcon, CloudArrowDownIcon, ClockIcon } from '@heroicons/vue/24/solid';
 
 import CloudArrowDownIconOutline from '@heroicons/vue/24/outline/CloudArrowDownIcon';
 import Meter from '@/components/charts/Meter.vue';
@@ -44,10 +44,10 @@ const ToggleShow = () => {
                 <div class="flex gap-1 mb-5">
                     <!-- Button for the stats bar  -->
                     <Button @click="ToggleShow" label="Toggle Insights"
-                        class="bg-slate-100 text-slate-700 !rounded-full hover:bg-slate-200 border-none min-w-8 max-w-8 min-h-8 max-h-8 !p-0">
+                        class="bg-slate-100 text-slate-700 !rounded-full hover:bg-slate-200 border-none min-w-8 max-w-8 min-h-8 max-h-8 !p-0 flex justify-center items-center">
                         <Transition name="fade">
-                            <ArrowRightEndOnRectangleIcon v-if="show" class="h-5 w-5" />
-                            <ArrowLeftStartOnRectangleIcon v-else class="h-5 w-5" />
+                            <ChevronRightIcon v-if="show" class="h-5 w-5" />
+                            <ChevronLeftIcon v-else class="h-5 w-5" />
                         </Transition>
                     </Button>
                 </div>

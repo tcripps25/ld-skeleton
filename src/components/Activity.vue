@@ -1,5 +1,6 @@
 <script setup>
-import { ArrowRightIcon, ChevronDownIcon, ChevronRightIcon, TrashIcon, EllipsisHorizontalIcon, ArrowUturnLeftIcon, ClockIcon, DocumentTextIcon, PlusIcon, PencilIcon, CheckCircleIcon } from '@heroicons/vue/24/solid'
+import { ArrowRightIcon, ChevronDownIcon, ChevronRightIcon, TrashIcon, EllipsisHorizontalIcon, ArrowUturnLeftIcon, ClockIcon, DocumentTextIcon, PlusIcon, CheckCircleIcon } from '@heroicons/vue/24/solid'
+import { PencilIcon } from '@heroicons/vue/16/solid';
 import { useCourseStore } from '@/stores/course.js'
 import { ref, computed, watch, onMounted } from 'vue';
 import MultiSelect from 'primevue/multiselect';
@@ -10,6 +11,7 @@ import SettingsPanel from '@/components/ui/SettingsPanel.vue'
 import InputSwitch from 'primevue/inputswitch';
 import SelectButton from 'primevue/selectbutton';
 import MoodleActivity from '@/components/ui/MoodleActivity.vue';
+
 
 const course = useCourseStore();
 
@@ -141,12 +143,15 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
 
 </script>
 <template>
-  <div id="activity-container" class="relative w-full h-[32rem] shadow-sm rounded-lg max-w-md mb-5">
+  <div :id="'activity-' + activityIndex + '-container'"
+    class="relative w-full h-[32rem] shadow-sm rounded-lg max-w-md mb-5">
 
-    <div id="activity-summary" :class="{ 'scale-95 bg-slate-200 -translate-x-5': editMode }"
-      class="bg-slate-100 overflow-y-auto px-4 pb-4 transition relative rounded-lg h-full flex flex-col gap-5 border border-slate-300">
-      <div :class="{ '!bg-slate-300': editMode }"
-        class="transition flex justify-center border-b border-slate-300 shadow-sm py-3 sticky top-0 bg-slate-200 -mx-4 z-20">
+    <div :id="'activity-' + activityIndex + '-summary'" :class="{ 'scale-95 !bg-slate-200 -translate-x-5': editMode }"
+      class="bg-slate-50 overflow-x-hidden px-4 pb-4 transition relative rounded-lg h-full flex flex-col gap-5 border border-slate-300">
+
+
+      <div :id="'activity-' + activityIndex + '-header'" :class="{ '!bg-slate-300': editMode }"
+        class="transition flex justify-center shadow-sm py-3 -mb-1 sticky top-0 bg-slate-100 -mx-4 text-slate-800 border-b">
 
         <div class="flex justify-between items-center gap-2">
           <div v-if="editTitle" class="flex flex-col w-full">
@@ -156,154 +161,160 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
               class="border form-input mt-1 block p-1 w-full rounded"
               :placeholder="'Activity ' + (activityIndex + 1)" />
           </div>
-          <h3 v-else class="text-md font-semibold"> {{ activity.name || 'Activity ' + (activityIndex + 1) }} </h3>
+          <h3 v-else class="text-md font-medium"> {{ activity.name || 'Activity ' + (activityIndex + 1) }} </h3>
           <Button @click="toggleEditTitle"
             class="!p-1 h-max bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
             <span class="sr-only">Edit Activity title</span>
-            <PencilIcon class="w-4 h-4 text-slate-700"></PencilIcon>
+            <PencilIcon class="w-4 h-4 text-slate-600"></PencilIcon>
           </Button>
         </div>
 
         <Button @click="togglemanageActivity" rounded
-          class="!p-0 !absolute right-2 top-2 bg-transparent border-0 ring-0 !ring-blue-300 hover:border-0 hover:bg-slate-100 hover:border-slate-200 w-8 h-8">
+          class="!p-0 !absolute right-3 top-2 bg-transparent border-0 transition ring-0 !ring-blue-300 hover:border-0 hover:bg-slate-200 hover:border-slate-200 w-8 h-8">
           <span class="sr-only">Manage Activity</span>
-          <EllipsisHorizontalIcon class="text-slate-900" />
+          <EllipsisHorizontalIcon class="text-slate-600" />
         </Button>
       </div>
-      <h4 class="font-semibold border-b pb-1 border-slate-300">Instructions:</h4>
-      <div class="flex justify-between gap-2" :id="'activity-' + activityIndex + '-instructions'">
+      <div :id="'activity-' + activityIndex + '-content'"
+        class="bg-slate-50 -mx-4 -my-4 relative p-4  overflow-y-auto flex flex-col gap-3"
+        :class="{ '!bg-slate-200': editMode }">
+        <h4 class="font-semibold border-b pb-1 border-slate-300">Instructions:</h4>
+        <div class="flex justify-between gap-2" :id="'activity-' + activityIndex + '-instructions'">
 
-        <div v-if="activity.instructions || editInstructions" class="flex justify-between items-start grow">
-          <div class="flex gap-2 justify-between mb-2 w-full">
-            <div v-if="editInstructions" class="w-full">
-              <label :for="'description-' + props.weekIndex + '-' + activityIndex"
-                class="sr-only block text-gray-700">Instructions:</label>
-              <textarea v-model="activity.instructions" :id="'description-' + props.weekIndex + '-' + activityIndex"
-                :name="'description-' + props.weekIndex + '-' + activityIndex" rows="4"
-                class="form-textarea mt-1 w-full rounded p-1 border"></textarea>
+          <div v-if="activity.instructions || editInstructions" class="flex justify-between items-start grow">
+            <div class="flex gap-2 justify-between mb-2 w-full">
+              <div v-if="editInstructions" class="w-full">
+                <label :for="'description-' + props.weekIndex + '-' + activityIndex"
+                  class="sr-only block text-gray-700">Instructions:</label>
+                <textarea v-model="activity.instructions" :id="'description-' + props.weekIndex + '-' + activityIndex"
+                  :name="'description-' + props.weekIndex + '-' + activityIndex" rows="4"
+                  class="form-textarea mt-1 w-full rounded p-1 border"></textarea>
+              </div>
+              <div v-else class="items-start flex gap-2 grow">
+                <p class="w-full">{{ activity.instructions }}</p>
+              </div>
             </div>
-            <div v-else class="items-start flex gap-2 grow">
-              <p class="w-full">{{ activity.instructions }}</p>
+          </div>
+          <div v-else class="text-sm bg-slate-200/80 text-slate-600 p-2 rounded text-center italic w-full">No Activity
+            instructions added yet.</div>
+          <div>
+            <Button @click="toggleEditInstructions"
+              class="!p-1 h-max bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
+              <span class="sr-only">Edit instructions</span>
+              <PencilIcon class="w-4 h-4 text-slate-700"></PencilIcon>
+            </Button>
+          </div>
+        </div>
+
+        <div class="flex">
+
+          <div class="w-full flex flex-col gap-5">
+            <div class="flex justify-between gap-4 items-center ">
+              <label class="w-max font-semibold" :for="activityIndex + '-activity-duration'">Activity duration
+                (mins):</label>
+              <input type="number" class="border w-20 p-1 px-2 rounded" v-model="activity.duration"
+                :id="activityIndex + '-activity-duration'" min="0" :step="1">
+              </input>
+            </div>
+            <div class="flex justify-between gap-4 items-center">
+              <label class="w-max font-semibold" :for="activityIndex + '-group-toggle'">Group Activity:</label>
+              <InputSwitch v-model="activity.isGroup" :inputId="activityIndex + '-group-toggle'" />
+            </div>
+            <div class="flex justify-between gap-4 items-center">
+              <div class="flex gap-1 items-center">
+                <label :for="'activity-' + activityIndex + '-method-select'" class="w-max font-semibold">Mode:</label>
+                <InfoButton help-title="Delivery mode">
+                  All about the Mode
+                </InfoButton>
+              </div>
+              <SelectButton :id="'activity-' + activityIndex + '-method-select'" v-model="activity.mode"
+                :options="['Sync', 'Async']" class="method-select-button" aria-labelledby="multiple"
+                pt:root:class="flex rounded-lg overflow-hidden"
+                pt:button:class="group cursor-pointer p-[.3rem] px-1 bg-slate-200"
+                pt:label:class="group-aria-checked:bg-white group-aria-checked:font-semibold py-1 px-2 hover:bg-slate-100 rounded transition-all" />
             </div>
           </div>
         </div>
-        <div v-else class="text-sm bg-slate-200/80 text-slate-600 p-2 rounded text-center italic w-full">No Activity
-          instructions added yet.</div>
-        <div>
-          <Button @click="toggleEditInstructions"
-            class="!p-1 h-max bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
-            <span class="sr-only">Edit instructions</span>
-            <PencilIcon class="w-4 h-4 text-slate-700"></PencilIcon>
-          </Button>
-        </div>
-      </div>
 
-      <div class="flex">
-
-        <div class="w-full flex flex-col gap-5">
-          <div class="flex justify-between gap-4 items-center ">
-            <label class="w-max font-semibold" :for="activityIndex + '-activity-duration'">Activity duration
-              (mins):</label>
-            <input type="number" class="border w-20 p-1 px-2 rounded" v-model="activity.duration"
-              :id="activityIndex + '-activity-duration'" min="0" :step="1">
-            </input>
-          </div>
-          <div class="flex justify-between gap-4 items-center">
-            <label class="w-max font-semibold" :for="activityIndex + '-group-toggle'">Group Activity:</label>
-            <InputSwitch v-model="activity.isGroup" :inputId="activityIndex + '-group-toggle'" />
-          </div>
-          <div class="flex justify-between gap-4 items-center">
+        <div class="">
+          <div class="flex justify-between items-center mb-2 border-b pb-1 border-slate-300">
             <div class="flex gap-1 items-center">
-              <label :for="'activity-' + activityIndex + '-method-select'" class="w-max font-semibold">Mode:</label>
-              <InfoButton help-title="Delivery mode">
-                All about the Mode
+              <h4 class="font-semibold">Learning Type<span
+                  v-if="activity.selectedTypes && activity.selectedTypes.length > 1">s</span>:</h4>
+              <InfoButton help-title="Learning Types">
+                All about Learning Types
               </InfoButton>
             </div>
-            <SelectButton :id="'activity-' + activityIndex + '-method-select'" v-model="activity.mode"
-              :options="['Sync', 'Async']" class="method-select-button" aria-labelledby="multiple"
-              pt:root:class="flex rounded-lg overflow-hidden"
-              pt:button:class="group cursor-pointer p-[.3rem] px-1 bg-slate-200"
-              pt:label:class="group-aria-checked:bg-white group-aria-checked:font-semibold py-1 px-2 hover:bg-slate-100 rounded transition-all" />
+            <Button @click="toggleEditTypes" title="Add or edit associated Learning Types"
+              class="!p-0 bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
+              <PlusIcon class="w-5 h-5 text-slate-700" />
+            </Button>
           </div>
+          <ul v-if="activity && activity.selectedTypes && activity.selectedTypes.length > 0"
+            class="grid grid-cols-3 grid-flow-row gap-2 py-1">
+            <li v-for="(type, index) in activity.selectedTypes"
+              class="p-1 px-2 text-sm rounded bg-white border flex gap-2 items-center">
+              <div :style="{ backgroundColor: course.getColorByLabel(type) }"
+                class="w-4 h-4 min-w-4 min-h-4 bg-slate-600 rounded-full">
+              </div>
+              {{ type }}
+            </li>
+          </ul>
+          <p class="p-2 text-center text-sm bg-slate-200/80 text-slate-600 italic rounded" v-else>There are no
+            associated
+            types for this Activity yet.</p>
         </div>
-      </div>
-
-      <div class="">
-        <div class="flex justify-between items-center mb-2 border-b pb-1 border-slate-300">
-          <div class="flex gap-1 items-center">
-            <h4 class="font-semibold">Learning Type<span
-                v-if="activity.selectedTypes && activity.selectedTypes.length > 1">s</span>:</h4>
-            <InfoButton help-title="Learning Types">
-              All about Learning Types
-            </InfoButton>
-          </div>
-          <Button @click="toggleEditTypes" title="Add or edit associated Learning Types"
-            class="!p-0 bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
-            <PlusIcon class="w-5 h-5 text-slate-700" />
-          </Button>
-        </div>
-        <ul v-if="activity && activity.selectedTypes && activity.selectedTypes.length > 0"
-          class="grid grid-cols-3 grid-flow-row gap-2 py-1">
-          <li v-for="(type, index) in activity.selectedTypes"
-            class="p-1 px-2 text-sm rounded bg-white border flex gap-2 items-center">
-            <div :style="{ backgroundColor: course.getColorByLabel(type) }"
-              class="w-4 h-4 min-w-4 min-h-4 bg-slate-600 rounded-full">
+        <div class="">
+          <div class="flex justify-between items-center mb-2 border-b pb-1 border-slate-300">
+            <div class="flex items-center gap-1">
+              <h4 class="font-semibold">Alignment<span
+                  v-if="activity && activity.alignments && activity.alignments.length > 1">s</span>:</h4>
+              <InfoButton help-title="Alignments">
+                All about Alignments
+              </InfoButton>
             </div>
-            {{ type }}
-          </li>
-        </ul>
-        <p class="p-2 text-center text-sm bg-slate-200/80 text-slate-600 italic rounded" v-else>There are no associated
-          types for this Activity yet.</p>
-      </div>
-      <div class="">
-        <div class="flex justify-between items-center mb-2 border-b pb-1 border-slate-300">
-          <div class="flex items-center gap-1">
-            <h4 class="font-semibold">Alignment<span
-                v-if="activity && activity.alignments && activity.alignments.length > 1">s</span>:</h4>
-            <InfoButton help-title="Alignments">
-              All about Alignments
-            </InfoButton>
+            <Button @click="toggleEditAlign" title="Add or edit associated Alignments"
+              class="!p-0 bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
+              <PlusIcon class="w-5 h-5 text-slate-700" />
+            </Button>
           </div>
-          <Button @click="toggleEditAlign" title="Add or edit associated Alignments"
-            class="!p-0 bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
-            <PlusIcon class="w-5 h-5 text-slate-700" />
-          </Button>
+          <ul v-if="activity && activity.selectedAlignments && activity.selectedAlignments.length > 0"
+            class="divide-slate-200 divide-y ml-1 flex flex-col">
+            <li v-for="(alignment, index) in activity.selectedAlignments" class="py-2" :key="index">
+              <div class="flex gap-3 items-center">
+                <CheckCircleIcon class="text-teal-500 w-5 h-5 min-w-5" />
+                <p v-if="alignment.nickname" class="">{{ alignment.nickname }}</p>
+                <p v-else class="">{{ alignment.label }}</p>
+              </div>
+            </li>
+          </ul>
+          <p class="p-2 text-center text-sm bg-slate-200/80 text-slate-600 italic rounded" v-else>There are no
+            associated
+            alignments for this Activity yet.</p>
         </div>
-        <ul v-if="activity && activity.selectedAlignments && activity.selectedAlignments.length > 0"
-          class="divide-slate-200 divide-y ml-1 flex flex-col">
-          <li v-for="(alignment, index) in activity.selectedAlignments" class="py-2" :key="index">
-            <div class="flex gap-3 items-center">
-              <CheckCircleIcon class="text-teal-500 w-5 h-5 min-w-5" />
-              <p v-if="alignment.nickname" class="">{{ alignment.nickname }}</p>
-              <p v-else class="">{{ alignment.label }}</p>
+        <div class="">
+          <div class="flex justify-between items-center mb-2 border-b pb-1 border-slate-300">
+            <div class="flex items-center gap-1">
+              <h4 class="font-semibold">Moodle activities:</h4>
+              <InfoButton help-title="Moodle activities">
+                Select Moodle activities here. These will be created with a sensible set of defaults in your new Module
+                which you can then modify to suit your teaching.
+              </InfoButton>
             </div>
-          </li>
-        </ul>
-        <p class="p-2 text-center text-sm bg-slate-200/80 text-slate-600 italic rounded" v-else>There are no associated
-          alignments for this Activity yet.</p>
-      </div>
-      <div class="">
-        <div class="flex justify-between items-center mb-2 border-b pb-1 border-slate-300">
-          <div class="flex items-center gap-1">
-            <h4 class="font-semibold">Moodle activities:</h4>
-            <InfoButton help-title="Moodle activities">
-              Select Moodle activities here. These will be created with a sensible set of defaults in your new Module
-              which you can then modify to suit your teaching.
-            </InfoButton>
-          </div>
-          <Button @click="toggleSuggestMoodle" title="Add or edit suggested Moodle activities"
-            class="!p-0 bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
-            <PlusIcon class="w-5 h-5 text-slate-700" />
-          </Button>
+            <Button @click="toggleSuggestMoodle" title="Add or edit suggested Moodle activities"
+              class="!p-0 bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
+              <PlusIcon class="w-5 h-5 text-slate-700" />
+            </Button>
 
+          </div>
+          <ul v-if="!activity.selectedMoodle.length == 0" class="grid grid-cols-3 gap-2">
+            <li v-for="(moodleActivity, index) in activity.selectedMoodle" :key="index">
+              <MoodleActivity :activity="activity" :moodle-activity="moodleActivity" />
+            </li>
+          </ul>
+          <p v-else class="p-2 text-center text-sm bg-slate-200/80 text-slate-600 italic rounded">There are no chosen
+            Moodle activities yet.</p>
         </div>
-        <ul v-if="!activity.selectedMoodle.length == 0" class="grid grid-cols-3 gap-2">
-          <li v-for="(moodleActivity, index) in activity.selectedMoodle" :key="index">
-            <MoodleActivity :activity="activity" :moodle-activity="moodleActivity" />
-          </li>
-        </ul>
-        <p v-else class="p-2 text-center text-sm bg-slate-200/80 text-slate-600 italic rounded">There are no chosen
-          Moodle activities yet.</p>
       </div>
 
     </div>
@@ -405,6 +416,7 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
         </Button>
       </SettingsPanel>
     </Transition>
+
   </div>
 </template>
 

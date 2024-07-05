@@ -333,7 +333,13 @@ export const useCourseStore = defineStore('course', () => {
 
   // Store actions
   const incrementWeek = (name, description, activities) => {
-    const tempName = 'New Week'
+    let tempName = ''
+
+    if (weeks.value && weeks.value.length >= 0) {
+      tempName = 'New Week ' + (weeks.value.length + 1)
+    } else {
+      tempName = 'New Week'
+    }
     const tempDescription = ''
     const tempActivities = []
 
