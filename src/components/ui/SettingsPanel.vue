@@ -28,7 +28,7 @@ const props = defineProps({
       <div class="flex sticky -bottom-4 shadow-sm -mb-4 mt-5 border-t border-slate-300 p-2 -mx-4 bg-slate-50">
 
         <Button @click="$emit('closePanel')" title="Save and back to Activity"
-          pt:root:class="transition bg-blue-600 hover:bg-blue-500 text-blue-50 p-2 rounded-md w-full flex justify-center">
+          pt:root:class="transition bg-sky-600 hover:bg-sky-500 text-blue-50 p-2 rounded-md w-full flex justify-center">
           <div class="flex gap-1">
             <ArrowUturnLeftIcon class="w-5 h-5" />
             <span class="text-sm whitespace-nowrap font-semibold">Done & Back to Activity</span>

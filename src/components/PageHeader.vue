@@ -6,8 +6,8 @@ const props = defineProps({
 })
 </script>
 <template>
-  <div class="flex flex-col bg-white border-b sticky top-0 z-50 px-5 py-4">
-    <div class=" flex justify-between items-center">
+  <div class="flex flex-col bg-white border-b sticky top-0 z-50 px-5 py-3">
+    <div class="flex justify-between items-center">
       <div v-if="$slots.title">
         <slot name="title"></slot>
       </div>
@@ -20,7 +20,7 @@ const props = defineProps({
         <slot></slot>
       </div>
     </div>
-    <div v-if="$slots.toolbar" class="mt-2">
+    <div v-if="$slots.toolbar" class="">
       <slot name="toolbar"></slot>
     </div>
   </div>

@@ -151,7 +151,7 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
 
 
       <div :id="'activity-' + activityIndex + '-header'" :class="{ '!bg-slate-300': editMode }"
-        class="transition flex justify-center shadow-sm py-3 -mb-1 sticky top-0 bg-slate-100 -mx-4 text-slate-800 border-b">
+        class="transition flex justify-center shadow-sm py-3 -mb-1 sticky top-0 bg-slate-50 -mx-4 text-slate-800 border-b">
 
         <div class="flex justify-between items-center gap-2">
           <div v-if="editTitle" class="flex flex-col w-full">
@@ -170,7 +170,7 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
         </div>
 
         <Button @click="togglemanageActivity" rounded
-          class="!p-0 !absolute right-3 top-2 bg-transparent border-0 transition ring-0 !ring-blue-300 hover:border-0 hover:bg-slate-200 hover:border-slate-200 w-8 h-8">
+          class="!p-0 !absolute right-4 top-2 bg-transparent border-0 transition ring-0 !ring-blue-300 hover:border-0 hover:bg-slate-200 hover:border-slate-200 w-8 h-8">
           <span class="sr-only">Manage Activity</span>
           <EllipsisHorizontalIcon class="text-slate-600" />
         </Button>
@@ -253,7 +253,7 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
           <ul v-if="activity && activity.selectedTypes && activity.selectedTypes.length > 0"
             class="grid grid-cols-3 grid-flow-row gap-2 py-1">
             <li v-for="(type, index) in activity.selectedTypes"
-              class="p-1 px-2 text-sm rounded bg-white border flex gap-2 items-center">
+              class="p-1 px-2 text-sm rounded bg-slate-50 border flex gap-2 items-center">
               <div :style="{ backgroundColor: course.getColorByLabel(type) }"
                 class="w-4 h-4 min-w-4 min-h-4 bg-slate-600 rounded-full">
               </div>

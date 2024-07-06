@@ -38,7 +38,7 @@ const toggleSelected = () => {
 
 <template>
   <Button @click="() => { $emit('selected'); toggleSelected(); }"
-    pt:root:class="bg-white border p-1 text-sm w-full rounded">
+    pt:root:class="border bg-slate-50 hover:bg-slate-100 transition p-1 text-sm w-full rounded">
     <div class="flex gap-2">
       <Transition name="fade">
         <CheckCircleIcon v-if="selected" class="w-5 h-5 absolute text-blue-500" />

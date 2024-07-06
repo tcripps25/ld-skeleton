@@ -7,6 +7,7 @@ import { useCourseStore } from '@/stores/course.js'
 import Button from 'primevue/button';
 import ToggleButton from 'primevue/togglebutton';
 import { XMarkIcon, ChevronRightIcon, ChevronLeftIcon, CloudArrowDownIcon, ClockIcon } from '@heroicons/vue/24/solid';
+import GptPanel from '@/ai/GptPanel.vue'
 
 import CloudArrowDownIconOutline from '@heroicons/vue/24/outline/CloudArrowDownIcon';
 import Meter from '@/components/charts/Meter.vue';
@@ -64,6 +65,7 @@ const ToggleShow = () => {
 
         <Transition name="slide-fade">
             <div v-if="show" class="flex flex-col gap-10 divide-y">
+
                 <Transition name="fade">
                     <Panel borderless flush sidebar>
                         <Meter title="Activity Duration" :values="course.getActivitiesForWeek(index)"

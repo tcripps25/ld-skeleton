@@ -17,7 +17,7 @@ import PageHeader from './PageHeader.vue';
 import ActivityClass from '@/classes/Activity';
 import { PencilIcon } from '@heroicons/vue/16/solid';
 import OverlayPanel from 'primevue/overlaypanel';
-
+import GptPanel from '@/ai/GptPanel.vue';
 const route = useRoute()
 
 const props = defineProps({
@@ -59,7 +59,7 @@ const toggleEditTitle = () => {
 </script>
 
 <template>
-  <Page class="grow">
+  <Page class="grow relative">
     <template v-slot:page-header>
       <PageHeader :title="week.name">
         <template v-slot:title>
@@ -77,14 +77,18 @@ const toggleEditTitle = () => {
 
           </div>
         </template>
-        <Button @click="addActivity(index)"
-          pt:root:class="bg-sky-600 hover:bg-sky-500 text-sky-50 px-3 py-2 rounded-md flex items-center gap-1 w-max">
-          Add
-          Activity
-          <PlusCircleIcon class="w-5 h-5" />
-        </Button>
+        <div class="flex justify-center items-center gap-2">
+          <Button @click="addActivity(index)"
+            pt:root:class="bg-sky-600 hover:bg-sky-500 text-sm text-sky-50 px-3 py-2 rounded-md flex items-center gap-1 w-max">
+            Add
+            Activity
+            <PlusCircleIcon class="w-5 h-5" />
+          </Button>
+          <GptPanel :week-index="index" />
+        </div>
         <template v-slot:toolbar>
-          <div class="font-normal flex flex-col text-sm"> Week Commencing: {{ week.formattedDate }} </div>
+          <div class="font-normal flex flex-col text-sm text-slate-600"> Week Commencing: {{ week.formattedDate }}
+          </div>
         </template>
       </PageHeader>
     </template>
@@ -127,6 +131,8 @@ const toggleEditTitle = () => {
         <p>Selected Week can't be found, navigate to 'Set Up' and then refresh the page.</p>
       </Panel>
     </div>
+
   </Page>
+
   <DetailSidebar :week="week" :index="index" />
 </template>
