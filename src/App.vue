@@ -10,18 +10,26 @@ import ResetCourseButton from "./components/buttons/ResetCourseButton.vue";
 import { PencilIcon } from "@heroicons/vue/16/solid";
 import MainNav from "@/components/menu/MainNav.vue";
 import Logo from "@/assets/uop_logo.png";
-
+import InputText from "primevue/inputtext";
 const course = useCourseStore();
 const designMenu = useDesignMenuStore();
 
 console.log(course.title);
+
+
+const showField = ref(false)
+
+const toggleShowField = () => {
+  showField.value = !showField.value
+}
+
 </script>
 
 <template>
   <div id="sidebar" class="px-5 py-5 flex flex-col gap-3 border-r bg-white h-screen overflow-x-auto">
     <header class="text-slate-800 flex flex-col">
       <div class="flex justify-start gap-5 items-center mb-3">
-        <img :src="Logo" class="h-11" alt="University of Portsmouth Logo" />
+        <img @click="toggleShowField" :src="Logo" class="h-11" alt="University of Portsmouth Logo" />
         <a href="#" class="flex flex-col">
           <h1 class="text-lg font-semibold">Module Designer</h1>
           <p class="text-sm">June 2024</p>
@@ -35,6 +43,7 @@ console.log(course.title);
       </div>
     </header>
     <MainNav />
+    <InputText v-if="showField" v-model="course.key" />
   </div>
   <main class="h-screen bg-white w-full">
     <!-- Render the Design view with the imported data -->

@@ -9,6 +9,7 @@ export const useCourseStore = defineStore('course', () => {
   const title = ref('Contemporary Issues In Cyber Security')
   const weeks = ref([])
   const startDate = ref(new Date())
+  const key = ref('')
 
   function updateWeeks(newWeeks) {
     weeks.value = newWeeks
@@ -379,6 +380,7 @@ export const useCourseStore = defineStore('course', () => {
     updateWeeks,
     activityTypeColorAndCount,
     getActivitiesForWeek,
-    getActivityColor
+    getActivityColor,
+    key
   }
 })
