@@ -1,8 +1,6 @@
 <script setup>
 import { computed, watch, ref } from 'vue';
-import PieChart from '../charts/PieChart.vue';
-import Panel from './Panel.vue';
-import PanelNotice from './PanelNotice.vue';
+
 import { useCourseStore } from '@/stores/course.js'
 import Button from 'primevue/button';
 import ToggleButton from 'primevue/togglebutton';
@@ -10,20 +8,12 @@ import { XMarkIcon, ChevronRightIcon, ChevronLeftIcon, CloudArrowDownIcon, Clock
 import GptPanel from '@/ai/GptPanel.vue'
 
 import CloudArrowDownIconOutline from '@heroicons/vue/24/outline/CloudArrowDownIcon';
-import Meter from '@/components/charts/Meter.vue';
+
 
 const props = defineProps({
-    week: Object,
-    index: Number,
+    title: String,
 });
-const course = useCourseStore();
 
-
-const weekStats = computed(() => course.getActivityTypePercentagesForWeek(props.index));
-
-watch(weekStats, (newStats) => {
-    console.log('Week stats updated:', newStats);
-});
 
 const show = ref(true)
 
@@ -37,9 +27,9 @@ const ToggleShow = () => {
 <template>
 
 
-    <div :id="'week-' + (index + 1) + '-sidebar'"
-        class="bg-white p-5 border-l flex-initial overflow-y-auto overflow-x-hidden max-w-[26rem] min-w-[26rem] flex flex-col gap-4 transition-all duration-300"
+    <div class="bg-slate-50 p-5 border-l flex-initial overflow-y-auto overflow-x-hidden max-w-[26rem] min-w-[26rem] flex flex-col gap-4 transition-all duration-300"
         :class="{ '!max-w-[4.5rem] min-w-[4.5rem]': !show }">
+
         <div id="sidebar-header">
             <div class="flex justify-between items-start">
                 <div class="flex gap-1 mb-5">
@@ -53,7 +43,7 @@ const ToggleShow = () => {
                     </Button>
                 </div>
                 <div v-if="show" class="flex gap-1 items-center">
-                    <h3 class="text-xl font-semibold">Insights</h3>
+                    <h3 class="text-xl font-semibold">{{ title }}</h3>
                 </div>
                 <!-- Download Insights Button  -->
                 <Button v-if="show" label="Download Insights" title="Download Insights"
@@ -62,47 +52,9 @@ const ToggleShow = () => {
                 </Button>
             </div>
         </div>
-
-        <Transition name="slide-fade">
-            <div v-if="show" class="flex flex-col gap-10 divide-y">
-
-                <Transition name="fade">
-                    <Panel borderless flush sidebar>
-                        <Meter title="Activity Duration" :values="course.getActivitiesForWeek(index)"
-                            :max="course.totalMinsInWeekActivities(index)">
-                            <p class="mb-3">Your total time for this week split by Activity.
-                            </p>
-                            <template v-slot:meter-badge>
-                                <div class="flex gap-2 items-center justify-end rounded w-full">
-
-                                    <p class="text-lg font-medium text-teal-700">{{
-                                        course.totalMinsInWeekActivities(index) }} <span
-                                            class="text-sm text-slate-600">Total minutes</span>
-                                    </p>
-
-                                </div>
-                            </template>
-                        </Meter>
-                    </Panel>
-                </Transition>
-                <Transition name="fade">
-                    <Panel borderless flush sidebar>
-                        <PieChart chartWidth="350" legendPosition="left" :dataseries="weekStats"
-                            :datalabels="course.activityTypes" :colors="course.activityColors" title="Learning Type Mix"
-                            :id="'week-' + (index + 1) + '-learning-types'">
-                            <p class="mb-3">An overview of the Learning Types you have used in this week of your course.
-                            </p>
-                        </PieChart>
-                        <PanelNotice enable>
-                            A glance at your Learning Type mix for this week. These types will also determine which
-                            Moodle
-                            activities
-                            will be suggested for each Activity you create.
-                        </PanelNotice>
-                    </Panel>
-                </Transition>
-            </div>
-        </Transition>
+        <div v-if="show" id="sidebar-internal-container">
+            <slot></slot>
+        </div>
     </div>
 
 

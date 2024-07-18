@@ -29,7 +29,7 @@ const isDesignPage = computed(() => route.path === '/design/overview');
 </script>
 
 <template>
-  <div class="flex shrink">
+  <div>
     <Page v-if="isDesignPage" class="w-full">
       <template v-slot:page-header>
         <PageHeader title="Design" />
