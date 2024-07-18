@@ -13,7 +13,7 @@ const props = defineProps({
     class="w-full rounded-lg absolute top-0 h-full overflow-y-auto p-4 bg-slate-50 pt-0 shadow-sm border border-slate-300">
     <div class="flex flex-col h-full relative justify-between ">
       <div
-        class="py-3  text-slate-900 flex items-center sticky top-0 bg-slate-100 shadow-sm border-b border-slate-300 -mx-4 px-4 z-10 mb-5">
+        class="py-3 text-sky-50 flex items-center sticky top-0 bg-sky-700 shadow-sm border-b border-sky-700 -mx-4 px-4 z-10 mb-5">
 
         <div v-if="title" class="flex justify-center w-full">
           <h3 class="text-md w-max font-semibold">{{ title }}</h3>

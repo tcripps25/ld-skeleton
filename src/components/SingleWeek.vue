@@ -131,29 +131,7 @@ watch(weekStats, (newStats) => {
     </template>
     <div v-if="week">
       <div class="flex grow flex-col gap-7">
-        <div>
-          <div class="my-5 flex justify-between">
-            <div class="flex items-center gap-3">
 
-              <Button @click="toggleAddDescActive"
-                class="!p-2 !px-3 h-10 w-max text-sm flex gap-2 !bg-transparent border-0 !text-blue-700 hover:!bg-slate-200"
-                :class="{ '!bg-slate-200': addDescActive }">
-                Add description
-                <Transition>
-                  <CheckCircleIcon v-if="week.description" class="h-5 w-5 text-blue-400" />
-                </Transition>
-              </Button>
-            </div>
-
-          </div>
-          <Transition>
-            <div v-if="addDescActive" id="editWeek" class="">
-              <label class="text-sm mb-1 ml-3 flex" :for="'week-' + index + '-description'">Description:</label>
-              <Textarea class="p-2 w-full rounded border" rows="2" :id="'week-' + index + '-description'" type="text"
-                v-model="week.description" />
-            </div>
-          </Transition>
-        </div>
         <Week :week="week" :week-index="index" :showTitle="false" />
       </div>
     </div>

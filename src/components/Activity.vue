@@ -1,5 +1,5 @@
 <script setup>
-import { ArrowRightIcon, ChevronDownIcon, ChevronRightIcon, TrashIcon, EllipsisHorizontalIcon, ArrowUturnLeftIcon, ClockIcon, DocumentTextIcon, PlusIcon, CheckCircleIcon } from '@heroicons/vue/24/solid'
+import { ArrowRightIcon, ChevronDownIcon, ChevronRightIcon, TrashIcon, EllipsisVerticalIcon, ArrowUturnLeftIcon, ClockIcon, DocumentTextIcon, PlusIcon, CheckCircleIcon } from '@heroicons/vue/24/solid'
 import { PencilIcon } from '@heroicons/vue/16/solid';
 import { useCourseStore } from '@/stores/course.js'
 import { ref, computed, watch, onMounted } from 'vue';
@@ -150,29 +150,19 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
       class="bg-slate-50 overflow-x-hidden px-4 pb-4 transition relative rounded-lg h-full flex flex-col gap-5 border border-slate-300">
 
 
-      <div :id="'activity-' + activityIndex + '-header'" :class="{ '!bg-slate-300': editMode }"
-        class="transition flex justify-center shadow-sm py-3 -mb-1 sticky top-0 bg-slate-50 -mx-4 text-slate-800 border-b">
+      <div :id="'activity-' + activityIndex + '-header'" :class="{ '!bg-sky-800': editMode }"
+        class="transition flex justify-start shadow-sm py-3 px-5 -mb-1 sticky top-0 bg-sky-700 -mx-4 text-sky-50 border-b">
 
         <div class="flex justify-between items-center gap-2">
-          <div v-if="editTitle" class="flex flex-col w-full">
-            <label :for="'name' + props.weekIndex + '-' + activityIndex" class="sr-only block text-gray-700">Activity
-              name:</label>
-            <input :id="'name' + props.weekIndex + '-' + activityIndex" v-model="activity.title" type="text"
-              class="border form-input mt-1 block p-1 w-full rounded"
-              :placeholder="'Activity ' + (activityIndex + 1)" />
-          </div>
-          <h3 v-else class="text-md font-medium"> {{ activity.title || 'Activity ' + (activityIndex + 1) }} </h3>
-          <Button @click="toggleEditTitle"
-            class="!p-1 h-max bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
-            <span class="sr-only">Edit Activity title</span>
-            <PencilIcon class="w-4 h-4 text-slate-600"></PencilIcon>
-          </Button>
+
+          <h3 class="text-md font-medium"> {{ activity.title || 'Activity ' + (activityIndex + 1) }} </h3>
+
         </div>
 
         <Button @click="togglemanageActivity" rounded
-          class="!p-0 !absolute right-4 top-2 bg-transparent border-0 transition ring-0 !ring-blue-300 hover:border-0 hover:bg-slate-200 hover:border-slate-200 w-8 h-8">
+          class="!p-0 !absolute right-4 top-2 bg-transparent border-0 transition ring-0 !ring-blue-300 hover:border-0 hover:bg-sky-600 hover:border-sky-600 w-7 h-7">
           <span class="sr-only">Manage Activity</span>
-          <EllipsisHorizontalIcon class="text-slate-600" />
+          <EllipsisVerticalIcon class="text-sky-50" />
         </Button>
       </div>
       <div :id="'activity-' + activityIndex + '-content'"
