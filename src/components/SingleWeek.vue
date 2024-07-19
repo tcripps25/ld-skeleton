@@ -70,17 +70,12 @@ watch(weekStats, (newStats) => {
   <Page class="grow relative" sidebar-title="Statistics">
     <template #page-header>
       <PageHeader :title="week.name">
-
-
         <template #toolbar>
-
           <div class="flex justify-center items-center gap-2">
-
-            <Button @click="addActivity(index)"
-              pt:root:class="bg-slate-50 hover:bg-slate-200 transition text-sm text-sky-600 border px-3 py-2 rounded-md flex items-center gap-1 w-max">
-              Add
-              Activity
-              <PlusCircleIcon class="w-5 h-5" />
+            <Button @click="addActivity(index)" label="Add Activity">
+              <template #icon>
+                <PlusCircleIcon class="w-5 h-5" />
+              </template>
             </Button>
             <GptPanel :week-index="index" />
           </div>

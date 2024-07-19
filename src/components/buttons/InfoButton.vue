@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { InformationCircleIcon } from '@heroicons/vue/24/solid'
 import Button from 'primevue/button';
-import OverlayPanel from 'primevue/overlaypanel';
+import Popover from 'primevue/popover';
 
 const props = defineProps({
     helpTitle: String,
@@ -20,16 +20,16 @@ const showInfoModal = (event) => {
 </script>
 
 <template>
-    <Button @click="showInfoModal" :title="'See more information about ' + helpTitle" label="Information"
-        pt:root:class="bg-transparent p-0 h-min rounded-full">
-        <InformationCircleIcon id="info-icon" class="w-4 h-4 text-teal-600 hover:text-teal-500" />
+    <Button size="small" text @click="showInfoModal" :title="'See more information about ' + helpTitle"
+        aria-label="Information">
+        <template #icon>
+            <InformationCircleIcon id="info-icon" class="w-4 h-4" />
+        </template>
     </Button>
 
-    <OverlayPanel ref="infoModal">
+    <Popover ref="infoModal">
         <div class="flex flex-col gap-2 max-w-xs bg-white text-sm">
-            <slot>
-
-            </slot>
+            <slot></slot>
         </div>
-    </OverlayPanel>
+    </Popover>
 </template>

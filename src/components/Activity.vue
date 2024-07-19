@@ -8,9 +8,12 @@ import Listbox from 'primevue/listbox'
 import Button from 'primevue/button';
 import InfoButton from '@/components/buttons/InfoButton.vue'
 import SettingsPanel from '@/components/ui/SettingsPanel.vue'
-import InputSwitch from 'primevue/inputswitch';
+import ToggleSwitch from 'primevue/toggleswitch';
 import SelectButton from 'primevue/selectbutton';
 import MoodleActivity from '@/components/ui/MoodleActivity.vue';
+import Label from '@/components/forms/Label.vue'
+import Textarea from 'primevue/textarea';
+import PlusButton from './buttons/PlusButton.vue';
 
 
 const course = useCourseStore();
@@ -151,77 +154,48 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
 
 
       <div :id="'activity-' + activityIndex + '-header'" :class="{ '!bg-sky-800': editMode }"
-        class="transition flex justify-start shadow-sm py-3 px-5 -mb-1 sticky top-0 bg-sky-700 -mx-4 text-sky-50 border-b">
+        class="transition flex justify-between items-center shadow-sm py-2 px-5 -mb-1 sticky top-0 bg-sky-700 -mx-4 text-sky-50 border-b">
 
-        <div class="flex justify-between items-center gap-2">
 
-          <h3 class="text-md font-medium"> {{ activity.title || 'Activity ' + (activityIndex + 1) }} </h3>
 
-        </div>
+        <h3 class="text-md font-medium"> {{ activity.title || 'Activity ' + (activityIndex + 1) }} </h3>
 
-        <Button @click="togglemanageActivity" rounded
-          class="!p-0 !absolute right-4 top-2 bg-transparent border-0 transition ring-0 !ring-blue-300 hover:border-0 hover:bg-sky-600 hover:border-sky-600 w-7 h-7">
-          <span class="sr-only">Manage Activity</span>
-          <EllipsisVerticalIcon class="text-sky-50" />
+
+        <Button unstyled @click="togglemanageActivity" aria-label="Manage Activity"
+          pt:root="hover:bg-sky-600 flex rounded justify-center items-center p-1" pt:label="hidden">
+          <template #icon>
+            <EllipsisVerticalIcon class="w-5 h-5" />
+          </template>
         </Button>
       </div>
       <div :id="'activity-' + activityIndex + '-content'"
         class="bg-white -mx-4 -my-4 relative p-4  overflow-y-auto flex flex-col gap-3"
         :class="{ '!bg-slate-200': editMode }">
-        <h4 class="font-semibold border-b pb-1 border-slate-300">Instructions:</h4>
-        <div class="flex justify-between gap-2" :id="'activity-' + activityIndex + '-instructions'">
 
-          <div v-if="activity.instructions || editInstructions" class="flex justify-between items-start grow">
-            <div class="flex gap-2 justify-between mb-2 w-full">
-              <div v-if="editInstructions" class="w-full">
-                <label :for="'description-' + props.weekIndex + '-' + activityIndex"
-                  class="sr-only block text-gray-700">Instructions:</label>
-                <textarea v-model="activity.instructions" :id="'description-' + props.weekIndex + '-' + activityIndex"
-                  :name="'description-' + props.weekIndex + '-' + activityIndex" rows="4"
-                  class="form-textarea mt-1 w-full rounded p-1 border"></textarea>
-              </div>
-              <div v-else class="items-start flex gap-2 grow">
-                <p class="w-full">{{ activity.instructions }}</p>
-              </div>
-            </div>
-          </div>
-          <div v-else class="text-sm bg-slate-200/80 text-slate-600 p-2 rounded text-center italic w-full">No Activity
-            instructions added yet.</div>
-          <div>
-            <Button @click="toggleEditInstructions"
-              class="!p-1 h-max bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
-              <span class="sr-only">Edit instructions</span>
-              <PencilIcon class="w-4 h-4 text-slate-700"></PencilIcon>
-            </Button>
-          </div>
-        </div>
+        <Label :for="'activity-' + activityIndex + '-instructions'" title="Instructions:" />
+        <Textarea :id="'activity-' + activityIndex + '-instructions'"></Textarea>
+
 
         <div class="flex">
 
           <div class="w-full flex flex-col gap-5">
             <div class="flex justify-between gap-4 items-center ">
-              <label class="w-max font-semibold" :for="activityIndex + '-activity-duration'">Activity duration
-                (mins):</label>
+              <Label :for="activityIndex + '-activity-duration'" title="Activity duration (mins):" />
+
               <input type="number" class="border w-20 p-1 px-2 rounded" v-model="activity.duration"
                 :id="activityIndex + '-activity-duration'" min="0" :step="1">
               </input>
             </div>
             <div class="flex justify-between gap-4 items-center">
-              <label class="w-max font-semibold" :for="activityIndex + '-group-toggle'">Group Activity:</label>
-              <InputSwitch v-model="activity.isGroup" :inputId="activityIndex + '-group-toggle'" />
+              <Label :for="activityIndex + '-group-toggle'" title="Group Activity:" />
+              <ToggleSwitch v-model="activity.isGroup" :inputId="activityIndex + '-group-toggle'" />
             </div>
-            <div class="flex justify-between gap-4 items-center">
-              <div class="flex gap-1 items-center">
-                <label :for="'activity-' + activityIndex + '-method-select'" class="w-max font-semibold">Mode:</label>
-                <InfoButton help-title="Delivery mode">
-                  All about the Mode
-                </InfoButton>
-              </div>
+            <div class="flex justify-between items-center">
+              <Label :for="'activity-' + activityIndex + '-method-select'" title="Mode:" infoTitle="About Learning Mode"
+                infoText="All about Learning Mode" />
+
               <SelectButton :id="'activity-' + activityIndex + '-method-select'" v-model="activity.mode"
-                :options="['Sync', 'Async']" class="method-select-button" aria-labelledby="multiple"
-                pt:root:class="flex rounded-lg overflow-hidden"
-                pt:button:class="group cursor-pointer p-[.3rem] px-1 bg-slate-200"
-                pt:label:class="group-aria-checked:bg-white group-aria-checked:font-semibold py-1 px-2 hover:bg-slate-100 rounded transition-all" />
+                :options="['Sync', 'Async']" aria-labelledby="basic" />
             </div>
           </div>
         </div>
@@ -235,10 +209,7 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
                 All about Learning Types
               </InfoButton>
             </div>
-            <Button @click="toggleEditTypes" title="Add or edit associated Learning Types"
-              class="!p-0 bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
-              <PlusIcon class="w-5 h-5 text-slate-700" />
-            </Button>
+            <PlusButton @click="toggleEditTypes" title="Add or edit associated Learning Types" />
           </div>
           <ul v-if="activity && activity.selectedTypes && activity.selectedTypes.length > 0"
             class="grid grid-cols-3 grid-flow-row gap-2 py-1">
@@ -263,10 +234,9 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
                 All about Alignments
               </InfoButton>
             </div>
-            <Button @click="toggleEditAlign" title="Add or edit associated Alignments"
-              class="!p-0 bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
-              <PlusIcon class="w-5 h-5 text-slate-700" />
-            </Button>
+
+            <PlusButton @click="toggleEditAlign" title="Add or edit associated Alignments" />
+
           </div>
           <ul v-if="activity && activity.selectedAlignments && activity.selectedAlignments.length > 0"
             class="divide-slate-200 divide-y ml-1 flex flex-col">
@@ -291,10 +261,9 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
                 which you can then modify to suit your teaching.
               </InfoButton>
             </div>
-            <Button @click="toggleSuggestMoodle" title="Add or edit suggested Moodle activities"
-              class="!p-0 bg-transparent border-transparent border-slate-300 hover:bg-slate-300 hover:border-slate-300 focus:!ring-blue-400 focus:ring-2">
-              <PlusIcon class="w-5 h-5 text-slate-700" />
-            </Button>
+
+            <PlusButton @click="toggleSuggestMoodle" title="Add or edit suggested Moodle activities" />
+
 
           </div>
           <ul v-if="!activity.selectedMoodle.length == 0" class="grid grid-cols-3 gap-2">
@@ -355,7 +324,7 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
                   <span v-else>{{ item.label }}</span>
                 </label>
                 <div class="w-max">
-                  <InputSwitch v-model="isAligned(item).value"
+                  <ToggleSwitch v-model="isAligned(item).value"
                     :inputId="'activity-' + activityIndex + item.value + '-switch-' + index" />
                 </div>
               </li>
@@ -432,36 +401,5 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-}
-
-
-::deep .custom-select-button .p-button {
-  @apply bg-gray-300 text-black;
-  /* Default background color and text color */
-}
-
-::deep .custom-select-button .p-button.p-highlight {
-  @apply text-white;
-  /* Text color for selected option */
-}
-
-::deep .custom-select-button .p-button.Sync {
-  @apply bg-blue-500;
-  /* Background color for Sync option */
-}
-
-::deep .custom-select-button .p-button.Async {
-  @apply bg-green-500;
-  /* Background color for Async option */
-}
-
-::deep .custom-select-button .p-button.Sync.p-highlight {
-  @apply bg-blue-700;
-  /* Highlighted background color for Sync option */
-}
-
-::deep .custom-select-button .p-button.Async.p-highlight {
-  @apply bg-green-700;
-  /* Highlighted background color for Async option */
 }
 </style>

@@ -7,7 +7,7 @@ import WeekLink from '@/components/menu/WeekLink.vue';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import MenuItem from './MenuItem.vue';
 import Button from 'primevue/button';
-import AddWeekButton from '../buttons/AddWeekButton.vue';
+import PlusButton from '../buttons/PlusButton.vue';
 
 const course = useCourseStore();
 const route = useRoute();
@@ -20,7 +20,9 @@ const toggleShowDesign = () => {
 
 const isDesignActive = computed(() => route.path === '/design' || route.path.startsWith('/design/'));
 
-
+const handleAddWeek = () => {
+  course.incrementWeek(); // Use store action to increment the week
+};
 </script>
 
 <template>
@@ -44,7 +46,7 @@ const isDesignActive = computed(() => route.path === '/design' || route.path.sta
         <li class="mb-3 relative">
           <div class="flex justify-between p-2 items-center border-b">
             <h3>Weeks</h3>
-            <AddWeekButton class="-mr-1" />
+            <PlusButton @click="handleAddWeek" title="Add Week" class="-mr-3" />
           </div>
         </li>
         <!-- Rounded top of week timeline -->
