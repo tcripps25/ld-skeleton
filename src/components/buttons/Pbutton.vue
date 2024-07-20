@@ -6,11 +6,11 @@ const props = defineProps({
     label: String,
     ariaLabel: String,
     title: String,
+    solid: Boolean,
 })
 
 const computedClasses = computed(() => {
     return [
-        'text-sky-600',
         'justify-center',
         'items-center',
         'rounded',
@@ -19,7 +19,9 @@ const computedClasses = computed(() => {
         'flex',
         'hover:bg-slate-200',
         'gap-1',
-        props.label ? 'px-2' : ''
+        'text-sm',
+        props.label ? 'px-3 py-2' : '',
+        props.solid ? 'bg-sky-700 text-sky-50 hover:bg-sky-600' : 'text-sky-600'
     ].join(' ');
 });
 

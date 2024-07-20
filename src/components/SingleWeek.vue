@@ -74,7 +74,7 @@ watch(weekStats, (newStats) => {
       <PageHeader :title="week.name">
         <template #toolbar>
           <div class="flex justify-center items-center gap-2">
-            <Pbutton @click="addActivity(index)" label="Add Activity">
+            <Pbutton solid @click="addActivity(index)" label="Add Activity">
               <template #icon>
                 <PlusIcon class="w-5 h-5" />
               </template>

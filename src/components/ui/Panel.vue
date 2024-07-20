@@ -13,7 +13,7 @@ const props = defineProps({
         <div class="flex justify-between mb-3" v-if="$slots.title || title || $slots.action">
             <!-- for usage without using props -->
             <slot v-if="$slots.title || title" name="title">
-                <h2 v-if="title" class="text-2xl font-semibold text-slate-700 ">{{ title }}</h2>
+                <h2 v-if="title" class="text-xl font-semibold text-slate-700 ">{{ title }}</h2>
             </slot>
             <div class="ml-auto" v-if="$slots.action">
                 <slot v-if="$slots.action" name="action" />

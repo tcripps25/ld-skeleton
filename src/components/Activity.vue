@@ -154,7 +154,7 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
 
 
       <div :id="'activity-' + activityIndex + '-header'" :class="{ '!bg-sky-800': editMode }"
-        class="transition flex justify-between items-center shadow-sm py-2 px-5 -mb-1 sticky top-0 bg-sky-700 -mx-4 text-sky-50 border-b">
+        class="transition flex justify-between items-center shadow-sm py-2 px-5 -mb-1 sticky top-0 bg-sky-700 -mx-5 text-sky-50 border-b">
 
 
 

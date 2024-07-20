@@ -1,6 +1,6 @@
 <script setup>
 import { computed, watch, ref } from 'vue';
-import { ChevronRightIcon, ChevronLeftIcon, CloudArrowDownIconOutline } from '@heroicons/vue/16/solid';
+import { ChevronRightIcon, ChevronLeftIcon, CloudArrowDownIcon } from '@heroicons/vue/16/solid';
 import Pbutton from '../buttons/Pbutton.vue';
 
 
@@ -43,7 +43,7 @@ const ToggleShow = () => {
                 <!-- Download Insights Button  -->
                 <Pbutton v-if="show" aria-label="Download Insights" title="Download Insights">
                     <template #icon>
-                        <CloudArrowDownIconOutline class="h-5 w-5" />
+                        <CloudArrowDownIcon class="h-5 w-5" />
                     </template>
                 </Pbutton>
             </div>

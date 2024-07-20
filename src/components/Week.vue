@@ -34,24 +34,20 @@ const panelTitle = computed(() => {
 </script>
 
 <template>
+  <div class="flex flex-col -my-5 -mx-5 gap-5 w-full">
+    <div class="flex p-5 gap-5 overflow-x-auto">
+      <div v-for="(activity, index) in week.activities" :key="index"
+        class="bg-white shadow-sm text-sky-800 p-3 rounded grow-0 flex-shrink-0 ">
+        <h3 class="font-medium">{{ activity.title }}</h3>
+      </div>
+    </div>
 
-  <div class="bg-slate-50 backdrop-blur-md px-5 -mt-5 py-5 -mx-5 sticky top-9 mb-5 z-10">
-    <Carousel :value="week.activities" :numVisible="4" :numScroll="1" pt:itemList="" pt:item="" pt:content="">
-      <template #item="slotProps">
-        <div class=" bg-slate-300 text-sky-80 p-3 rounded mx-5 h-24 ">
-          <h3 class="text-md font-medium">{{ slotProps.data.title }}</h3>
-        </div>
-      </template>
-    </Carousel>
+    <TransitionGroup name="list" tag="div" class="flex flex-wrap gap-5 pl-5">
+      <Activity v-for="(activity, activityIndex) in week.activities" :key="activityIndex" :week="week"
+        :weekIndex="weekIndex" :activity="activity" :activityIndex="activityIndex"
+        @remove-activity="handleRemoveActivity(weekIndex, activityIndex)" />
+    </TransitionGroup>
   </div>
-
-  <TransitionGroup name="list" tag="div" class="flex flex-wrap gap-5">
-    <Activity v-for="(activity, activityIndex) in week.activities" :key="activityIndex" :week="week"
-      :weekIndex="weekIndex" :activity="activity" :activityIndex="activityIndex"
-      @remove-activity="handleRemoveActivity(weekIndex, activityIndex)" />
-  </TransitionGroup>
-
-
 </template>
 
 <style scoped>
