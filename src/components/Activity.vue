@@ -1,6 +1,6 @@
 <script setup>
-import { ArrowRightIcon, ChevronDownIcon, ChevronRightIcon, TrashIcon, EllipsisVerticalIcon, ArrowUturnLeftIcon, ClockIcon, DocumentTextIcon, PlusIcon, CheckCircleIcon } from '@heroicons/vue/24/solid'
-import { PencilIcon } from '@heroicons/vue/16/solid';
+import { ArrowRightIcon, ChevronDownIcon, ChevronRightIcon, TrashIcon, EllipsisVerticalIcon, ArrowUturnLeftIcon, ClockIcon, DocumentTextIcon, CheckCircleIcon } from '@heroicons/vue/24/solid'
+import { PencilIcon, PlusIcon } from '@heroicons/vue/16/solid';
 import { useCourseStore } from '@/stores/course.js'
 import { ref, computed, watch, onMounted } from 'vue';
 import MultiSelect from 'primevue/multiselect';
@@ -13,7 +13,7 @@ import SelectButton from 'primevue/selectbutton';
 import MoodleActivity from '@/components/ui/MoodleActivity.vue';
 import Label from '@/components/forms/Label.vue'
 import Textarea from 'primevue/textarea';
-import PlusButton from './buttons/PlusButton.vue';
+import Pbutton from '@/components/buttons/Pbutton.vue'
 
 
 const course = useCourseStore();
@@ -158,7 +158,7 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
 
 
 
-        <h3 class="text-md font-medium"> {{ activity.title || 'Activity ' + (activityIndex + 1) }} </h3>
+        <h3 class="text-md font-medium"> {{ activity.title }} </h3>
 
 
         <Button unstyled @click="togglemanageActivity" aria-label="Manage Activity"
@@ -209,7 +209,11 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
                 All about Learning Types
               </InfoButton>
             </div>
-            <PlusButton @click="toggleEditTypes" title="Add or edit associated Learning Types" />
+            <Pbutton @click="toggleEditTypes" aria-label="Add or edit associated Learning Types">
+              <template #icon>
+                <PlusIcon class="w-5 h-5" />
+              </template>
+            </Pbutton>
           </div>
           <ul v-if="activity && activity.selectedTypes && activity.selectedTypes.length > 0"
             class="grid grid-cols-3 grid-flow-row gap-2 py-1">
@@ -235,7 +239,11 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
               </InfoButton>
             </div>
 
-            <PlusButton @click="toggleEditAlign" title="Add or edit associated Alignments" />
+            <Pbutton @click="toggleEditAlign" aria-label="Add or edit associated Alignments">
+              <template #icon>
+                <PlusIcon class="w-5 h-5" />
+              </template>
+            </Pbutton>
 
           </div>
           <ul v-if="activity && activity.selectedAlignments && activity.selectedAlignments.length > 0"
@@ -262,7 +270,11 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
               </InfoButton>
             </div>
 
-            <PlusButton @click="toggleSuggestMoodle" title="Add or edit suggested Moodle activities" />
+            <Pbutton @click="toggleSuggestMoodle" aria-label="Add or edit suggested Moodle activities">
+              <template #icon>
+                <PlusIcon class="w-5 h-5" />
+              </template>
+            </Pbutton>
 
 
           </div>

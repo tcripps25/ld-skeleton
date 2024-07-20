@@ -7,7 +7,7 @@ import ScrollPanel from 'primevue/scrollpanel';
 </script>
 
 <template>
-    <div class="flex my-5 grow overflow-hidden rounded-s-lg">
+    <div class="flex my-5 grow overflow-hidden rounded-s-lg relative">
         <div class="bg-slate-200 dark:bg-black flex-col flex grow ">
             <div class="flex grow h-full">
                 <div class="p-5 flex-col flex grow overflow-y-auto overflow-x-hidden ">

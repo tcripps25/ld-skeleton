@@ -10,13 +10,15 @@ import InputText from 'primevue/inputtext';
 import Meter from '@/components/charts/Meter.vue';
 import Textarea from 'primevue/textarea';
 import Button from 'primevue/button';
+import Pbutton from './buttons/Pbutton.vue';
+
 import { CheckCircleIcon, ChevronDownIcon, PlusCircleIcon } from '@heroicons/vue/24/solid';
 
 import DetailSidebar from '@/components/ui/DetailSidebar.vue'
 import Page from './Page.vue';
 import PageHeader from './PageHeader.vue';
 import ActivityClass from '@/classes/Activity';
-import { PencilIcon } from '@heroicons/vue/16/solid';
+import { PencilIcon, PlusIcon } from '@heroicons/vue/16/solid';
 
 import GptPanel from '@/ai/GptPanel.vue';
 const route = useRoute()
@@ -47,7 +49,7 @@ const addActivity = (weekIndex) => {
   newActivity.duration = 0
 
   if (props.week.activities.length >= 0) {
-    newActivity.name = 'New Activity ' + (props.week.activities.length + 1)
+    newActivity.title = 'New Activity ' + (props.week.activities.length + 1)
   }
   course.weeks[weekIndex].activities.push(newActivity);
 };
@@ -72,11 +74,12 @@ watch(weekStats, (newStats) => {
       <PageHeader :title="week.name">
         <template #toolbar>
           <div class="flex justify-center items-center gap-2">
-            <Button @click="addActivity(index)" label="Add Activity">
+            <Pbutton @click="addActivity(index)" label="Add Activity">
               <template #icon>
-                <PlusCircleIcon class="w-5 h-5" />
+                <PlusIcon class="w-5 h-5" />
               </template>
-            </Button>
+            </Pbutton>
+
             <GptPanel :week-index="index" />
           </div>
         </template>
@@ -125,10 +128,10 @@ watch(weekStats, (newStats) => {
       </Transition>
     </template>
     <div v-if="week">
-      <div class="flex grow flex-col gap-7">
 
-        <Week :week="week" :week-index="index" :showTitle="false" />
-      </div>
+
+      <Week :week="week" :week-index="index" :showTitle="false" />
+
     </div>
 
 

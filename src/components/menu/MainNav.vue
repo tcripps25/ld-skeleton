@@ -1,13 +1,14 @@
 <script setup>
 import { RouterLink, useRoute } from 'vue-router';
 import { PaintBrushIcon, HomeIcon, ChartPieIcon, Cog8ToothIcon, ArrowUpOnSquareIcon, ChevronDownIcon } from '@heroicons/vue/24/solid';
+import { PlusIcon } from '@heroicons/vue/16/solid';
 import { useCourseStore } from '@/stores/course.js';
 import { computed } from 'vue';
 import WeekLink from '@/components/menu/WeekLink.vue';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import MenuItem from './MenuItem.vue';
 import Button from 'primevue/button';
-import PlusButton from '../buttons/PlusButton.vue';
+import Pbutton from '../buttons/Pbutton.vue';
 
 const course = useCourseStore();
 const route = useRoute();
@@ -46,7 +47,12 @@ const handleAddWeek = () => {
         <li class="mb-3 relative">
           <div class="flex justify-between p-2 items-center border-b">
             <h3>Weeks</h3>
-            <PlusButton @click="handleAddWeek" title="Add Week" class="-mr-3" />
+            <Pbutton @click="handleAddWeek" aria-label="Add Week" class="-mr-3">
+              <template #icon>
+                <PlusIcon class="w-5 h-5" />
+              </template>
+            </Pbutton>
+
           </div>
         </li>
         <!-- Rounded top of week timeline -->
