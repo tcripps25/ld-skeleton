@@ -3,6 +3,7 @@ import VisualiseView from '@/views/VisualiseView.vue'
 import DesignView from '@/views/DesignView.vue'
 import SetupView from '@/views/SetUpView.vue'
 import SingleWeek from '@/components/SingleWeek.vue'
+import SingleActivity from '@/components/SingleActivity.vue'
 import { useCourseStore } from '@/stores/course.js'
 import PublishView from '@/views/PublishView.vue'
 
@@ -32,7 +33,21 @@ const router = createRouter({
             const index = parseInt(route.params.index)
             const week = course.weeks[index]
             return { index, week }
-          }
+          },
+          children: [
+            {
+              path: ':activityIndex',
+              name: 'activity-detail',
+              component: SingleActivity,
+              props: (route) => {
+                const course = useCourseStore()
+                const activityIndex = parseInt(route.params.activityIndex)
+                const index = parseInt(route.params.index) // get index from parent route params
+                const activity = course.weeks[index].activities[activityIndex]
+                return { index, activityIndex, activity }
+              }
+            }
+          ]
         }
       ]
     },

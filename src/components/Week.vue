@@ -6,6 +6,7 @@ import { PlusCircleIcon, XMarkIcon } from '@heroicons/vue/24/solid';
 import Panel from './ui/Panel.vue';
 import Button from 'primevue/button';
 import Carousel from 'primevue/carousel';
+import { RouterLink, RouterView } from 'vue-router';
 
 const course = useCourseStore()
 
@@ -34,19 +35,21 @@ const panelTitle = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col -my-5 -mx-5 gap-5 w-full">
-    <div class="flex p-5 gap-5 overflow-x-auto">
-      <div v-for="(activity, index) in week.activities" :key="index"
-        class="bg-white shadow-sm text-sky-800 p-3 rounded grow-0 flex-shrink-0 ">
+  <div class="flex flex-col gap-5 w-full">
+    <div class="flex gap-5 overflow-x-auto">
+      <RouterLink :to="'/design/' + weekIndex + '/' + index" v-for="(activity, index) in week.activities" :key="index"
+        class="bg-white shadow-sm text-sky-800 p-3 rounded grow-0 flex-shrink-0 hover:bg-slate-50">
         <h3 class="font-medium">{{ activity.title }}</h3>
-      </div>
+      </RouterLink>
     </div>
 
-    <TransitionGroup name="list" tag="div" class="flex flex-wrap gap-5 pl-5">
+    <RouterView />
+    <!-- <TransitionGroup name="list" tag="div" class="flex flex-wrap gap-5 pl-5">
       <Activity v-for="(activity, activityIndex) in week.activities" :key="activityIndex" :week="week"
         :weekIndex="weekIndex" :activity="activity" :activityIndex="activityIndex"
         @remove-activity="handleRemoveActivity(weekIndex, activityIndex)" />
     </TransitionGroup>
+    -->
   </div>
 </template>
 
