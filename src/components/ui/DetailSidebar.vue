@@ -21,7 +21,7 @@ const ToggleShow = () => {
 <template>
 
 
-    <div class="bg-white p-5 flex-initial overflow-y-auto overflow-x-hidden max-w-[26rem] min-w-[26rem] flex flex-col gap-4 transition-all duration-300 shrink-0"
+    <div class="bg-white p-5 flex-none overflow-y-auto overflow-x-hidden max-w-[26rem] min-w-[26rem] flex flex-col gap-4 transition-all duration-300 shrink-0"
         :class="{ '!max-w-[4.5rem] min-w-[4.5rem]': !show }">
 
         <div id="sidebar-header">

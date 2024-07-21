@@ -1,12 +1,11 @@
 <script setup>
 import { TransitionGroup, computed, onMounted } from 'vue';
-import Activity from '@/components/Activity.vue';
+
 import { useCourseStore } from '@/stores/course.js'
-import { PlusCircleIcon, XMarkIcon } from '@heroicons/vue/24/solid';
-import Panel from './ui/Panel.vue';
-import Button from 'primevue/button';
-import Carousel from 'primevue/carousel';
-import { RouterLink, RouterView } from 'vue-router';
+
+import { RouterView } from 'vue-router';
+import ScrollPanel from 'primevue/scrollpanel';
+import ActivityCard from '@/components/ActivityCard.vue';
 
 const course = useCourseStore()
 
@@ -32,18 +31,37 @@ const panelTitle = computed(() => {
   return props.showTitle ? props.week.name : '';
 });
 
+const items = computed(() =>
+  props.week.activities.map((activity, index) => ({
+    route: `/design/${props.weekIndex}/${index}`,
+    label: activity.title
+  }))
+);
+
+
 </script>
 
 <template>
-  <div class="flex flex-col gap-5 w-full">
-    <div class="flex gap-5 overflow-x-auto">
-      <RouterLink :to="'/design/' + weekIndex + '/' + index" v-for="(activity, index) in week.activities" :key="index"
-        class="bg-white shadow-sm text-sky-800 p-3 rounded grow-0 flex-shrink-0 hover:bg-slate-50">
-        <h3 class="font-medium">{{ activity.title }}</h3>
-      </RouterLink>
-    </div>
+
+  <div class="flex flex-col ">
+
+    <ScrollPanel class="w-full h-auto  -mx-5 -my-5">
+      <TransitionGroup name="list" tag="ul" class="flex gap-3  p-5 ">
+        <li v-for="activity in items" :key="activity" class="">
+          <ActivityCard :item="activity" :weekIndex="weekIndex" />
+        </li>
+
+      </TransitionGroup>
+    </ScrollPanel>
+
+
+
+
+
 
     <RouterView />
+
+
     <!-- <TransitionGroup name="list" tag="div" class="flex flex-wrap gap-5 pl-5">
       <Activity v-for="(activity, activityIndex) in week.activities" :key="activityIndex" :week="week"
         :weekIndex="weekIndex" :activity="activity" :activityIndex="activityIndex"
@@ -54,6 +72,8 @@ const panelTitle = computed(() => {
 </template>
 
 <style scoped>
+.list-move,
+/* apply transition to moving elements */
 .list-enter-active,
 .list-leave-active {
   transition: all 0.5s ease;
@@ -62,9 +82,11 @@ const panelTitle = computed(() => {
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
-  transform: translateX(30px);
+
 }
 
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
 .list-leave-active {
   position: absolute;
 }

@@ -127,12 +127,12 @@ watch(weekStats, (newStats) => {
         </div>
       </Transition>
     </template>
-    <div v-if="week">
 
 
-      <Week :week="week" :week-index="index" :showTitle="false" />
 
-    </div>
+    <Week v-if="week" :week="week" :week-index="index" />
+
+
 
 
     <div v-else class="">

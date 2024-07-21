@@ -9,7 +9,7 @@ const props = defineProps({
     solid: Boolean,
 })
 
-const computedClasses = computed(() => {
+const computedRootClasses = computed(() => {
     return [
         'justify-center',
         'items-center',
@@ -17,11 +17,10 @@ const computedClasses = computed(() => {
         'p-1',
         'transition',
         'flex',
-        'hover:bg-slate-200',
         'gap-1',
         'text-sm',
         props.label ? 'px-3 py-2' : '',
-        props.solid ? 'bg-sky-700 text-sky-50 hover:bg-sky-600' : 'text-sky-600'
+        props.solid ? 'bg-sky-700 text-sky-50 hover:bg-sky-600' : 'hover:bg-slate-200 text-sky-600'
     ].join(' ');
 });
 
@@ -29,7 +28,7 @@ const computedClasses = computed(() => {
 
 <template>
     <Button unstyled :label="label" :aria-label="ariaLabel ? ariaLabel : label" :title="ariaLabel ? ariaLabel : label"
-        :pt:root="computedClasses" :pt:label="label ? '' : 'hidden'">
+        :pt:root="computedRootClasses" :pt:label="label ? '' : 'hidden'">
         <template #icon>
             <slot name="icon">
 
