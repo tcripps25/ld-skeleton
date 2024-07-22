@@ -2,11 +2,12 @@
 import { TransitionGroup, computed, onMounted } from 'vue';
 
 import { useCourseStore } from '@/stores/course.js'
-
+import Pbutton from './buttons/Pbutton.vue';
+import { ChevronLeftIcon, ChevronRightIcon, PlusIcon } from '@heroicons/vue/16/solid';
 import { RouterView } from 'vue-router';
 import ScrollPanel from 'primevue/scrollpanel';
 import ActivityCard from '@/components/ActivityCard.vue';
-
+import Panel from './ui/Panel.vue';
 const course = useCourseStore()
 
 // Define props
@@ -42,33 +43,46 @@ const items = computed(() =>
 </script>
 
 <template>
+  <Panel title="Activities">
+    <template #action>
+      <div class="flex gap-2">
+        <Pbutton @click="$emit('addActivity')" label="Add Activity">
+          <template #icon>
+            <PlusIcon class="w-5 h-5 " />
+          </template>
+        </Pbutton>
 
-  <div class="flex flex-col ">
-
-    <ScrollPanel class="w-full h-auto  -mx-5 -my-5">
-      <TransitionGroup name="list" tag="ul" class="flex gap-3  p-5 ">
-        <li v-for="activity in items" :key="activity" class="">
+      </div>
+    </template>
+    <template #subtitle>
+      <p>All Activities for this week will appear here. Use the controls on the right hand side to navigate through
+        activities or add a new Activity.</p>
+    </template>
+    <div class="-ml-5 flex gap-10 flex-initial">
+      <TransitionGroup name="list" tag="ul" class="flex flex-col w-54">
+        <li v-for="activity in items" :key="activity.route" class="">
           <ActivityCard :item="activity" :weekIndex="weekIndex" />
         </li>
-
       </TransitionGroup>
-    </ScrollPanel>
+      <!-- Activity shown here -->
+      <RouterView class="bg-slate-50 p-5 -mr-5 border-t border-s border-b rounded-s" />
+    </div>
+
+  </Panel>
 
 
 
 
 
 
-    <RouterView />
 
-
-    <!-- <TransitionGroup name="list" tag="div" class="flex flex-wrap gap-5 pl-5">
+  <!-- <TransitionGroup name="list" tag="div" class="flex flex-wrap gap-5 pl-5">
       <Activity v-for="(activity, activityIndex) in week.activities" :key="activityIndex" :week="week"
         :weekIndex="weekIndex" :activity="activity" :activityIndex="activityIndex"
         @remove-activity="handleRemoveActivity(weekIndex, activityIndex)" />
     </TransitionGroup>
     -->
-  </div>
+
 </template>
 
 <style scoped>

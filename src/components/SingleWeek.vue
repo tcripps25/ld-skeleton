@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, computed, watch, ref } from 'vue';
+import { computed, watch, ref } from 'vue';
 import Week from './Week.vue';
 import Panel from './ui/Panel.vue';
 import PieChart from '@/components/charts/PieChart.vue';
@@ -11,7 +11,7 @@ import Meter from '@/components/charts/Meter.vue';
 import Textarea from 'primevue/textarea';
 import Button from 'primevue/button';
 import Pbutton from './buttons/Pbutton.vue';
-
+import { EllipsisHorizontalIcon } from '@heroicons/vue/16/solid'
 import { CheckCircleIcon, ChevronDownIcon, PlusCircleIcon } from '@heroicons/vue/24/solid';
 
 import DetailSidebar from '@/components/ui/DetailSidebar.vue'
@@ -21,6 +21,7 @@ import ActivityClass from '@/classes/Activity';
 import { PencilIcon, PlusIcon } from '@heroicons/vue/16/solid';
 
 import GptPanel from '@/ai/GptPanel.vue';
+import ActivityLabel from './forms/ActivityLabel.vue';
 const route = useRoute()
 
 const props = defineProps({
@@ -33,9 +34,6 @@ const course = useCourseStore();
 
 
 
-onMounted(() => {
-  console.log(props.index);
-});
 
 const addDescActive = ref(false);
 
@@ -73,17 +71,16 @@ watch(weekStats, (newStats) => {
     <template #page-header>
       <PageHeader :title="week.name">
         <template #toolbar>
-          <div class="flex justify-center items-center gap-2">
-            <Pbutton solid @click="addActivity(index)" label="Add Activity">
-              <template #icon>
-                <PlusIcon class="w-5 h-5" />
-              </template>
-            </Pbutton>
-
-            <GptPanel :week-index="index" />
-          </div>
+          <Pbutton aria-label="Manage Week">
+            <template #icon>
+              <EllipsisHorizontalIcon class="w-5 h-5" />
+            </template>
+          </Pbutton>
         </template>
       </PageHeader>
+    </template>
+    <template #lead>
+      <p>Enter information about this week of your Module.</p>
     </template>
     <template #sidebar>
       <Transition name="slide-fade">
@@ -116,7 +113,7 @@ watch(weekStats, (newStats) => {
                 <p class="mb-3">An overview of the Learning Types you have used in this week of your course.
                 </p>
               </PieChart>
-              <PanelNotice enable>
+              <PanelNotice sidebar enable>
                 A glance at your Learning Type mix for this week. These types will also determine which
                 Moodle
                 activities
@@ -128,9 +125,18 @@ watch(weekStats, (newStats) => {
       </Transition>
     </template>
 
-
-
-    <Week v-if="week" :week="week" :week-index="index" />
+    <Panel title="General Information">
+      <div class="flex flex-col gap-3">
+        <ActivityLabel label="Week name" targetId="week-name" help="Enter a name for this week.">
+          <InputText v-model="week.name" id="week-name" />
+        </ActivityLabel>
+        <ActivityLabel label="Week description" targetId="week-description"
+          help="Describe the aims of this week to your students.">
+          <Textarea v-model="week.description" id="week-description" />
+        </ActivityLabel>
+      </div>
+    </Panel>
+    <Week v-if="week" :week="week" :week-index="index" @add-activity="addActivity(index)" />
 
 
 

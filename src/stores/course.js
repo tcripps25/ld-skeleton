@@ -110,8 +110,8 @@ export const useCourseStore = defineStore('course', () => {
     let maxMins = 0
     for (const week of weeks.value) {
       for (const activity of week.activities) {
-        if (activity.minutes > maxMins) {
-          maxMins = activity.minutes
+        if (activity.duration > maxMins) {
+          maxMins = activity.duration
         }
       }
     }

@@ -12,9 +12,9 @@ const isActive = computed(() => route.path === props.item.route);
 
 <template>
     <RouterLink class="group" :to="item.route">
-        <div class="w-28 h-16 rounded" :class="isActive ? 'bg-sky-600 ' : 'bg-slate-400 group-hover:bg-slate-300'">
-
+        <div class="rounded-e p-2 w-48 pl-5"
+            :class="isActive ? 'bg-sky-700 text-sky-50' : ' group-hover:bg-slate-100 '">
+            <span class="text-sm block overflow-hidden whitespace-nowrap text-ellipsis">{{ item.label }}</span>
         </div>
-        <span class="text-sm text-center block mt-1 mb-2">{{ item.label }}</span>
     </RouterLink>
 </template>

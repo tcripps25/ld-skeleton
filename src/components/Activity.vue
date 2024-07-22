@@ -173,7 +173,7 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
         :class="{ '!bg-slate-200': editMode }">
 
         <Label :for="'activity-' + activityIndex + '-instructions'" title="Instructions:" />
-        <Textarea :id="'activity-' + activityIndex + '-instructions'"></Textarea>
+        <Textarea v-model="activity.instructions" :id="'activity-' + activityIndex + '-instructions'"></Textarea>
 
 
         <div class="flex">

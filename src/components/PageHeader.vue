@@ -7,7 +7,7 @@ const props = defineProps({
 </script>
 <template>
   <div
-    class="px-5 py-3 sticky -top-5 -mx-5 -mt-5 z-10  bg-slate-100 dark:bg-zinc-800 border-slate-200 dark:border-zinc-800 flex justify-between min-h-14 max-h-14">
+    class=" py-3  bg-white -mt-5 z-10 dark:bg-zinc-800 border-slate-200 dark:border-zinc-800 flex justify-between min-h-14 max-h-14">
     <div class="flex justify-between items-center">
 
       <h1 class="text-xl mb-0 font-semibold flex gap-2 items-center">{{ title }}</h1>

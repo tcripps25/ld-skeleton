@@ -32,11 +32,11 @@ const handleAddWeek = () => {
     <Cog8ToothIcon class="w-5 h-5" />
     </MenuItem>
     <div class="">
-      <Button label="Design" @click="toggleShowDesign" pt:root:class="p-1 flex justify-start gap-3 items-center w-full"
-        id="show-design-button">
-        <ChevronDownIcon class="w-4 h-4 ml-1 -rotate-90 transition" :class="{ '!rotate-0': showDesign }" />
-        <h3 :class="{ 'font-semibold': showDesign }">Design</h3>
-      </Button>
+      <Pbutton label="Design" @click="toggleShowDesign" id="show-design-button">
+        <template #icon>
+          <ChevronDownIcon class="w-4 h-4 ml-1 -rotate-90 transition" :class="{ '!rotate-0': showDesign }" />
+        </template>
+      </Pbutton>
     </div>
     <Transition name="drawer">
       <ul v-if="showDesign" class="px-5 flex-col bg-slate-50 py-4 border-y shadow-inner relative -mx-5">

@@ -14,8 +14,7 @@ import MainSidebar from "@/components/MainSidebar.vue"
 <template>
   <div class="flex grow h-screen overflow-hidden">
     <MainSidebar />
-    <main class="flex grow bg-white ">
-      <!-- Render the Design view with the imported data -->
+    <main class="flex grow bg-white">
       <RouterView class="flex grow relative" />
     </main>
   </div>
