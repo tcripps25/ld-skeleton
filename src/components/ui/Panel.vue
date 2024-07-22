@@ -15,7 +15,7 @@ const props = defineProps({
             <slot v-if="$slots.title || title" name="title">
                 <h2 v-if="title" class="text-lg font-semibold text-slate-500 ">{{ title }}</h2>
             </slot>
-            <div class="ml-auto" v-if="$slots.action">
+            <div class="ml-auto flex items-center" v-if="$slots.action">
                 <slot v-if="$slots.action" name="action" />
             </div>
         </div>

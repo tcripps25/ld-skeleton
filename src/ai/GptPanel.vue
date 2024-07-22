@@ -8,7 +8,7 @@ import { useCourseStore } from '@/stores/course.js'
 import Textarea from 'primevue/textarea';
 import { SparklesIcon } from '@heroicons/vue/24/solid';
 import EnableLogo from '@/assets/enable-sm.png'
-
+import Pbutton from '@/components/buttons/Pbutton.vue';
 const props = defineProps({
     weekIndex: Number
 });
@@ -77,11 +77,11 @@ async function main() {
 </script>
 
 <template>
-    <Button v-if="course.key" label="Activity Assistant" @click="visible = true"
-        pt:root:class="bg-sky-600 text-sm transition hover:bg-sky-500 text-sky-50 px-3 py-2 flex rounded-md flex gap-1 items-center !mt-0 justify-center w-max">
-        Activity Assistant
-        <SparklesIcon class="h-5 w-5" />
-    </Button>
+    <Pbutton v-if="course.key" label="Activity Assistant" @click="visible = true">
+        <template #icon>
+            <SparklesIcon class="h-5 w-5" />
+        </template>
+    </Pbutton>
 
     <Dialog v-model:visible="visible" modal header="Activity Assistant" :style="{ width: '25rem' }">
         <template #header>
@@ -106,15 +106,3 @@ async function main() {
     </Dialog>
 
 </template>
-
-
-<style scoped>
-textarea {
-    width: 100%;
-    height: 100px;
-}
-
-button {
-    margin-top: 10px;
-}
-</style>

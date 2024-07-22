@@ -8,6 +8,7 @@ import { RouterView } from 'vue-router';
 import ScrollPanel from 'primevue/scrollpanel';
 import ActivityCard from '@/components/ActivityCard.vue';
 import Panel from './ui/Panel.vue';
+import GptPanel from '@/ai/GptPanel.vue';
 const course = useCourseStore()
 
 // Define props
@@ -45,23 +46,23 @@ const items = computed(() =>
 <template>
   <Panel title="Activities">
     <template #action>
-      <div class="flex gap-2">
-        <Pbutton @click="$emit('addActivity')" label="Add Activity">
-          <template #icon>
-            <PlusIcon class="w-5 h-5 " />
-          </template>
-        </Pbutton>
 
-      </div>
+      <Pbutton @click="$emit('addActivity')" label="Add Activity">
+        <template #icon>
+          <PlusIcon class="w-5 h-5 " />
+        </template>
+      </Pbutton>
+      <GptPanel :weekIndex="weekIndex" />
+
     </template>
     <template #subtitle>
       <p>All Activities for this week will appear here. Use the controls on the right hand side to navigate through
         activities or add a new Activity.</p>
     </template>
     <div class="-ml-5 flex gap-10 flex-initial">
-      <TransitionGroup name="list" tag="ul" class="flex flex-col w-54">
-        <li v-for="activity in items" :key="activity.route" class="">
-          <ActivityCard :item="activity" :weekIndex="weekIndex" />
+      <TransitionGroup name="list" tag="ol" class="flex flex-col w-54">
+        <li v-for="(activity, index) in items" :key="activity.route" class="">
+          <ActivityCard :item="activity" :weekIndex="weekIndex" :index="index" />
         </li>
       </TransitionGroup>
       <!-- Activity shown here -->
