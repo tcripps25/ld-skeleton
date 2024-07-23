@@ -1,46 +1,168 @@
 <script setup>
+import { ref, computed } from 'vue';
 import Textarea from 'primevue/textarea';
 import InputText from 'primevue/inputtext';
-import Activity from './Activity.vue';
 import Panel from './ui/Panel.vue';
 import ActivityLabel from '@/components/forms/ActivityLabel.vue'
 import ToggleSwitch from 'primevue/toggleswitch';
 import SelectButton from 'primevue/selectbutton';
-import Pbutton from './buttons/Pbutton.vue';
-import { EllipsisHorizontalIcon } from '@heroicons/vue/16/solid';
-
+import Divider from 'primevue/divider';
+import { useCourseStore } from '@/stores/course.js'
 
 const props = defineProps({
+    weekIndex: Number,
     activity: Object,
     activityIndex: Number,
+
 })
+
+const course = useCourseStore()
+
+const activityWeek = ref(course.getWeek(props.weekIndex))
+
+const cardCount = computed(() => Math.min((activityWeek.value.activityCount - 1), 4));
+
+
+const dynamicBgClass = (index) => {
+    const baseColor = 100;
+    const increment = 100;
+    const bg = 'bg-slate-400 bg-slate-500 bg-slate-600 bg-slate-700'
+    const colorValue = baseColor + (index * increment);
+    // Ensure the color value does not exceed a certain limit if necessary (e.g., 900)
+    const clampedColorValue = Math.min(colorValue, 900);
+    return `bg-slate-${clampedColorValue}`;
+}
+
+const isAligned = (item) => {
+    return computed({
+        get: () => {
+            // Check again within the getter in case of reactivity issues
+            if (!props.activity.alignments) {
+                props.activity.alignments = [];
+            }
+            return props.activity.selectedAlignments.some(alignment => alignment.value === item.value);
+        },
+        set: (newValue) => {
+            if (!props.activity.selectedAlignments) {
+                props.activity.selectedAlignments = [];
+            }
+
+            if (newValue) {
+                if (!props.activity.selectedAlignments.some(alignment => alignment.value === item.value)) {
+                    props.activity.selectedAlignments.push(item);
+                }
+            } else {
+                const index = props.activity.selectedAlignments.findIndex(alignment => alignment.value === item.value);
+                if (index > -1) {
+                    props.activity.selectedAlignments.splice(index, 1);
+                }
+            }
+        }
+    });
+};
 </script>
 
 <template>
-    <Panel class="">
 
-        <div class="flex flex-col gap-5">
-            <ActivityLabel label="Title" targetId="activity-name" help="Enter a descriptive title for this Activity.">
-                <InputText id="activity-name" v-model="activity.title" />
-            </ActivityLabel>
-            <ActivityLabel label="Instructions" targetId="activity-instructions"
-                help="Describe the steps involved in this Activity to your students.">
-                <Textarea id="activity-instructions" v-model="activity.instructions" />
-            </ActivityLabel>
-            <ActivityLabel label="Duration (mins)" targetId="activity-duration"
-                help="How long will this Activity take in total.">
-                <InputText type="number" min="0" :step="1" id="activity-duration" v-model="activity.duration" />
-            </ActivityLabel>
-            <ActivityLabel label="Group" targetId="activity-group-toggle" help="Is this a group Activity?">
-                <ToggleSwitch v-model="activity.isGroup" inputId="activity-group-toggle" />
-            </ActivityLabel>
-            <ActivityLabel label="Learning Mode" targetId="activity-mode-select"
-                help="Indicate the learning mode of this Activity.">
-                <SelectButton id="activity-mode-select" :options="['Sync', 'Async']" aria-labelledby="basic"
-                    v-model="activity.mode" />
-            </ActivityLabel>
-            <!--
+    <div class="relative w-full max-w-7xl" :style="{ marginTop: `${cardCount * 10}px` }">
+        <Panel class=" bg-slate-50 p-5 border rounded-lg h-full relative z-20 shadow">
+            <div class="grid xs:grid-cols-1 2xl:grid-cols-2 gap-5">
+                <div class="flex-col flex gap-5 grow">
+                    <ActivityLabel label="Title" targetId="activity-name"
+                        help="Enter a descriptive title for this Activity.">
+                        <InputText id="activity-name" v-model="activity.title" />
+                    </ActivityLabel>
+                    <ActivityLabel label="Instructions" targetId="activity-instructions"
+                        help="Describe the steps involved in this Activity to your students.">
+                        <Textarea autoResize rows="5" id="activity-instructions" v-model="activity.instructions" />
+                    </ActivityLabel>
+                    <ActivityLabel horizontal label="Duration (mins)" targetId="activity-duration"
+                        help="How long will this Activity take in total.">
+                        <InputText type="number" min="0" :step="1" id="activity-duration" v-model="activity.duration" />
+                    </ActivityLabel>
+                    <ActivityLabel horizontal label="Group" targetId="activity-group-toggle"
+                        help="Is this a group Activity?">
+                        <ToggleSwitch v-model="activity.isGroup" inputId="activity-group-toggle" />
+                    </ActivityLabel>
+                    <ActivityLabel horizontal label="Learning Mode" targetId="activity-mode-select"
+                        help="Indicate the learning mode of this Activity.">
+                        <SelectButton id="activity-mode-select" :options="['Sync', 'Async']" aria-labelledby="basic"
+                            v-model="activity.mode" />
+                    </ActivityLabel>
+
+                </div>
+
+                <div class="grow flex-1 flex-col gap-5">
+                    <div v-for="(option, index) in course.alignmentOptions" :key="index">
+                        <div class="flex justify-between items-center ">
+                            <label class="w-full" :for="'alignment-group-' + index">
+                                <h3 class="font-medium">{{ option.group }}</h3>
+                            </label>
+
+
+                        </div>
+                        <Transition name="fade">
+                            <ul class="flex flex-col divide-y divide-slate-300 ml-4">
+                                <li v-for="(item, index) in option.items" :key="index"
+                                    class=" flex gap-3  hover:bg-slate-100 px-2 py-3 hover:rounded transition">
+                                    <span
+                                        class="min-w-6 max-h-6 text-sm font-medium flex items-center justify-center bg-cyan-700 text-white rounded-full">{{
+                                            (index++ + 1) }}</span>
+                                    <label class="w-full mr-2"
+                                        :for="'activity-' + activityIndex + item.value + '-switch-' + index">
+                                        <span v-if="item.nickname">{{ item.nickname }}</span>
+                                        <span v-else>{{ item.label }}</span>
+                                    </label>
+                                    <div class="w-max">
+                                        <ToggleSwitch v-model="isAligned(item).value"
+                                            :inputId="'activity-' + activityIndex + item.value + '-switch-' + index" />
+                                    </div>
+                                </li>
+                            </ul>
+                        </Transition>
+                    </div>
+                </div>
+                <!--
             <Activity :activity="activity" />-->
-        </div>
-    </Panel>
+            </div>
+        </Panel>
+        <TransitionGroup name="list">
+            <div v-for="index in cardCount" :key="index"
+                :class="['rounded-lg shadow-sm', 'h-full', 'w-full', 'absolute', dynamicBgClass(index)]"
+                :style="{ top: `-${index * 20}px`, transform: `scale(${1 - index * 0.02})`, zIndex: `${cardCount - index}` }">
+            </div>
+        </TransitionGroup>
+    </div>
+
 </template>
+
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+}
+
+.list-move,
+/* apply transition to moving elements */
+.list-enter-active,
+.list-leave-active {
+    transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+    opacity: 0;
+    transform: translateX(10px);
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list-leave-active {
+    position: absolute;
+}
+</style>

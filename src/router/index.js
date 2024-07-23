@@ -42,9 +42,9 @@ const router = createRouter({
               props: (route) => {
                 const course = useCourseStore()
                 const activityIndex = parseInt(route.params.activityIndex)
-                const index = parseInt(route.params.index) // get index from parent route params
-                const activity = course.weeks[index].activities[activityIndex]
-                return { index, activityIndex, activity }
+                const weekIndex = parseInt(route.params.index) // get index from parent route params
+                const activity = course.weeks[weekIndex].activities[activityIndex]
+                return { weekIndex, activityIndex, activity }
               }
             }
           ]

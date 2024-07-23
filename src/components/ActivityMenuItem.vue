@@ -17,7 +17,7 @@ const listNumber = ref(props.index + 1)
     <RouterLink class="group" :to="item.route">
         <div class="rounded-e p-2 w-48 pl-5"
             :class="isActive ? 'bg-sky-700 text-sky-50' : ' group-hover:bg-slate-100 '">
-            <div class="flex gap-2 items-center">{{ listNumber }}.
+            <div class="text-sm flex gap-2 items-center">{{ listNumber }}.
                 <span class="text-sm block overflow-hidden whitespace-nowrap text-ellipsis">{{ item.label }}</span>
             </div>
         </div>

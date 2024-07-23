@@ -352,6 +352,10 @@ export const useCourseStore = defineStore('course', () => {
     weeks.value.push(week)
   }
 
+  const getWeek = (index) => {
+    return weeks.value[index]
+  }
+
   return {
     title,
     startDate,
@@ -381,6 +385,7 @@ export const useCourseStore = defineStore('course', () => {
     activityTypeColorAndCount,
     getActivitiesForWeek,
     getActivityColor,
-    key
+    key,
+    getWeek
   }
 })

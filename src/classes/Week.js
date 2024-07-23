@@ -24,4 +24,12 @@ export default class Week {
   get formattedDate() {
     return this.date.toLocaleDateString('en-GB') // Format the date as dd/mm/yyyy
   }
+
+  get activityCount() {
+    if (this.activities) {
+      return this.activities.length
+    } else {
+      return 0
+    }
+  }
 }

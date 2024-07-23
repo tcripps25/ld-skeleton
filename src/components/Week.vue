@@ -6,7 +6,7 @@ import Pbutton from './buttons/Pbutton.vue';
 import { ChevronLeftIcon, ChevronRightIcon, PlusIcon } from '@heroicons/vue/16/solid';
 import { RouterView } from 'vue-router';
 import ScrollPanel from 'primevue/scrollpanel';
-import ActivityCard from '@/components/ActivityCard.vue';
+import ActivityMenuItem from '@/components/ActivityMenuItem.vue';
 import Panel from './ui/Panel.vue';
 import GptPanel from '@/ai/GptPanel.vue';
 const course = useCourseStore()
@@ -59,15 +59,20 @@ const items = computed(() =>
       <p>All Activities for this week will appear here. Use the controls on the right hand side to navigate through
         activities or add a new Activity.</p>
     </template>
-    <div class="-ml-5 flex gap-10 flex-initial">
-      <TransitionGroup name="list" tag="ol" class="flex flex-col w-54">
-        <li v-for="(activity, index) in items" :key="activity.route" class="">
-          <ActivityCard :item="activity" :weekIndex="weekIndex" :index="index" />
-        </li>
-      </TransitionGroup>
+
+    <div class="-ml-5 flex gap-10 flex-initial mt-10">
+      <div class="block">
+        <TransitionGroup name="list" tag="ol" class="flex flex-col w-54 sticky top-0">
+          <li v-for="(activity, index) in items" :key="activity.route" class="">
+            <ActivityMenuItem :item="activity" :weekIndex="weekIndex" :index="index" />
+          </li>
+        </TransitionGroup>
+      </div>
       <!-- Activity shown here -->
-      <RouterView class="bg-slate-50 p-5 -mr-5 border-t border-s border-b rounded-s" />
+
+      <RouterView />
     </div>
+
 
   </Panel>
 
