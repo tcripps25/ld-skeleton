@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useCourseStore } from '@/stores/course.js'
 import { useRouter, RouterLink } from 'vue-router';
 import Menu from 'primevue/menu';
@@ -14,12 +14,12 @@ const items = ref([
       {
         label: 'What is Module Designer?',
         icon: 'pi pi-question-circle',
-        route: ''
+        route: '/about'
       },
       {
         label: 'Help',
         icon: 'pi pi-info-circle',
-        route: ''
+        route: '/help'
       },
     ]
   },
@@ -50,6 +50,15 @@ const items = ref([
   },
 ]);
 
+const weeksExist = computed(() => {
+  // Check if course.weeks exists and has length
+  if (!course.weeks || course.weeks.length === 0) {
+    return false
+  } else {
+    return true
+  }
+})
+
 </script>
 
 <template>
@@ -65,7 +74,7 @@ const items = ref([
           <span class="ml-2">{{ item.label }}</span>
         </div>
       </RouterLink>
-      <ModuleMenu v-if="item.label == 'Design'" class="ml-8 relative" />
+      <ModuleMenu v-if="item.label == 'Design' && weeksExist" class="ml-8 relative" />
     </template>
   </Menu>
 
