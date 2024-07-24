@@ -1,7 +1,7 @@
 <script setup>
 
 import { RouterView } from "vue-router";
-
+import 'primeicons/primeicons.css'
 import MainSidebar from "@/components/MainSidebar.vue"
 
 

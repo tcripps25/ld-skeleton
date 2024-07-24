@@ -8,6 +8,7 @@ import ToggleSwitch from 'primevue/toggleswitch';
 import SelectButton from 'primevue/selectbutton';
 import Divider from 'primevue/divider';
 import { useCourseStore } from '@/stores/course.js'
+import Fieldset from 'primevue/fieldset';
 
 const props = defineProps({
     weekIndex: Number,
@@ -91,37 +92,40 @@ const isAligned = (item) => {
                     </ActivityLabel>
 
                 </div>
-
-                <div class="grow flex-1 flex-col gap-5">
-                    <div v-for="(option, index) in course.alignmentOptions" :key="index">
-                        <div class="flex justify-between items-center ">
-                            <label class="w-full" :for="'alignment-group-' + index">
-                                <h3 class="font-medium">{{ option.group }}</h3>
-                            </label>
-
-
+                <Fieldset toggleable legend="Alignments" pt:legend="!bg-transparent" pt:root="!bg-transparent">
+                    <div class="">
+                        <p class="text-sm mb-4">Select which Learning Outcomes or Assessments this
+                            Activity
+                            is aligned with.</p>
+                        <div v-for="(option, index) in course.alignmentOptions" :key="index">
+                            <Divider v-if="index != 0" />
+                            <div class="flex justify-between items-center ">
+                                <label class="w-full" :for="'alignment-group-' + index">
+                                    <h3 class="font-medium">{{ option.group }}</h3>
+                                </label>
+                            </div>
+                            <Transition name="fade">
+                                <ul class="flex flex-col">
+                                    <li v-for="(item, index) in option.items" :key="index"
+                                        class=" flex gap-3  hover:bg-slate-100 px-2 py-3 hover:rounded transition">
+                                        <span
+                                            class="min-w-6 max-h-6 text-sm font-medium flex items-center justify-center bg-cyan-700 text-white rounded-full">{{
+                                                (index++ + 1) }}</span>
+                                        <label class="w-full mr-2"
+                                            :for="'activity-' + activityIndex + item.value + '-switch-' + index">
+                                            <span v-if="item.nickname">{{ item.nickname }}</span>
+                                            <span v-else>{{ item.label }}</span>
+                                        </label>
+                                        <div class="w-max">
+                                            <ToggleSwitch v-model="isAligned(item).value"
+                                                :inputId="'activity-' + activityIndex + item.value + '-switch-' + index" />
+                                        </div>
+                                    </li>
+                                </ul>
+                            </Transition>
                         </div>
-                        <Transition name="fade">
-                            <ul class="flex flex-col divide-y divide-slate-300 ml-4">
-                                <li v-for="(item, index) in option.items" :key="index"
-                                    class=" flex gap-3  hover:bg-slate-100 px-2 py-3 hover:rounded transition">
-                                    <span
-                                        class="min-w-6 max-h-6 text-sm font-medium flex items-center justify-center bg-cyan-700 text-white rounded-full">{{
-                                            (index++ + 1) }}</span>
-                                    <label class="w-full mr-2"
-                                        :for="'activity-' + activityIndex + item.value + '-switch-' + index">
-                                        <span v-if="item.nickname">{{ item.nickname }}</span>
-                                        <span v-else>{{ item.label }}</span>
-                                    </label>
-                                    <div class="w-max">
-                                        <ToggleSwitch v-model="isAligned(item).value"
-                                            :inputId="'activity-' + activityIndex + item.value + '-switch-' + index" />
-                                    </div>
-                                </li>
-                            </ul>
-                        </Transition>
                     </div>
-                </div>
+                </Fieldset>
                 <!--
             <Activity :activity="activity" />-->
             </div>
