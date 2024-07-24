@@ -26,13 +26,13 @@ const toggleShowField = () => {
 
 <template>
     <div id="sidebar"
-        class="px-5 py-5 flex flex-col gap-3 bg-slate-50 border-r h-screen overflow-x-auto max-w-80 min-w-80 text-sm">
+        class="px-5 py-5 flex flex-col gap-3 bg-slate-50 border-r h-screen overflow-x-auto max-w-72 min-w-72 text-sm">
         <header class="text-slate-800 flex flex-col">
             <div class="flex justify-start gap-5 items-center mb-3">
                 <img @click="toggleShowField" :src="Logo" class="h-11" alt="University of Portsmouth Logo" />
                 <a href="#" class="flex flex-col">
                     <h1 class="text-lg font-semibold">Module Designer</h1>
-                    <p class="text-sm">June 2024</p>
+                    <p class="text-sm px-1 font-medium bg-sky-600 text-sky-50 rounded w-max">Prototype UI2</p>
                 </a>
             </div>
 
