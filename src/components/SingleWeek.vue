@@ -126,7 +126,10 @@ watch(weekStats, (newStats) => {
     </template>
 
     <Panel title="General Information">
-      <div class="flex flex-col gap-3">
+      <template #help>
+        This is some help
+      </template>
+      <div class="flex flex-col gap-3 mb-10">
         <ActivityLabel label="Week name" targetId="week-name" help="Enter a name for this week.">
           <InputText v-model="week.name" id="week-name" />
         </ActivityLabel>

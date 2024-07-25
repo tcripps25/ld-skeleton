@@ -5,6 +5,7 @@ import { useCourseStore } from '@/stores/course.js'
 import Pbutton from './buttons/Pbutton.vue';
 import { ChevronLeftIcon, ChevronRightIcon, PlusIcon } from '@heroicons/vue/16/solid';
 import { RouterView } from 'vue-router';
+import { EllipsisHorizontalIcon } from '@heroicons/vue/16/solid';
 import ScrollPanel from 'primevue/scrollpanel';
 import ActivityMenuItem from '@/components/ActivityMenuItem.vue';
 import Panel from './ui/Panel.vue';
@@ -47,11 +48,11 @@ const items = computed(() =>
   <Panel title="Activities">
     <template #action>
 
-      <Pbutton @click="$emit('addActivity')" label="Add Activity">
-        <template #icon>
-          <PlusIcon class="w-5 h-5 " />
-        </template>
-      </Pbutton>
+      <Pbutton aria-label="Manage Activities">
+            <template #icon>
+              <EllipsisHorizontalIcon class="w-5 h-5" />
+            </template>
+          </Pbutton>
       <GptPanel :weekIndex="weekIndex" />
 
     </template>
@@ -60,17 +61,19 @@ const items = computed(() =>
     </template>
 
     <div class="-ml-5 flex gap-10 flex-initial mt-10">
-      <div class="block">
-        <TransitionGroup name="list" tag="ol" class="flex flex-col w-54 sticky top-0 mb-1">
+      <div class="block w-54">
+        <div class="sticky -top-3">
+        <TransitionGroup name="list" tag="ol" class="flex flex-col ">
           <li v-for="(activity, index) in items" :key="activity.route" class="">
             <ActivityMenuItem :item="activity" :weekIndex="weekIndex" :index="index" />
           </li>
         </TransitionGroup>
-        <Pbutton menuLink  @click="$emit('addActivity')" label="Add Activity" class="rounded-s-none">
+        <Pbutton menuLink ghost @click="$emit('addActivity')" label="Add Activity" class="rounded-s-none pl-4 mt-1">
         <template #icon>
-          <PlusIcon class="w-5 h-5 " />
+          <PlusIcon class="w-5 h-5" />
         </template>
       </Pbutton>
+    </div>
       </div>
       <!-- Activity shown here -->
 

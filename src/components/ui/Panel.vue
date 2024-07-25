@@ -22,6 +22,13 @@ const props = defineProps({
         <div v-if="$slots.subtitle" class="mb-5 text-sm">
             <slot name="subtitle" />
         </div>
+        <div class="flex grow gap-5">
+        <div class="grow">
         <slot></slot>
+        </div>
+        <div v-if="$slots.help" class="flex-initial">
+           <slot name="help"></slot>
+        </div>
+        </div>
     </div>
 </template>

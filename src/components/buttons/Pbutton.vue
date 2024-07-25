@@ -10,6 +10,8 @@ const props = defineProps({
     disabled: Boolean,
     trailing: Boolean,
     menuLink: Boolean,
+    ghost: Boolean,
+    outline: Boolean,
 })
 
 const computedRootClasses = computed(() => {
@@ -25,6 +27,8 @@ const computedRootClasses = computed(() => {
         props.solid ? 'bg-sky-700 text-sky-50 hover:bg-sky-600' : 'hover:bg-slate-200 text-sky-600',
         props.trailing ? 'flex-row-reverse' : 'flex-row',
         props.menuLink ? 'w-full justify-start' : 'w-max justify-center',
+        props.ghost ? 'bg-slate-100 dark:bg-zinc-800 text-sky-700' : 'hover:bg-slate-200 text-sky-600',
+        props.outline ? 'border-2 border-sky-700 hover:bg-sky-700 hover:text-sky-50' : ''  
     ].join(' ');
 });
 
