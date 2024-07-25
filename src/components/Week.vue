@@ -56,17 +56,21 @@ const items = computed(() =>
 
     </template>
     <template #subtitle>
-      <p>All Activities for this week will appear here. Use the controls on the right hand side to navigate through
-        activities or add a new Activity.</p>
+      <p>Create and manage Activities for this week.</p>
     </template>
 
     <div class="-ml-5 flex gap-10 flex-initial mt-10">
       <div class="block">
-        <TransitionGroup name="list" tag="ol" class="flex flex-col w-54 sticky top-0">
+        <TransitionGroup name="list" tag="ol" class="flex flex-col w-54 sticky top-0 mb-1">
           <li v-for="(activity, index) in items" :key="activity.route" class="">
             <ActivityMenuItem :item="activity" :weekIndex="weekIndex" :index="index" />
           </li>
         </TransitionGroup>
+        <Pbutton menuLink  @click="$emit('addActivity')" label="Add Activity" class="rounded-s-none">
+        <template #icon>
+          <PlusIcon class="w-5 h-5 " />
+        </template>
+      </Pbutton>
       </div>
       <!-- Activity shown here -->
 

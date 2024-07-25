@@ -9,11 +9,11 @@ const props = defineProps({
     solid: Boolean,
     disabled: Boolean,
     trailing: Boolean,
+    menuLink: Boolean,
 })
 
 const computedRootClasses = computed(() => {
     return [
-        'justify-center',
         'items-center',
         'rounded',
         'p-1',
@@ -23,7 +23,8 @@ const computedRootClasses = computed(() => {
         'text-sm',
         props.label ? 'px-3 py-2' : '',
         props.solid ? 'bg-sky-700 text-sky-50 hover:bg-sky-600' : 'hover:bg-slate-200 text-sky-600',
-        props.trailing ? 'flex-row-reverse' : 'flex-row'
+        props.trailing ? 'flex-row-reverse' : 'flex-row',
+        props.menuLink ? 'w-full justify-start' : 'w-max justify-center',
     ].join(' ');
 });
 

@@ -6,6 +6,7 @@ import SingleWeek from '@/components/SingleWeek.vue'
 import SingleActivity from '@/components/SingleActivity.vue'
 import { useCourseStore } from '@/stores/course.js'
 import PublishView from '@/views/PublishView.vue'
+import ActivityPlaceholder from '@/components/ActivityPlaceholder.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,7 +47,15 @@ const router = createRouter({
                 const activity = course.weeks[weekIndex].activities[activityIndex]
                 return { weekIndex, activityIndex, activity }
               }
-            }
+            },
+            { path: '', component: ActivityPlaceholder,
+              props: (route) => {
+                const course = useCourseStore()
+                const weekIndex = parseInt(route.params.index) // get index from parent route params
+                const activities = course.weeks[weekIndex].activities
+                return { activities }
+              }
+             },
           ]
         }
       ]
