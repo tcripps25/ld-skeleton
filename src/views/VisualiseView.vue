@@ -11,9 +11,7 @@ import TabPanel from 'primevue/tabpanel';
 import TabView from 'primevue/tabview';
 const course = useCourseStore()
 
-onMounted(() => {
-  console.log(course.activityTypePercentages);
-});
+
 
 
 </script>

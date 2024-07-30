@@ -2,7 +2,7 @@
 import { ref, computed, watch } from 'vue';
 import WeekSummary from '@/components/WeekSummary.vue';
 import PageHeader from '@/components/PageHeader.vue';
-import AddWeekButton from '@/components/buttons/AddWeekButton.vue'
+import Panel from '@/components/ui/Panel.vue';
 import Page from '@/components/Page.vue'
 import { useRoute, RouterView } from 'vue-router';
 import { useCourseStore } from '@/stores/course.js'
@@ -26,25 +26,28 @@ watch([totalActivities, numberOfWeeks], ([newTotalActivities, newNumberOfWeeks])
 // Check if the current route is '/design' or any of its sub-routes
 const isDesignPage = computed(() => route.path === '/design/overview');
 
+
 </script>
 
 <template>
   <div>
-    <Page v-if="isDesignPage" class="w-full">
+    <Page v-if="isDesignPage">
       <template v-slot:page-header>
         <PageHeader title="Design" />
       </template>
-      <div class="w-100 grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
-        <TransitionGroup>
-          <WeekSummary v-for="(week, weekIndex) in course.weeks" :key="weekIndex" :week="week" :weekIndex="weekIndex"
-            class="flex flex-col gap-5" />
-        </TransitionGroup>
-        <Button @click="course.incrementWeek();"
-          pt:root:class="ring group rounded-lg grow w-full h-full h-full flex justify-center items-center hover:shadow transition text-slate-800 p-5"
-          label="Add Week" title="Add Week">
-          <PlusCircleIcon class="h-10 w-10 text-blue-500 group-hover:text-blue-400 transition" />
-        </Button>
-      </div>
+      <Panel>
+        <div class="w-100 flex flex-col gap-5">
+          <TransitionGroup>
+            <WeekSummary v-for="(week, weekIndex) in course.weeks" :key="weekIndex" :week="week" :weekIndex="weekIndex"
+              class="flex flex-col gap-5" />
+          </TransitionGroup>
+          <Button @click="course.incrementWeek();"
+            pt:root:class="ring group rounded-lg grow w-full h-full h-full flex justify-center items-center hover:shadow transition text-slate-800 p-5"
+            label="Add Week" title="Add Week">
+            <PlusCircleIcon class="h-10 w-10 text-blue-500 group-hover:text-blue-400 transition" />
+          </Button>
+        </div>
+      </Panel>
     </Page>
     <router-view v-else></router-view>
 

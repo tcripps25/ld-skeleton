@@ -13,7 +13,6 @@ import Button from 'primevue/button';
 import Pbutton from './buttons/Pbutton.vue';
 import { EllipsisHorizontalIcon } from '@heroicons/vue/16/solid'
 import { CheckCircleIcon, ChevronDownIcon, PlusCircleIcon } from '@heroicons/vue/24/solid';
-
 import DetailSidebar from '@/components/ui/DetailSidebar.vue'
 import Page from './Page.vue';
 import PageHeader from './PageHeader.vue';
@@ -126,8 +125,11 @@ watch(weekStats, (newStats) => {
     </template>
 
     <Panel title="General Information">
-      <template #help>
-        This is some help
+      <template #info>
+        Both Week Name and Week description will appear on your Moodle module for students to see. <br><br> Week name
+        should
+        describe the main themes of the learning content succinctly. <br><br> Week description can be longer, you'll be
+        able to toggle whether this is permanently displayed on your module within Moodle itself.
       </template>
       <div class="flex flex-col gap-3 mb-10">
         <ActivityLabel label="Week name" targetId="week-name" help="Enter a name for this week.">

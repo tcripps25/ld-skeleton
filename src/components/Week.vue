@@ -49,10 +49,10 @@ const items = computed(() =>
     <template #action>
 
       <Pbutton aria-label="Manage Activities">
-            <template #icon>
-              <EllipsisHorizontalIcon class="w-5 h-5" />
-            </template>
-          </Pbutton>
+        <template #icon>
+          <EllipsisHorizontalIcon class="w-5 h-5" />
+        </template>
+      </Pbutton>
       <GptPanel :weekIndex="weekIndex" />
 
     </template>
@@ -60,20 +60,20 @@ const items = computed(() =>
       <p>Create and manage Activities for this week.</p>
     </template>
 
-    <div class="-ml-5 flex gap-10 flex-initial mt-10">
+    <div class="flex gap-10 flex-initial mt-10">
       <div class="block w-54">
         <div class="sticky -top-3">
-        <TransitionGroup name="list" tag="ol" class="flex flex-col ">
-          <li v-for="(activity, index) in items" :key="activity.route" class="">
-            <ActivityMenuItem :item="activity" :weekIndex="weekIndex" :index="index" />
-          </li>
-        </TransitionGroup>
-        <Pbutton menuLink ghost @click="$emit('addActivity')" label="Add Activity" class="rounded-s-none pl-4 mt-1">
-        <template #icon>
-          <PlusIcon class="w-5 h-5" />
-        </template>
-      </Pbutton>
-    </div>
+          <TransitionGroup name="list" tag="ol" class="flex flex-col">
+            <li v-for="(activity, index) in items" :key="activity.route" class="">
+              <ActivityMenuItem :item="activity" :weekIndex="weekIndex" :index="index" />
+            </li>
+          </TransitionGroup>
+          <Pbutton menuLink ghost @click="$emit('addActivity')" label="Add Activity" class=" pl-4 mt-1">
+            <template #icon>
+              <PlusIcon class="w-5 h-5" />
+            </template>
+          </Pbutton>
+        </div>
       </div>
       <!-- Activity shown here -->
 

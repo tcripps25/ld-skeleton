@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import VisualiseView from '@/views/VisualiseView.vue'
 import DesignView from '@/views/DesignView.vue'
+import AboutView from '@/views/AboutView.vue'
+import HelpView from '@/views/HelpView.vue'
 import SetupView from '@/views/SetUpView.vue'
 import SingleWeek from '@/components/SingleWeek.vue'
 import SingleActivity from '@/components/SingleActivity.vue'
@@ -13,6 +15,16 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      name: 'about',
+      component: AboutView
+    },
+    {
+      path: '/help',
+      name: 'help',
+      component: HelpView
+    },
+    {
+      path: '/setup',
       name: 'setup',
       component: SetupView
     },
@@ -48,14 +60,16 @@ const router = createRouter({
                 return { weekIndex, activityIndex, activity }
               }
             },
-            { path: '', component: ActivityPlaceholder,
+            {
+              path: '',
+              component: ActivityPlaceholder,
               props: (route) => {
                 const course = useCourseStore()
                 const weekIndex = parseInt(route.params.index) // get index from parent route params
                 const activities = course.weeks[weekIndex].activities
                 return { activities }
               }
-             },
+            }
           ]
         }
       ]

@@ -3,10 +3,8 @@
 import { RouterView } from "vue-router";
 import 'primeicons/primeicons.css'
 import MainSidebar from "@/components/MainSidebar.vue"
-
-
-
-
+import ConfirmDialog from 'primevue/confirmdialog';
+import Toast from 'primevue/toast';
 
 
 </script>
@@ -18,4 +16,6 @@ import MainSidebar from "@/components/MainSidebar.vue"
       <RouterView class="flex grow relative" />
     </main>
   </div>
+  <ConfirmDialog></ConfirmDialog>
+  <Toast />
 </template>

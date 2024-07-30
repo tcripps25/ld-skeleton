@@ -1,34 +1,53 @@
 <script setup>
+import { ref } from 'vue';
+import InfoPanel from './InfoPanel.vue';
 const props = defineProps({
     title: String,
     borderless: Boolean,
     flush: Boolean,
     sidebar: Boolean,
+    stickyHeader: Boolean,
+    removeHeadUnderline: Boolean,
+    headerBar: Boolean,
 });
+
+const helpVisible = ref(true)
+
+const toggleHelpVisible = () => {
+    helpVisible.value = !helpVisible.value
+}
 </script>
 
 <template>
-    <div class=" grow" :class="sidebar ? 'bg-transparent -mx-5 px-5 pt-5 rounded-none' : 'mb-5'">
-        <div class="flex justify-between items-center py-1 bg-white  mb-5 border-b-2 border-slate-100"
-            v-if="$slots.title || title || $slots.action">
+    <div class="grow w-full mx-auto max-w-7xl"
+        :class="sidebar ? 'bg-transparent -mx-5 px-5 pt-5 rounded-none' : 'mb-5'">
+        <div :class="{ 'sticky top-0 bg-white': stickyHeader }, removeHeadUnderline ? 'border-none mb-0' : 'border-b mb-5', headerBar ? 'bg-slate-100 -m-5 px-5 py-3 ' : 'py-1'"
+            class="flex justify-between items-center rounded-t" v-if="$slots.title || title || $slots.action">
+            <div class="flex gap-2 ">
+                <slot v-if="$slots.title || title" name="title">
+                    <h2 v-if="title" class="text-lg font-semibold text-slate-600 ">{{ title }}</h2>
+                </slot>
+                <InfoPanel v-if="$.slots.info">
+                    <slot name="info"></slot>
+                </InfoPanel>
+
+            </div>
             <!-- for usage without using props -->
-            <slot v-if="$slots.title || title" name="title">
-                <h2 v-if="title" class="text-lg font-semibold text-slate-500 ">{{ title }}</h2>
-            </slot>
-            <div class="ml-auto flex items-center" v-if="$slots.action">
+
+
+            <div class="ml-auto flex gap-1 items-center" v-if="$slots.action">
                 <slot v-if="$slots.action" name="action" />
             </div>
         </div>
-        <div v-if="$slots.subtitle" class="mb-5 text-sm">
+        <div v-if="$slots.subtitle" class="mb-5">
             <slot name="subtitle" />
         </div>
         <div class="flex grow gap-5">
-        <div class="grow">
-        <slot></slot>
+            <div class="grow">
+                <slot></slot>
+            </div>
+
         </div>
-        <div v-if="$slots.help" class="flex-initial">
-           <slot name="help"></slot>
-        </div>
-        </div>
+
     </div>
 </template>

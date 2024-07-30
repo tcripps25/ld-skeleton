@@ -14,7 +14,7 @@ const items = ref([
       {
         label: 'What is Module Designer?',
         icon: 'pi pi-question-circle',
-        route: '/about'
+        route: '/'
       },
       {
         label: 'Help',
@@ -29,7 +29,7 @@ const items = ref([
       {
         label: 'Set Up',
         icon: 'pi pi-cog',
-        route: '/'
+        route: '/setup'
       },
       {
         label: 'Design',

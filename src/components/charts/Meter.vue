@@ -16,9 +16,7 @@ const value = [
 ];
 
 
-onMounted(() => {
-    console.log(props.values);
-});
+
 </script>
 <template>
     <MeterGroup :value="values" :max="max">

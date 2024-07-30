@@ -8,7 +8,11 @@ import ToggleSwitch from 'primevue/toggleswitch';
 import SelectButton from 'primevue/selectbutton';
 import Divider from 'primevue/divider';
 import { useCourseStore } from '@/stores/course.js'
+
 import Fieldset from 'primevue/fieldset';
+import ActivityPlaceholder from './ActivityPlaceholder.vue';
+import ManageActivityButton from '@/components/buttons/ManageActivityButton.vue';
+
 
 const props = defineProps({
     weekIndex: Number,
@@ -16,6 +20,7 @@ const props = defineProps({
     activityIndex: Number,
 
 })
+
 
 const course = useCourseStore()
 
@@ -61,38 +66,75 @@ const isAligned = (item) => {
         }
     });
 };
+function getRandomActivities(array, maxNumberOfItems) {
+    // Step 1: Copy the array
+    const newArray = array
+    // Step 2: Shuffle the array
+    const shuffledArray = newArray.sort(() => 0.5 - Math.random());
+
+    // Step 3: Determine a random number of items to select, up to the maximum specified
+    const numberOfItems = Math.floor(Math.random() * Math.min(maxNumberOfItems, newArray.length)) + 1;
+
+    // Step 4: Slice the first `numberOfItems` elements
+    return shuffledArray.slice(0, numberOfItems);
+}
+
+const suggestMoodleActivities = getRandomActivities(course.moodleActivities, 3);
+
+function removeSuggestedActivities(array1, array2) {
+    // Step 1: Create a Set from the second array
+    const set2 = new Set(array2);
+
+    // Step 2: Filter the first array to exclude elements that are present in the Set
+    const filteredArray = array1.filter(item => !set2.has(item));
+
+    return filteredArray;
+}
+
+const additionalActivities = ref(removeSuggestedActivities(course.moodleActivities, suggestMoodleActivities));
+
 </script>
 
 <template>
 
-    <div class="relative w-full max-w-7xl" :style="{ marginTop: `${cardCount * 10}px` }">
-        <Panel class=" bg-slate-50 p-5 border rounded-lg h-full relative z-20 shadow">
+    <div v-if="activity" class="relative w-full max-w-7xl" :style="{ marginTop: `${cardCount * 10}px` }">
+        <Panel headerBar :title="(activityIndex + 1) + '. ' + activity.title" removeHeadUnderline
+            class=" bg-slate-50 p-5 rounded h-full relative z-20 shadow">
+            <template #action>
+                <ManageActivityButton :week-index="weekIndex" :activity-index="activityIndex" :activity="activity" />
+            </template>
             <div class="grid xs:grid-cols-1 2xl:grid-cols-2 gap-5">
-                <div class="flex-col flex gap-5 grow">
-                    <ActivityLabel label="Title" targetId="activity-name"
-                        help="Enter a descriptive title for this Activity.">
-                        <InputText id="activity-name" v-model="activity.title" />
-                    </ActivityLabel>
-                    <ActivityLabel label="Instructions" targetId="activity-instructions"
-                        help="Describe the steps involved in this Activity to your students.">
-                        <Textarea autoResize rows="5" id="activity-instructions" v-model="activity.instructions" />
-                    </ActivityLabel>
-                    <ActivityLabel horizontal label="Duration (mins)" targetId="activity-duration"
-                        help="How long will this Activity take in total.">
-                        <InputText type="number" min="0" :step="1" id="activity-duration" v-model="activity.duration" />
-                    </ActivityLabel>
-                    <ActivityLabel horizontal label="Group" targetId="activity-group-toggle"
-                        help="Is this a group Activity?">
-                        <ToggleSwitch v-model="activity.isGroup" inputId="activity-group-toggle" />
-                    </ActivityLabel>
-                    <ActivityLabel horizontal label="Learning Mode" targetId="activity-mode-select"
-                        help="Indicate the learning mode of this Activity.">
-                        <SelectButton id="activity-mode-select" :options="['Sync', 'Async']" aria-labelledby="basic"
-                            v-model="activity.mode" />
-                    </ActivityLabel>
-
+                <div class="grow">
+                    <Fieldset legend="Basic Information" pt:legend="!bg-transparent" pt:root="!bg-transparent"
+                        pt:content="flex-col flex gap-5">
+                        <ActivityLabel label="Title" targetId="activity-name"
+                            help="Enter a descriptive title for this Activity.">
+                            <InputText id="activity-name" v-model="activity.title" />
+                        </ActivityLabel>
+                        <ActivityLabel label="Instructions" targetId="activity-instructions"
+                            help="Describe the steps involved in this Activity to your students.">
+                            <Textarea autoResize rows="5" id="activity-instructions" v-model="activity.instructions" />
+                        </ActivityLabel>
+                    </Fieldset>
+                    <Fieldset legend="Learning Approach" pt:content="flex-col flex gap-5" pt:legend="!bg-transparent"
+                        pt:root="!bg-transparent">
+                        <ActivityLabel horizontal label="Duration (mins)" targetId="activity-duration"
+                            help="How long will this Activity take in total.">
+                            <InputText type="number" min="0" :step="1" id="activity-duration"
+                                v-model="activity.duration" class="w-20" />
+                        </ActivityLabel>
+                        <ActivityLabel horizontal label="Group" targetId="activity-group-toggle"
+                            help="Is this a group Activity?">
+                            <ToggleSwitch v-model="activity.isGroup" inputId="activity-group-toggle" />
+                        </ActivityLabel>
+                        <ActivityLabel horizontal label="Learning Mode" targetId="activity-mode-select"
+                            help="Indicate the learning mode of this Activity.">
+                            <SelectButton id="activity-mode-select" :options="['Sync', 'Async']" aria-labelledby="basic"
+                                v-model="activity.mode" />
+                        </ActivityLabel>
+                    </Fieldset>
                 </div>
-                <Fieldset toggleable legend="Alignments" pt:legend="!bg-transparent" pt:root="!bg-transparent">
+                <Fieldset legend="Alignments" pt:legend="!bg-transparent" pt:root="!bg-transparent">
                     <div class="">
                         <p class="text-sm mb-4">Select which Learning Outcomes or Assessments this
                             Activity
@@ -126,18 +168,29 @@ const isAligned = (item) => {
                         </div>
                     </div>
                 </Fieldset>
-                <!--
-            <Activity :activity="activity" />-->
+                <Fieldset legend="Moodle Activities" pt:legend="!bg-transparent" pt:root="!bg-transparent">
+                    <ul class="flex flex-wrap gap-2">
+                        <li v-for="moodleActivity in suggestMoodleActivities">
+                            {{ moodleActivity.name }}
+                        </li>
+                    </ul>
+
+                    <ul class="flex flex-wrap gap-2">
+                        <li v-for="moodleActivity in additionalActivities">
+                            {{ moodleActivity.name }}
+                        </li>
+                    </ul>
+                </Fieldset>
             </div>
         </Panel>
         <TransitionGroup name="list">
             <div v-for="index in cardCount" :key="index"
-                :class="['rounded-lg shadow-sm', 'h-full', 'w-full', 'absolute', dynamicBgClass(index)]"
+                :class="['rounded shadow-sm', 'h-full', 'w-full', 'absolute', dynamicBgClass(index)]"
                 :style="{ top: `-${index * 20}px`, transform: `scale(${1 - index * 0.02})`, zIndex: `${cardCount - index}` }">
             </div>
         </TransitionGroup>
     </div>
-
+    <ActivityPlaceholder :activities="course.weeks[weekIndex].activities" v-else />
 </template>
 
 <style scoped>

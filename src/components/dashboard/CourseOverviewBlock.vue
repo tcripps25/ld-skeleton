@@ -8,20 +8,14 @@ import { onMounted } from 'vue';
 import PieChart from '@/components/charts/PieChart.vue';
 const course = useCourseStore()
 
-onMounted(() => {
-    console.log(course.activityTypeColorAndCount);
-});
 
-onMounted(() => {
-    console.log(course.activityTypePercentages);
-});
 </script>
 
 <template>
     <div class="flex gap-5">
         <Panel :title="'Module Overview'">
             <template v-slot:subtitle>
-                <p class="text-lg">{{course.title}}</p>
+                <p class="text-lg">{{ course.title }}</p>
             </template>
 
         </Panel>
