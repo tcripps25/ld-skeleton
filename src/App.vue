@@ -16,6 +16,7 @@ import Toast from 'primevue/toast';
       <RouterView class="flex grow relative" />
     </main>
   </div>
-  <ConfirmDialog></ConfirmDialog>
+  <ConfirmDialog class="!rounded">
+  </ConfirmDialog>
   <Toast />
 </template>
