@@ -36,7 +36,7 @@ const isDesignPage = computed(() => route.path === '/design/overview');
         <PageHeader title="Design" />
       </template>
       <Panel>
-        <div class="w-100 flex flex-col gap-5">
+        <div class="flex flex-col gap-5">
           <TransitionGroup>
             <WeekSummary v-for="(week, weekIndex) in course.weeks" :key="weekIndex" :week="week" :weekIndex="weekIndex"
               class="flex flex-col gap-5" />

@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue';
 import Textarea from 'primevue/textarea';
 import InputText from 'primevue/inputtext';
+import InputNumber from 'primevue/inputnumber';
 import Panel from './ui/Panel.vue';
 import ActivityLabel from '@/components/forms/ActivityLabel.vue'
 import ToggleSwitch from 'primevue/toggleswitch';
@@ -12,7 +13,8 @@ import { useCourseStore } from '@/stores/course.js'
 import Fieldset from 'primevue/fieldset';
 import ActivityPlaceholder from './ActivityPlaceholder.vue';
 import ManageActivityButton from '@/components/buttons/ManageActivityButton.vue';
-
+import MoodleActivity from './ui/MoodleActivity.vue';
+import MultiSelect from 'primevue/multiselect';
 
 const props = defineProps({
     weekIndex: Number,
@@ -20,6 +22,11 @@ const props = defineProps({
     activityIndex: Number,
 
 })
+
+const Pfieldset = ref({
+    content: 'bg-transparent',
+    legend: 'bg-transparent font-semibold leading-none',
+});
 
 
 const course = useCourseStore()
@@ -105,8 +112,8 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
             </template>
             <div class="grid xs:grid-cols-1 2xl:grid-cols-2 gap-5">
                 <div class="grow">
-                    <Fieldset legend="Basic Information" pt:legend="!bg-transparent" pt:root="!bg-transparent"
-                        pt:content="flex-col flex gap-5">
+                    <Fieldset :pt-options="{ mergeProps: true }" pt:root="bg-transparent" pt:legend="bg-transparent"
+                        legend="Basic Information">
                         <ActivityLabel label="Title" targetId="activity-name"
                             help="Enter a descriptive title for this Activity.">
                             <InputText id="activity-name" v-model="activity.title" />
@@ -116,12 +123,12 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
                             <Textarea autoResize rows="5" id="activity-instructions" v-model="activity.instructions" />
                         </ActivityLabel>
                     </Fieldset>
-                    <Fieldset legend="Learning Approach" pt:content="flex-col flex gap-5" pt:legend="!bg-transparent"
-                        pt:root="!bg-transparent">
+                    <Fieldset legend="Learning Approach" :pt-options="{ mergeProps: true }" pt:root="bg-transparent"
+                        pt:legend="bg-transparent">
                         <ActivityLabel horizontal label="Duration (mins)" targetId="activity-duration"
                             help="How long will this Activity take in total.">
-                            <InputText type="number" min="0" :step="1" id="activity-duration"
-                                v-model="activity.duration" class="w-20" />
+                            <InputText type="number" :min="0" buttonLayout="horizontal" :step="1" id="activity-duration"
+                                v-model="activity.duration" />
                         </ActivityLabel>
                         <ActivityLabel horizontal label="Group" targetId="activity-group-toggle"
                             help="Is this a group Activity?">
@@ -132,9 +139,15 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
                             <SelectButton id="activity-mode-select" :options="['Sync', 'Async']" aria-labelledby="basic"
                                 v-model="activity.mode" />
                         </ActivityLabel>
+                        <ActivityLabel label="Learning Type" targetId="select-learning-type">
+                            <MultiSelect v-model="activity.selectedTypes" :options="course.activityTypesColors"
+                                optionLabel="type" optionValue="type" placeholder="Select Learning Types"
+                                :maxSelectedLabels="3" id="select-learning-type" />
+                        </ActivityLabel>
                     </Fieldset>
                 </div>
-                <Fieldset legend="Alignments" pt:legend="!bg-transparent" pt:root="!bg-transparent">
+                <Fieldset legend="Alignments" :pt-options="{ mergeProps: true }" pt:root="bg-transparent"
+                    pt:legend="bg-transparent">
                     <div class="">
                         <p class="text-sm mb-4">Select which Learning Outcomes or Assessments this
                             Activity
@@ -168,19 +181,15 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
                         </div>
                     </div>
                 </Fieldset>
-                <Fieldset legend="Moodle Activities" pt:legend="!bg-transparent" pt:root="!bg-transparent">
-                    <ul class="flex flex-wrap gap-2">
-                        <li v-for="moodleActivity in suggestMoodleActivities">
-                            {{ moodleActivity.name }}
-                        </li>
-                    </ul>
-
-                    <ul class="flex flex-wrap gap-2">
-                        <li v-for="moodleActivity in additionalActivities">
-                            {{ moodleActivity.name }}
-                        </li>
-                    </ul>
+                <Fieldset legend="Moodle Activities" :pt-options="{ mergeProps: true }" pt:root="bg-transparent"
+                    pt:legend="bg-transparent">
+                    <ActivityLabel label="Moodle Activities" targetId="select-moodle-activities">
+                        <MultiSelect v-model="activity.selectedMoodle" :options="course.moodleActivities"
+                            optionLabel="name" filter placeholder="Select Moodle Activities" :maxSelectedLabels="3"
+                            id="select-moodle-activities" />
+                    </ActivityLabel>
                 </Fieldset>
+
             </div>
         </Panel>
         <TransitionGroup name="list">

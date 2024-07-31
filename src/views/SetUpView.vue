@@ -20,6 +20,7 @@ const toggleTitleEdit = () => {
   editTitle.value = !editTitle.value;
 };
 
+
 const submitTitle = () => {
   if (courseTitle.value.trim() !== '') {
     course.title = courseTitle.value.trim();

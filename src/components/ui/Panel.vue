@@ -30,7 +30,6 @@ const toggleHelpVisible = () => {
                 <InfoPanel v-if="$.slots.info">
                     <slot name="info"></slot>
                 </InfoPanel>
-
             </div>
             <!-- for usage without using props -->
 
