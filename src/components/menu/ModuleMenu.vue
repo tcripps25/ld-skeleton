@@ -3,7 +3,8 @@ import { ref, computed } from 'vue';
 import Menu from 'primevue/menu';
 import { useRouter, RouterLink } from 'vue-router';
 import { useCourseStore } from '@/stores/course.js';
-
+import MainMenu from './MainMenu.vue';
+import MenuItem from './MenuItem.vue';
 const course = useCourseStore();
 
 const moduleData = computed(() => {
@@ -14,23 +15,63 @@ const moduleData = computed(() => {
 
     return course.weeks.map((week, index) => ({
         label: week.name,
-        icon: 'pi pi-calendar',  // Use any icon class you prefer
+        icon: 'pi pi-calendar',
         route: `/design/${index}`
     }));
 });
 </script>
 
 <template>
-    <Menu unstyled :model="moduleData" pt:submenuLabel="font-medium text-sm text-slate-500 mt-1 mb-1"
-        pt:root="before:-top-0 before:bottom-[2.2rem] before:content-[''] before:rounded before:w-[2px] before:-left-4 before:-mb-5 before:bg-slate-300 before:absolute">
-        <template #item="{ item, props }">
-            <RouterLink v-if="item.route" v-slot="{ href, navigate }" :to="item.route"
-                active-class="bg-slate-200 text-slate-600 hover:!bg-slate-200 font-semibold"
-                class="relative transition hover:bg-slate-200 gap-2 flex p-2 rounded before:rounded-sm items-center before:content-[''] before:absolute before:-left-4  before:w-3 before:h-0 before:border-b-[2px] before:border-l-[2px] before:top-5 before:bottom-8 before:border-slate-300">
-                <div class="flex items-center">
-                    <span class="">{{ item.label }}</span>
-                </div>
-            </RouterLink>
-        </template>
-    </Menu>
+
+
+    <nav aria-labelledby="submenulabel">
+        <h2 id="submenulabel" class="sr-only">Module Schedule Menu</h2>
+
+        <TransitionGroup v-if="course.weeks.length > 0" class="flex flex-col relative ml-6" name="list" tag="ul">
+            <li v-for="(week, index) in moduleData" :key="index">
+                <MenuItem :item="week" />
+            </li>
+        </TransitionGroup>
+
+    </nav>
+
 </template>
+<style scoped>
+.list-enter-active,
+.list-leave-active {
+    transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+    opacity: 0;
+    transform: translateY(-5px);
+}
+
+.v-enter-active,
+.v-leave-active {
+    transition: all 0.2s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+    height: 0px;
+    position: absolute;
+    top: 6rem;
+}
+
+.drawer-enter-active,
+.drawer-leave-active {
+    transition: all 0.2s ease;
+}
+
+.drawer-enter-from,
+.drawer-leave-to {
+    opacity: 0;
+    height: 0px;
+    overflow: hidden;
+    margin-top: -1.3rem;
+    margin-bottom: -1.3rem;
+}
+</style>

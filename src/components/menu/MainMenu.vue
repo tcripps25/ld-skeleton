@@ -3,11 +3,13 @@ import { ref, computed } from "vue";
 import { useCourseStore } from '@/stores/course.js'
 import { useRouter, RouterLink } from 'vue-router';
 import Menu from 'primevue/menu';
+import PanelMenu from 'primevue/panelmenu';
 import ModuleMenu from '@/components/menu/ModuleMenu.vue'
+import MenuItem from "./MenuItem.vue";
 const router = useRouter();
 const course = useCourseStore()
 
-const items = ref([
+const menu = ref([
   {
     label: 'Getting started',
     items: [
@@ -59,24 +61,24 @@ const weeksExist = computed(() => {
   }
 })
 
+
+
 </script>
 
 <template>
-
-
-  <Menu unstyled :model="items" pt:submenuLabel="font-medium text-sm text-slate-500 mt-3 mb-1">
-    <template #item="{ item, props }">
-      <RouterLink v-if="item.route" v-slot="{ href, navigate }" :to="item.route"
-        active-class="bg-slate-200 text-slate-600 hover:!bg-slate-200 font-semibold"
-        class="transition hover:bg-slate-200 gap-2 flex p-2 rounded items-center">
-        <div class="flex items-center">
-          <span class="text-slate-500" :class="item.icon"></span>
-          <span class="ml-2">{{ item.label }}</span>
-        </div>
-      </RouterLink>
-      <ModuleMenu v-if="item.label == 'Design' && weeksExist" class="ml-8 relative" />
-    </template>
-  </Menu>
-
+  <nav aria-labelledby="mainmenulabel">
+    <h2 id="mainmenulabel" class="sr-only">Main Menu</h2>
+    <ul class="flex flex-col gap-2">
+      <li v-for="(cat, index) in menu">
+        <span class="text-slate-500 font-semibold flex mb-1">{{ cat.label }}</span>
+        <ul v-if="cat.items">
+          <li v-for="(item, index) in cat.items">
+            <MenuItem :item="item" />
+            <ModuleMenu v-if="item.label == 'Design'" />
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
 
 </template>

@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue';
 import Textarea from 'primevue/textarea';
 import InputText from 'primevue/inputtext';
-import InputNumber from 'primevue/inputnumber';
+import FileUpload from '@/components/forms/FileUpload.vue'
 import Panel from './ui/Panel.vue';
 import ActivityLabel from '@/components/forms/ActivityLabel.vue'
 import ToggleSwitch from 'primevue/toggleswitch';
@@ -125,25 +125,27 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
                     </Fieldset>
                     <Fieldset legend="Learning Approach" :pt-options="{ mergeProps: true }" pt:root="bg-transparent"
                         pt:legend="bg-transparent">
-                        <ActivityLabel horizontal label="Duration (mins)" targetId="activity-duration"
-                            help="How long will this Activity take in total.">
-                            <InputText type="number" :min="0" buttonLayout="horizontal" :step="1" id="activity-duration"
-                                v-model="activity.duration" />
-                        </ActivityLabel>
-                        <ActivityLabel horizontal label="Group" targetId="activity-group-toggle"
-                            help="Is this a group Activity?">
-                            <ToggleSwitch v-model="activity.isGroup" inputId="activity-group-toggle" />
-                        </ActivityLabel>
-                        <ActivityLabel horizontal label="Learning Mode" targetId="activity-mode-select"
-                            help="Indicate the learning mode of this Activity.">
-                            <SelectButton id="activity-mode-select" :options="['Sync', 'Async']" aria-labelledby="basic"
-                                v-model="activity.mode" />
-                        </ActivityLabel>
-                        <ActivityLabel label="Learning Type" targetId="select-learning-type">
-                            <MultiSelect v-model="activity.selectedTypes" :options="course.activityTypesColors"
-                                optionLabel="type" optionValue="type" placeholder="Select Learning Types"
-                                :maxSelectedLabels="3" id="select-learning-type" />
-                        </ActivityLabel>
+                        <div class="flex flex-col gap-2">
+                            <ActivityLabel horizontal label="Duration (mins)" targetId="activity-duration"
+                                help="How long will this Activity take in total.">
+                                <InputText type="number" :min="0" buttonLayout="horizontal" :step="1"
+                                    id="activity-duration" v-model="activity.duration" />
+                            </ActivityLabel>
+                            <ActivityLabel horizontal label="Group" targetId="activity-group-toggle"
+                                help="Is this a group Activity?">
+                                <ToggleSwitch v-model="activity.isGroup" inputId="activity-group-toggle" />
+                            </ActivityLabel>
+                            <ActivityLabel horizontal label="Learning Mode" id="activity-mode-select" help=" Indicate
+                                the learning mode of this Activity.">
+                                <SelectButton id="activity-mode-select" :options="['Sync', 'Async']"
+                                    aria-labelledby="activity-mode-select" v-model="activity.mode" />
+                            </ActivityLabel>
+                            <ActivityLabel label="Learning Type" targetId="select-learning-type">
+                                <MultiSelect v-model="activity.selectedTypes" :options="course.activityTypesColors"
+                                    optionLabel="type" optionValue="type" placeholder="Select Learning Types"
+                                    :maxSelectedLabels="3" inputId="select-learning-type" />
+                            </ActivityLabel>
+                        </div>
                     </Fieldset>
                 </div>
                 <Fieldset legend="Alignments" :pt-options="{ mergeProps: true }" pt:root="bg-transparent"
@@ -186,10 +188,10 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
                     <ActivityLabel label="Moodle Activities" targetId="select-moodle-activities">
                         <MultiSelect v-model="activity.selectedMoodle" :options="course.moodleActivities"
                             optionLabel="name" filter placeholder="Select Moodle Activities" :maxSelectedLabels="3"
-                            id="select-moodle-activities" />
+                            inputId="select-moodle-activities" />
                     </ActivityLabel>
                 </Fieldset>
-
+                <FileUpload />
             </div>
         </Panel>
         <TransitionGroup name="list">

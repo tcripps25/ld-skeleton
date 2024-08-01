@@ -7,6 +7,9 @@ export default {
     extend: {
       aria: {
         current: 'current="page"'
+      },
+      routerLink: {
+        active: 'active'
       }
     }
   }

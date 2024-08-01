@@ -8,8 +8,8 @@ const props = defineProps({
 })
 </script>
 <template>
-    <div class="flex gap-5 items-center">
-        <div class="flex grow flex-col gap-2">
+    <div class="flex gap-5 items-center border-b last-of-type:border-none py-2 mr-[-1.2rem] pr-5">
+        <div class="flex grow flex-col gap-1">
             <div class="flex gap-1" :class="horizontal ? 'flex-row justify-between items-center' : 'flex-col'">
                 <div class="flex gap-2">
                     <label class="font-medium" :for="targetId"
@@ -23,7 +23,7 @@ const props = defineProps({
                 </div>
                 <slot></slot>
             </div>
-            <small v-if="help" :id="targetId + '-help'">{{ help }}</small>
+            <small class="text-right text-slate-500 mb-2" v-if="help" :id="targetId + '-help'">{{ help }}</small>
         </div>
 
     </div>

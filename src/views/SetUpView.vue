@@ -5,7 +5,7 @@ import Page from '@/components/Page.vue';
 import Panel from '@/components/ui/Panel.vue';
 import PanelNotice from '@/components/ui/PanelNotice.vue'
 import { useCourseStore } from '@/stores/course.js'
-import Calendar from 'primevue/calendar';
+import DatePicker from 'primevue/datepicker';
 import InputText from 'primevue/inputtext';
 import { PencilIcon } from '@heroicons/vue/16/solid';
 import FloatLabel from 'primevue/floatlabel';
@@ -63,9 +63,9 @@ const submitTitle = () => {
                   <label for="module-code-input">Module Code</label>
                 </FloatLabel>
               </div>
-              <div class="flex items-center gap-2 font-semibold">
+              <div class="flex items-center gap-2">
                 <FloatLabel class="w-full">
-                  <Calendar v-model="course.startDate" pt:root:class="font-normal" input-id="module-start-date-input" />
+                  <DatePicker v-model="course.startDate" input-id="module-start-date-input" />
                   <label for="module-start-date-input" class="font-normal">Start Date</label>
                 </FloatLabel>
 
@@ -84,8 +84,9 @@ const submitTitle = () => {
             <div class="flex flex-col gap-9 pt-5">
               <div v-for="(outcome, index) in course.learningOutcomes">
                 <FloatLabel class="w-full">
-                  <InputText disabled id="module-code-input" v-model="outcome.label" type="text" class="w-full" />
-                  <label for="module-code-input">Learning Outcome {{ index + 1 }}</label>
+                  <InputText disabled :id="'learning-outcome' + index + '-input'" v-model="outcome.label" type="text"
+                    class="w-full" />
+                  <label :for="'learning-outcome' + index + '-input'">Learning Outcome {{ index + 1 }}</label>
                 </FloatLabel>
               </div>
             </div>

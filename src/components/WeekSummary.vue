@@ -36,9 +36,7 @@ const removeWeek = (weekIndex) => {
                 <div class="text-sm">Teaching Week {{ weekIndex + 1 }} Commencing: {{ week.formattedDate }}</div>
             </div>
         </template>
-        <label class="text-sm" :for="'week-' + weekIndex + '-description'">Description:</label>
-        <textarea class="p-1 rounded border" rows="2" :id="'week-' + weekIndex + '-description'" type="text"
-            v-model="week.description" />
+
         <div class="flex p-5 -ml-5">
 
             <Timeline v-if="week.activities.length > 0" :value="week.activities" align="right"
