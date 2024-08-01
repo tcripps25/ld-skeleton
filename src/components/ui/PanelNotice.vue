@@ -20,7 +20,7 @@ const props = defineProps({
             class="w-24 h-max -mt-6 p-1 mb-2 bg-white rounded shadow">
         <ExclamationTriangleIcon v-else-if="warning" class="w-7 h-7 -mt-7 text-red-400" />
         <InformationCircleIcon v-else class="w-7 h-7 -mt-7 text-blue-400" />
-        <p class="pb-5">
+        <p class="pb-5 text-sm">
             <slot />
         </p>
     </div>

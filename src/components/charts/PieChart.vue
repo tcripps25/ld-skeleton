@@ -116,7 +116,7 @@ onUnmounted(() => {
 
 
 <template>
-  <h4 class="font-semibold text-lg text-slate-600 mb-3" v-if="title">{{ title }}</h4>
+  <h4 class="font-semibold text-slate-600 mb-3" v-if="title">{{ title }}</h4>
   <slot></slot>
   <div class="">
     <div :id="id + '-pie-chart'" class=""></div>

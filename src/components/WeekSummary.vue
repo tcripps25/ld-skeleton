@@ -51,7 +51,6 @@ const removeWeek = (weekIndex) => {
                             {{ type }}
                         </li>
                     </ul>
-
                 </template>
             </Timeline>
 

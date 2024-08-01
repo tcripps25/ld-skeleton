@@ -22,7 +22,7 @@ const value = [
     <MeterGroup :value="values" :max="max">
         <template #start>
             <div class="flex flex-col gap-2">
-                <h4 class="font-semibold text-lg text-slate-600" v-if="title">{{ title }}</h4>
+                <h4 class="font-semibold text-slate-600" v-if="title">{{ title }}</h4>
                 <slot></slot>
                 <div class="mt-3">
                     <slot name="meter-badge"></slot>

@@ -113,10 +113,9 @@ watch(weekStats, (newStats) => {
                 </p>
               </PieChart>
               <PanelNotice sidebar enable>
-                A glance at your Learning Type mix for this week. These types will also determine which
-                Moodle
-                activities
-                will be suggested for each Activity you create.
+                Breaking down the spread of Learning Types over the week can help you ensure you're providing the right
+                mix for
+                your students.
               </PanelNotice>
             </Panel>
           </Transition>

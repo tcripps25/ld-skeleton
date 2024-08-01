@@ -62,7 +62,7 @@ const items = computed(() =>
 
     <div class="flex gap-10 flex-initial mt-10">
       <div class="block w-54">
-        <div class="sticky -top-3">
+        <div class="sticky -top-0">
           <TransitionGroup name="list" tag="ol" class="flex flex-col">
             <li v-for="(activity, index) in items" :key="activity.route" class="">
               <ActivityMenuItem :item="activity" :weekIndex="weekIndex" :index="index" />
