@@ -41,7 +41,7 @@ const computedRootClasses = computed(() => {
 </script>
 
 <template>
-    <Button :pt-options="{ mergeProps: false }" :severity="severity" :icon="icon" :disabled="disabled" :label="label"
+    <Button :severity="severity" :icon="icon" :disabled="disabled" :label="label"
         :aria-label="ariaLabel ? ariaLabel : label" :title="ariaLabel ? ariaLabel : label"
         :pt:root="computedRootClasses" :pt:label="label ? '' : 'hidden'">
         <template #icon>

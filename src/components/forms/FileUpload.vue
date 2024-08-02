@@ -11,7 +11,7 @@ const onAdvancedUpload = () => {
 </script>
 
 <template>
-    <Fieldset legend="Add Supporting Files" :pt-options="{ mergeProps: true }" pt:root="bg-transparent"
+    <Fieldset legend="Add Supporting Files"   pt:root="bg-transparent"
         pt:legend="bg-transparent">
 
         <FileUpload :multiple="true" @upload="onAdvancedUpload($event)" />

@@ -9,93 +9,70 @@ import ToggleSwitch from 'primevue/toggleswitch';
 import SelectButton from 'primevue/selectbutton';
 import Divider from 'primevue/divider';
 import { useCourseStore } from '@/stores/course.js'
-
 import Fieldset from 'primevue/fieldset';
 import ActivityPlaceholder from './ActivityPlaceholder.vue';
 import ManageActivityButton from '@/components/buttons/ManageActivityButton.vue';
 import MoodleActivity from './ui/MoodleActivity.vue';
 import MultiSelect from 'primevue/multiselect';
+import { Transition, TransitionGroup } from 'vue';
 
 const props = defineProps({
     weekIndex: Number,
     activity: Object,
     activityIndex: Number,
-
-})
-
-const Pfieldset = ref({
-    content: 'bg-transparent',
-    legend: 'bg-transparent font-semibold leading-none',
 });
 
+const course = useCourseStore();
 
-const course = useCourseStore()
-
-const activityWeek = ref(course.getWeek(props.weekIndex))
+const activityWeek = computed(() => course.getWeek(props.weekIndex));
 
 const cardCount = computed(() => Math.min((activityWeek.value.activityCount - 1), 4));
-
 
 const dynamicBgClass = (index) => {
     const baseColor = 100;
     const increment = 100;
-    const bg = 'bg-slate-400 bg-slate-500 bg-slate-600 bg-slate-700'
     const colorValue = baseColor + (index * increment);
-    // Ensure the color value does not exceed a certain limit if necessary (e.g., 900)
     const clampedColorValue = Math.min(colorValue, 900);
     return `bg-slate-${clampedColorValue}`;
-}
+};
 
-const isAligned = (item) => {
-    return computed({
-        get: () => {
-            // Check again within the getter in case of reactivity issues
-            if (!props.activity.alignments) {
-                props.activity.alignments = [];
-            }
-            return props.activity.selectedAlignments.some(alignment => alignment.value === item.value);
-        },
-        set: (newValue) => {
-            if (!props.activity.selectedAlignments) {
-                props.activity.selectedAlignments = [];
-            }
+const isAligned = (item) => computed({
+    get: () => {
+        if (!props.activity.alignments) {
+            props.activity.alignments = [];
+        }
+        return props.activity.selectedAlignments.some(alignment => alignment.value === item.value);
+    },
+    set: (newValue) => {
+        if (!props.activity.selectedAlignments) {
+            props.activity.selectedAlignments = [];
+        }
 
-            if (newValue) {
-                if (!props.activity.selectedAlignments.some(alignment => alignment.value === item.value)) {
-                    props.activity.selectedAlignments.push(item);
-                }
-            } else {
-                const index = props.activity.selectedAlignments.findIndex(alignment => alignment.value === item.value);
-                if (index > -1) {
-                    props.activity.selectedAlignments.splice(index, 1);
-                }
+        if (newValue) {
+            if (!props.activity.selectedAlignments.some(alignment => alignment.value === item.value)) {
+                props.activity.selectedAlignments.push(item);
+            }
+        } else {
+            const index = props.activity.selectedAlignments.findIndex(alignment => alignment.value === item.value);
+            if (index > -1) {
+                props.activity.selectedAlignments.splice(index, 1);
             }
         }
-    });
-};
+    }
+});
+
 function getRandomActivities(array, maxNumberOfItems) {
-    // Step 1: Copy the array
-    const newArray = array
-    // Step 2: Shuffle the array
+    const newArray = [...array];
     const shuffledArray = newArray.sort(() => 0.5 - Math.random());
-
-    // Step 3: Determine a random number of items to select, up to the maximum specified
     const numberOfItems = Math.floor(Math.random() * Math.min(maxNumberOfItems, newArray.length)) + 1;
-
-    // Step 4: Slice the first `numberOfItems` elements
     return shuffledArray.slice(0, numberOfItems);
 }
 
 const suggestMoodleActivities = getRandomActivities(course.moodleActivities, 3);
 
 function removeSuggestedActivities(array1, array2) {
-    // Step 1: Create a Set from the second array
     const set2 = new Set(array2);
-
-    // Step 2: Filter the first array to exclude elements that are present in the Set
-    const filteredArray = array1.filter(item => !set2.has(item));
-
-    return filteredArray;
+    return array1.filter(item => !set2.has(item));
 }
 
 const additionalActivities = ref(removeSuggestedActivities(course.moodleActivities, suggestMoodleActivities));
@@ -103,79 +80,58 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
 </script>
 
 <template>
-
     <div v-if="activity" class="relative w-full max-w-7xl" :style="{ marginTop: `${cardCount * 10}px` }">
-        <Panel headerBar :title="(activityIndex + 1) + '. ' + activity.title" removeHeadUnderline
-            class=" bg-slate-50 p-5 rounded h-full relative z-20 shadow">
+        <Panel headerBar :title="(activityIndex + 1) + '. ' + activity.title" removeHeadUnderline class=" bg-slate-50 p-5 rounded h-full relative z-20 shadow">
             <template #action>
                 <ManageActivityButton :week-index="weekIndex" :activity-index="activityIndex" :activity="activity" />
             </template>
             <div class="grid xs:grid-cols-1 2xl:grid-cols-2 gap-5">
                 <div class="grow">
-                    <Fieldset :pt-options="{ mergeProps: true }" pt:root="bg-transparent" pt:legend="bg-transparent"
-                        legend="Basic Information">
-                        <ActivityLabel label="Title" targetId="activity-name"
-                            help="Enter a descriptive title for this Activity.">
+                    <Fieldset legend="Basic Information">
+                        <ActivityLabel label="Title" targetId="activity-name" help="Enter a descriptive title for this Activity.">
                             <InputText id="activity-name" v-model="activity.title" />
                         </ActivityLabel>
-                        <ActivityLabel label="Instructions" targetId="activity-instructions"
-                            help="Describe the steps involved in this Activity to your students.">
+                        <ActivityLabel label="Instructions" targetId="activity-instructions" help="Describe the steps involved in this Activity to your students.">
                             <Textarea autoResize rows="5" id="activity-instructions" v-model="activity.instructions" />
                         </ActivityLabel>
                     </Fieldset>
-                    <Fieldset legend="Learning Approach" :pt-options="{ mergeProps: true }" pt:root="bg-transparent"
-                        pt:legend="bg-transparent">
+                    <Fieldset legend="Learning Approach"   >
                         <div class="flex flex-col gap-2">
-                            <ActivityLabel horizontal label="Duration (mins)" targetId="activity-duration"
-                                help="How long will this Activity take in total.">
-                                <InputText type="number" :min="0" buttonLayout="horizontal" :step="1"
-                                    id="activity-duration" v-model="activity.duration" />
+                            <ActivityLabel horizontal label="Duration (mins)" targetId="activity-duration" help="How long will this Activity take in total.">
+                                <InputText type="number" :min="0" buttonLayout="horizontal" :step="1" id="activity-duration" v-model="activity.duration" />
                             </ActivityLabel>
-                            <ActivityLabel horizontal label="Group" targetId="activity-group-toggle"
-                                help="Is this a group Activity?">
+                            <ActivityLabel horizontal label="Group" targetId="activity-group-toggle" help="Is this a group Activity?">
                                 <ToggleSwitch v-model="activity.isGroup" inputId="activity-group-toggle" />
                             </ActivityLabel>
-                            <ActivityLabel horizontal label="Learning Mode" id="activity-mode-select" help=" Indicate
-                                the learning mode of this Activity.">
-                                <SelectButton id="activity-mode-select" :options="['Sync', 'Async']"
-                                    aria-labelledby="activity-mode-select" v-model="activity.mode" />
+                            <ActivityLabel horizontal label="Learning Mode" id="activity-mode-select" help=" Indicate the learning mode of this Activity.">
+                                <SelectButton id="activity-mode-select" :options="['Sync', 'Async']" aria-labelledby="activity-mode-select" v-model="activity.mode" />
                             </ActivityLabel>
                             <ActivityLabel label="Learning Type" targetId="select-learning-type">
-                                <MultiSelect v-model="activity.selectedTypes" :options="course.activityTypesColors"
-                                    optionLabel="type" optionValue="type" placeholder="Select Learning Types"
-                                    :maxSelectedLabels="3" inputId="select-learning-type" />
+                                <MultiSelect v-model="activity.selectedTypes" :options="course.activityTypesColors" optionLabel="type" optionValue="type" placeholder="Select Learning Types" :maxSelectedLabels="3" inputId="select-learning-type" />
                             </ActivityLabel>
                         </div>
                     </Fieldset>
                 </div>
-                <Fieldset legend="Alignments" :pt-options="{ mergeProps: true }" pt:root="bg-transparent"
-                    pt:legend="bg-transparent">
-                    <div class="">
-                        <p class="text-sm mb-4">Select which Learning Outcomes or Assessments this
-                            Activity
-                            is aligned with.</p>
-                        <div v-for="(option, index) in course.alignmentOptions" :key="index">
-                            <Divider v-if="index != 0" />
-                            <div class="flex justify-between items-center ">
-                                <label class="w-full" :for="'alignment-group-' + index">
+                <Fieldset legend="Alignments">
+                    <div>
+                        <p class="text-sm mb-4">Select which Learning Outcomes or Assessments this Activity is aligned with.</p>
+                        <div v-for="(option, optionIndex) in course.alignmentOptions" :key="optionIndex">
+                            <Divider v-if="optionIndex !== 0" />
+                            <div class="flex justify-between items-center">
+                                <label class="w-full" :for="'alignment-group-' + optionIndex">
                                     <h3 class="font-medium">{{ option.group }}</h3>
                                 </label>
                             </div>
                             <Transition name="fade">
                                 <ul class="flex flex-col">
-                                    <li v-for="(item, index) in option.items" :key="index"
-                                        class=" flex gap-3  hover:bg-slate-100 px-2 py-3 hover:rounded transition">
-                                        <span
-                                            class="min-w-6 max-h-6 text-sm font-medium flex items-center justify-center bg-cyan-700 text-white rounded-full">{{
-                                                (index++ + 1) }}</span>
-                                        <label class="w-full mr-2"
-                                            :for="'activity-' + activityIndex + item.value + '-switch-' + index">
+                                    <li v-for="(item, itemIndex) in option.items" :key="itemIndex" class=" flex gap-3 hover:bg-slate-100 px-2 py-3 hover:rounded transition">
+                                        <span class="min-w-6 max-h-6 text-sm font-medium flex items-center justify-center bg-cyan-700 text-white rounded-full">{{ itemIndex + 1 }}</span>
+                                        <label class="w-full mr-2" :for="'activity-' + activityIndex + item.value + '-switch-' + itemIndex">
                                             <span v-if="item.nickname">{{ item.nickname }}</span>
                                             <span v-else>{{ item.label }}</span>
                                         </label>
                                         <div class="w-max">
-                                            <ToggleSwitch v-model="isAligned(item).value"
-                                                :inputId="'activity-' + activityIndex + item.value + '-switch-' + index" />
+                                            <ToggleSwitch v-model="isAligned(item).value" :inputId="'activity-' + activityIndex + item.value + '-switch-' + itemIndex" />
                                         </div>
                                     </li>
                                 </ul>
@@ -183,21 +139,16 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
                         </div>
                     </div>
                 </Fieldset>
-                <Fieldset legend="Moodle Activities" :pt-options="{ mergeProps: true }" pt:root="bg-transparent"
-                    pt:legend="bg-transparent">
+                <Fieldset legend="Moodle Activities">
                     <ActivityLabel label="Moodle Activities" targetId="select-moodle-activities">
-                        <MultiSelect v-model="activity.selectedMoodle" :options="course.moodleActivities"
-                            optionLabel="name" filter placeholder="Select Moodle Activities" :maxSelectedLabels="3"
-                            inputId="select-moodle-activities" />
+                        <MultiSelect v-model="activity.selectedMoodle" :options="course.moodleActivities" optionLabel="name" filter placeholder="Select Moodle Activities" :maxSelectedLabels="3" inputId="select-moodle-activities" />
                     </ActivityLabel>
                 </Fieldset>
                 <FileUpload />
             </div>
         </Panel>
         <TransitionGroup name="list">
-            <div v-for="index in cardCount" :key="index"
-                :class="['rounded shadow-sm', 'h-full', 'w-full', 'absolute', dynamicBgClass(index)]"
-                :style="{ top: `-${index * 20}px`, transform: `scale(${1 - index * 0.02})`, zIndex: `${cardCount - index}` }">
+            <div v-for="index in cardCount" :key="index" :class="['rounded shadow-sm', 'h-full', 'w-full', 'absolute', dynamicBgClass(index)]" :style="{ top: `-${index * 20}px`, transform: `scale(${1 - index * 0.02})`, zIndex: `${cardCount - index}` }">
             </div>
         </TransitionGroup>
     </div>
@@ -216,7 +167,6 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
 }
 
 .list-move,
-/* apply transition to moving elements */
 .list-enter-active,
 .list-leave-active {
     transition: all 0.5s ease;
@@ -228,8 +178,6 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
     transform: translateX(10px);
 }
 
-/* ensure leaving items are taken out of layout flow so that moving
-   animations can be calculated correctly. */
 .list-leave-active {
     position: absolute;
 }
