@@ -10,6 +10,7 @@ import InputText from 'primevue/inputtext';
 import Meter from '@/components/charts/Meter.vue';
 import Textarea from 'primevue/textarea';
 import Button from 'primevue/button';
+import TipBox from '@/components/ui/TipBox.vue'
 import Pbutton from './buttons/Pbutton.vue';
 import { EllipsisHorizontalIcon } from '@heroicons/vue/16/solid'
 import { CheckCircleIcon, ChevronDownIcon, PlusCircleIcon } from '@heroicons/vue/24/solid';
@@ -129,6 +130,11 @@ watch(weekStats, (newStats) => {
         should
         describe the main themes of the learning content succinctly. <br><br> Week description can be longer, you'll be
         able to toggle whether this is permanently displayed on your module within Moodle itself.
+      </template>
+      <template #rhcontent>
+        <TipBox right-col>
+          Both Week Name and Week description will appear on your Moodle module for students to see.
+        </TipBox>
       </template>
       <div class="flex flex-col gap-3 mb-10">
         <ActivityLabel label="Week name" targetId="week-name" help="Enter a name for this week.">

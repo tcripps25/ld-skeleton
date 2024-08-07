@@ -1,6 +1,6 @@
 <script setup>
 import { TransitionGroup, computed, onMounted } from 'vue';
-
+import TipBox from './ui/TipBox.vue';
 import { useCourseStore } from '@/stores/course.js'
 import Pbutton from './buttons/Pbutton.vue';
 import { ChevronLeftIcon, ChevronRightIcon, PlusIcon } from '@heroicons/vue/16/solid';
@@ -59,10 +59,8 @@ const items = computed(() =>
     <template #subtitle>
       <p>Create and manage Activities for this week.</p>
     </template>
-
-    <div class="flex gap-10 flex-initial mt-10">
-      <div class="block w-54">
-        <div class="sticky -top-0">
+<template #lhcontent>
+  <div class="sticky -top-3">
           <TransitionGroup name="list" tag="ol" class="flex flex-col">
             <li v-for="(activity, index) in items" :key="activity.route" class="">
               <ActivityMenuItem :item="activity" :weekIndex="weekIndex" :index="index" />
@@ -73,12 +71,16 @@ const items = computed(() =>
               <PlusIcon class="w-5 h-5" />
             </template>
           </Pbutton>
+          <TipBox class="mt-5">
+            yo
+        </TipBox>
         </div>
-      </div>
+</template>
+    
       <!-- Activity shown here -->
 
       <RouterView />
-    </div>
+   
 
 
   </Panel>
