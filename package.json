@@ -13,6 +13,7 @@
     "@primevue/themes": "^4.0.0",
     "apexcharts": "^3.49.1",
     "chart.js": "^4.4.3",
+    "gsap": "^3.12.5",
     "openai": "^4.52.3",
     "pinia": "^2.1.7",
     "postcss-import": "^16.1.0",

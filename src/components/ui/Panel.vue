@@ -41,15 +41,15 @@ const toggleHelpVisible = () => {
         <div v-if="$slots.subtitle" class="mb-5">
             <slot name="subtitle" />
         </div>
-        
+
         <div class="flex grow gap-10 relative">
-            <div v-if="$slots.lhcontent" class="max-w-52 block">
+            <div v-if="$slots.lhcontent" class="max-w-72 block">
                 <slot name="lhcontent" />
             </div>
             <div class="grow">
                 <slot></slot>
             </div>
-            <div v-if="$slots.rhcontent" class="max-w-52 block">
+            <div v-if="$slots.rhcontent" class="max-w-72  block">
                 <slot name="rhcontent" />
             </div>
         </div>
