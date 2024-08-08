@@ -37,10 +37,7 @@ function onEnter(el, done) {
     // You can add any additional logic here if needed during the enter phase
 }
 function onLeave(el, done) {
-
-
     done()
-
 }
 
 function onAfterLeave(el) {
