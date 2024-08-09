@@ -67,7 +67,7 @@ const router = createRouter({
                 const course = useCourseStore()
                 const weekIndex = parseInt(route.params.index) // get index from parent route params
                 const activities = course.weeks[weekIndex].activities
-                return { activities }
+                return { activities, weekIndex }
               }
             }
           ]

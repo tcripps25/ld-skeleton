@@ -44,6 +44,7 @@ const toggleHelpVisible = () => {
 
         <div class="flex grow gap-10 relative">
             <div v-if="$slots.lhcontent" class="max-w-72 block">
+
                 <slot name="lhcontent" />
             </div>
             <div class="grow">

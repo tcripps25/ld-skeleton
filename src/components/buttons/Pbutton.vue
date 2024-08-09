@@ -30,7 +30,7 @@ const computedRootClasses = computed(() => {
         props.solid ? 'bg-sky-700 text-sky-50 hover:bg-sky-600' : 'hover:bg-sky-700/10',
         props.solid && (props.severity = "info") ? 'bg-teal-400 text-teal-900 hover:bg-teal-300' : '',
         props.trailing ? 'flex-row-reverse' : 'flex-row',
-        props.menuLink ? 'w-48 justify-start' : 'w-max justify-center',
+        props.menuLink ? 'pl-1 gap-2 w-48 justify-start' : 'w-max justify-center',
         props.ghost ? 'bg-sky-700/10 dark:bg-white/10 dark:hover:bg-white/50 text-sky-700 hover:bg-sky-700/20' : '',
         props.outline ? 'border-2 border-sky-700 hover:bg-sky-700 hover:text-sky-50' : '',
         props.reverse ? 'text-sky-50' : '',
@@ -44,6 +44,7 @@ const computedRootClasses = computed(() => {
     <Button :severity="severity" :icon="icon" :disabled="disabled" :label="label"
         :aria-label="ariaLabel ? ariaLabel : label" :title="ariaLabel ? ariaLabel : label"
         :pt:root="computedRootClasses" :pt:label="label ? '' : 'hidden'">
+
         <template #icon>
             <slot name="icon">
 

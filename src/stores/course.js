@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { slugify } from '@/utils/utils'
 import Week from '@/classes/Week.js'
 import { graphColors } from '@/data/graphColors'
-
+import Activity from '@/classes/Activity'
 export const useCourseStore = defineStore('course', () => {
   // Reactive state
   const title = ref('Contemporary Issues In Cyber Security')
@@ -356,6 +356,18 @@ export const useCourseStore = defineStore('course', () => {
     return weeks.value[index]
   }
 
+  const addActivityToWeek = (weekIndex) => {
+    const week = getWeek(weekIndex)
+
+    const newActivity = new Activity()
+    newActivity.duration = 0
+
+    if (week.activities.length >= 0) {
+      newActivity.title = 'New Activity ' + (week.activities.length + 1)
+    }
+    weeks.value[weekIndex].activities.push(newActivity)
+  }
+
   return {
     title,
     startDate,
@@ -386,6 +398,7 @@ export const useCourseStore = defineStore('course', () => {
     getActivitiesForWeek,
     getActivityColor,
     key,
-    getWeek
+    getWeek,
+    addActivityToWeek
   }
 })
