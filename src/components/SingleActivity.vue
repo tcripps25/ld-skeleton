@@ -31,6 +31,7 @@ const cardCount = computed(() => Math.min((activityWeek.value.activityCount - 1)
 const dynamicBgClass = (index) => {
     const baseColor = 100;
     const increment = 100;
+    const colors = ['bg-slate-400', 'bg-slate-500']
     const colorValue = baseColor + (index * increment);
     const clampedColorValue = Math.min(colorValue, 900);
     return `bg-slate-${clampedColorValue}`;
@@ -81,40 +82,51 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
 
 <template>
     <div v-if="activity" class="relative w-full max-w-7xl" :style="{ marginTop: `${cardCount * 10}px` }">
-        <Panel headerBar :title="(activityIndex + 1) + '. ' + activity.title" removeHeadUnderline class=" bg-slate-50 p-5 rounded h-full relative z-20 shadow">
+        <Panel headerBar :title="(activityIndex + 1) + '. ' + activity.title" removeHeadUnderline
+            class=" bg-slate-50 p-5 rounded h-full relative z-20 shadow">
             <template #action>
                 <ManageActivityButton :week-index="weekIndex" :activity-index="activityIndex" :activity="activity" />
             </template>
             <div class="grid xs:grid-cols-1 2xl:grid-cols-2 gap-5">
                 <div class="grow">
                     <Fieldset legend="Basic Information">
-                        <ActivityLabel label="Title" targetId="activity-name" help="Enter a descriptive title for this Activity.">
+                        <ActivityLabel label="Title" targetId="activity-name"
+                            help="Enter a descriptive title for this Activity.">
                             <InputText id="activity-name" v-model="activity.title" />
                         </ActivityLabel>
-                        <ActivityLabel label="Instructions" targetId="activity-instructions" help="Describe the steps involved in this Activity to your students.">
+                        <ActivityLabel label="Instructions" targetId="activity-instructions"
+                            help="Describe the steps involved in this Activity to your students.">
                             <Textarea autoResize rows="5" id="activity-instructions" v-model="activity.instructions" />
                         </ActivityLabel>
                     </Fieldset>
-                    <Fieldset legend="Learning Approach"   >
+                    <Fieldset legend="Learning Approach">
                         <div class="flex flex-col gap-2">
-                            <ActivityLabel horizontal label="Duration (mins)" targetId="activity-duration" help="How long will this Activity take in total.">
-                                <InputText type="number" :min="0" buttonLayout="horizontal" :step="1" id="activity-duration" v-model="activity.duration" />
+                            <ActivityLabel horizontal label="Duration (mins)" targetId="activity-duration"
+                                help="How long will this Activity take in total.">
+                                <InputText type="number" :min="0" buttonLayout="horizontal" :step="1"
+                                    id="activity-duration" v-model="activity.duration" />
                             </ActivityLabel>
-                            <ActivityLabel horizontal label="Group" targetId="activity-group-toggle" help="Is this a group Activity?">
+                            <ActivityLabel horizontal label="Group" targetId="activity-group-toggle"
+                                help="Is this a group Activity?">
                                 <ToggleSwitch v-model="activity.isGroup" inputId="activity-group-toggle" />
                             </ActivityLabel>
-                            <ActivityLabel horizontal label="Learning Mode" id="activity-mode-select" help=" Indicate the learning mode of this Activity.">
-                                <SelectButton id="activity-mode-select" :options="['Sync', 'Async']" aria-labelledby="activity-mode-select" v-model="activity.mode" />
+                            <ActivityLabel horizontal label="Learning Mode" id="activity-mode-select"
+                                help=" Indicate the learning mode of this Activity.">
+                                <SelectButton id="activity-mode-select" :options="['Sync', 'Async']"
+                                    aria-labelledby="activity-mode-select" v-model="activity.mode" />
                             </ActivityLabel>
                             <ActivityLabel label="Learning Type" targetId="select-learning-type">
-                                <MultiSelect v-model="activity.selectedTypes" :options="course.activityTypesColors" optionLabel="type" optionValue="type" placeholder="Select Learning Types" :maxSelectedLabels="3" inputId="select-learning-type" />
+                                <MultiSelect v-model="activity.selectedTypes" :options="course.activityTypesColors"
+                                    optionLabel="type" optionValue="type" placeholder="Select Learning Types"
+                                    :maxSelectedLabels="3" inputId="select-learning-type" />
                             </ActivityLabel>
                         </div>
                     </Fieldset>
                 </div>
                 <Fieldset legend="Alignments">
                     <div>
-                        <p class="text-sm mb-4">Select which Learning Outcomes or Assessments this Activity is aligned with.</p>
+                        <p class="text-sm mb-4">Select which Learning Outcomes or Assessments this Activity is aligned
+                            with.</p>
                         <div v-for="(option, optionIndex) in course.alignmentOptions" :key="optionIndex">
                             <Divider v-if="optionIndex !== 0" />
                             <div class="flex justify-between items-center">
@@ -124,14 +136,19 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
                             </div>
                             <Transition name="fade">
                                 <ul class="flex flex-col">
-                                    <li v-for="(item, itemIndex) in option.items" :key="itemIndex" class=" flex gap-3 hover:bg-slate-100 px-2 py-3 hover:rounded transition">
-                                        <span class="min-w-6 max-h-6 text-sm font-medium flex items-center justify-center bg-cyan-700 text-white rounded-full">{{ itemIndex + 1 }}</span>
-                                        <label class="w-full mr-2" :for="'activity-' + activityIndex + item.value + '-switch-' + itemIndex">
+                                    <li v-for="(item, itemIndex) in option.items" :key="itemIndex"
+                                        class=" flex gap-3 hover:bg-slate-100 px-2 py-3 hover:rounded transition">
+                                        <span
+                                            class="min-w-6 max-h-6 text-sm font-medium flex items-center justify-center bg-cyan-700 text-white rounded-full">{{
+                                                itemIndex + 1 }}</span>
+                                        <label class="w-full mr-2"
+                                            :for="'activity-' + activityIndex + item.value + '-switch-' + itemIndex">
                                             <span v-if="item.nickname">{{ item.nickname }}</span>
                                             <span v-else>{{ item.label }}</span>
                                         </label>
                                         <div class="w-max">
-                                            <ToggleSwitch v-model="isAligned(item).value" :inputId="'activity-' + activityIndex + item.value + '-switch-' + itemIndex" />
+                                            <ToggleSwitch v-model="isAligned(item).value"
+                                                :inputId="'activity-' + activityIndex + item.value + '-switch-' + itemIndex" />
                                         </div>
                                     </li>
                                 </ul>
@@ -141,14 +158,18 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
                 </Fieldset>
                 <Fieldset legend="Moodle Activities">
                     <ActivityLabel label="Moodle Activities" targetId="select-moodle-activities">
-                        <MultiSelect v-model="activity.selectedMoodle" :options="course.moodleActivities" optionLabel="name" filter placeholder="Select Moodle Activities" :maxSelectedLabels="3" inputId="select-moodle-activities" />
+                        <MultiSelect v-model="activity.selectedMoodle" :options="course.moodleActivities"
+                            optionLabel="name" filter placeholder="Select Moodle Activities" :maxSelectedLabels="3"
+                            inputId="select-moodle-activities" />
                     </ActivityLabel>
                 </Fieldset>
                 <FileUpload />
             </div>
         </Panel>
         <TransitionGroup name="list">
-            <div v-for="index in cardCount" :key="index" :class="['rounded shadow-sm', 'h-full', 'w-full', 'absolute', dynamicBgClass(index)]" :style="{ top: `-${index * 20}px`, transform: `scale(${1 - index * 0.02})`, zIndex: `${cardCount - index}` }">
+            <div v-for="index in cardCount" :key="index"
+                :class="['rounded shadow-sm', 'h-full', 'w-full', 'absolute', dynamicBgClass(index)]"
+                :style="{ top: `-${index * 20}px`, transform: `scale(${1 - index * 0.02})`, zIndex: `${cardCount - index}` }">
             </div>
         </TransitionGroup>
     </div>
