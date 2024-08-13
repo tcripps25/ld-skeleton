@@ -4,9 +4,8 @@ import { TransitionGroup, computed, onMounted } from 'vue';
 import TipBox from './ui/TipBox.vue';
 import { useCourseStore } from '@/stores/course.js'
 import Pbutton from './buttons/Pbutton.vue';
-import { ChevronLeftIcon, ChevronRightIcon, PlusIcon, Squares2X2Icon } from '@heroicons/vue/16/solid';
 import { RouterView } from 'vue-router';
-import { EllipsisHorizontalIcon } from '@heroicons/vue/16/solid';
+import { EllipsisHorizontalIcon, ChevronDoubleUpIcon, ChevronDoubleDownIcon, PlusIcon, Squares2X2Icon } from '@heroicons/vue/16/solid';
 import ScrollPanel from 'primevue/scrollpanel';
 import ActivityMenuItem from '@/components/ActivityMenuItem.vue';
 import Panel from './ui/Panel.vue';
@@ -56,49 +55,46 @@ const noActivitySelected = computed(() => route.path === '/design/' + props.week
   <Panel title="Activities">
     <template #action>
 
-      <Pbutton aria-label="Manage Activities">
-        <template #icon>
-          <EllipsisHorizontalIcon class="w-5 h-5" />
-        </template>
-      </Pbutton>
       <GptPanel :weekIndex="weekIndex" />
 
     </template>
-    <template #subtitle>
-      <p>Create and manage Activities for this week.</p>
+
+
+
+    <div v-if="!noActivitySelected" class="flex justify-between items-center mb-5">
+
+      <Pbutton @click="router.push('/design/' + props.weekIndex)" label="All Activities">
+        <template #icon>
+          <Squares2X2Icon class="w-5 h-5" />
+        </template>
+      </Pbutton>
+
+      <div class="flex items-center gap-1 mb-5">
+        <Pbutton ghost @click="course.addActivityToWeek(weekIndex)" label="Add Activity"
+          :badge="week.activities.length">
+          <template #icon>
+            <PlusIcon class="w-5 h-5" />
+          </template>
+        </Pbutton>
+
+      </div>
+    </div>
+
+    <template v-if="!noActivitySelected" #rhcontent>
+      <div class="flex flex-col justify-center items-center sticky top-0 mt-20">
+        <Pbutton aria-label="Next Activity">
+          <template #icon>
+            <ChevronDoubleUpIcon class="w-5 h-5" />
+          </template>
+        </Pbutton>
+
+        <Pbutton aria-label="Previous Activity">
+          <template #icon>
+            <ChevronDoubleDownIcon class="w-5 h-5" />
+          </template>
+        </Pbutton>
+      </div>
     </template>
-
-    <template #lhcontent>
-      <Transition>
-        <div class="sticky -top-3">
-          <ul class="border-b mb-2 pb-1">
-            <li>
-              <ActivityMenuItem :item="allActivitiesItem" :weekIndex="weekIndex" :index="index">
-                <template #icon>
-                  <Squares2X2Icon class="w-5 h-5" />
-                </template>
-              </ActivityMenuItem>
-            </li>
-          </ul>
-
-
-          <TransitionGroup name="list" tag="ol" class="flex flex-col">
-            <li v-for="(activity, index) in items" :key="activity.route" class="">
-              <ActivityMenuItem :item="activity" :weekIndex="weekIndex" :index="index" />
-            </li>
-          </TransitionGroup>
-          <Pbutton menuLink ghost @click="course.addActivityToWeek(weekIndex)" label="Add Activity" class=" pl-4 mt-1">
-            <template #icon>
-              <PlusIcon class="w-5 h-5" />
-            </template>
-          </Pbutton>
-          <TipBox class="mt-5">
-            yo
-          </TipBox>
-        </div>
-      </Transition>
-    </template>
-
     <!-- Activity shown here -->
 
     <router-view v-slot="{ Component }">
@@ -110,10 +106,6 @@ const noActivitySelected = computed(() => route.path === '/design/' + props.week
 
 
   </Panel>
-
-
-
-
 
 
 

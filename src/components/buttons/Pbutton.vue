@@ -16,6 +16,7 @@ const props = defineProps({
     icon: String,
     severity: String,
     rounded: Boolean,
+    badge: String,
 })
 
 const computedRootClasses = computed(() => {
@@ -27,8 +28,8 @@ const computedRootClasses = computed(() => {
         'gap-1',
         'text-sm',
         props.label ? 'px-3 py-2' : '',
-        props.solid ? 'bg-sky-700 text-sky-50 hover:bg-sky-600' : 'hover:bg-sky-700/10',
-        props.solid && (props.severity = "info") ? 'bg-teal-400 text-teal-900 hover:bg-teal-300' : '',
+        props.solid ? 'bg-gradient-to-br from-blue-600 to-purple-600 text-sky-50 hover:from-blue-500 hover:to-purple-500' : 'text-sky-800 hover:bg-sky-700/10',
+        props.solid && (props.severity == "info") ? 'bg-teal-400 text-teal-900 hover:bg-teal-300' : '',
         props.trailing ? 'flex-row-reverse' : 'flex-row',
         props.menuLink ? 'pl-1 gap-2 w-48 justify-start' : 'w-max justify-center',
         props.ghost ? 'bg-sky-700/10 dark:bg-white/10 dark:hover:bg-white/50 text-sky-700 hover:bg-sky-700/20' : '',
@@ -41,9 +42,11 @@ const computedRootClasses = computed(() => {
 </script>
 
 <template>
-    <Button :severity="severity" :icon="icon" :disabled="disabled" :label="label"
+    <Button :severity="severity" :badge="badge" :icon="icon" :disabled="disabled" :label="label"
         :aria-label="ariaLabel ? ariaLabel : label" :title="ariaLabel ? ariaLabel : label"
-        :pt:root="computedRootClasses" :pt:label="label ? '' : 'hidden'">
+        :pt:root="computedRootClasses"
+        :pt:pcBadge="solid ? '!bg-purple-500 text-purple-50' : '!bg-slate-300 text-slate-900'"
+        :pt:label="label ? '' : 'hidden'">
 
         <template #icon>
             <slot name="icon">

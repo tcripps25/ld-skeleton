@@ -50,7 +50,7 @@ const id = ref(Date.now());
 <template>
     <div class="sticky top-0">
         <Pbutton v-if="!show" @click="toggleShow" solid :aria-label="'Open tip panel'"
-            class="max-w-full group bg-slate-700 hover:bg-slate-600 p-2 !rounded-3xl rotate-45 w-max before:content-none shadow"
+            class="max-w-full group !from-slate-700 !to-slate-800 hover:!from-slate-600 hover:!to-slate-700 p-2 !rounded-3xl rotate-45 w-max before:content-none shadow"
             :class="[
                 rightCol ? ' mr-auto !rounded-es' : '!rounded-se ml-auto before:-right-1 ',
             ]">
@@ -67,12 +67,12 @@ const id = ref(Date.now());
                 <div>
                     <div class="flex gap-1 mb-2 -mt-1 -mx-1 justify-between items-center">
                         <div class="flex gap-1">
-                            <LightBulbIcon class="w-5 h-5 text-yellow-300" />
+                            <LightBulbIcon class="w-5 h-5 !text-yellow-300" />
                             <h4 v-if="(title)" class="font-semibold text-sm">{{ title }}</h4>
                         </div>
                         <Pbutton @click="toggleShow" :aria-label="'Close tip panel'">
                             <template #icon>
-                                <XMarkIcon class="h-5 w-5" />
+                                <XMarkIcon class="h-5 w-5 text-slate-50" />
                             </template>
                         </Pbutton>
                     </div>

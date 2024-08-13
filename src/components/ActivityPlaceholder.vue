@@ -4,6 +4,9 @@ import { PlusIcon } from '@heroicons/vue/24/solid';
 import { useCourseStore } from '@/stores/course';
 import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
+import Carousel from 'primevue/carousel';
+
+
 const course = useCourseStore()
 
 const props = defineProps({
@@ -19,7 +22,7 @@ const route = (index) => computed(() => `/design/${props.weekIndex}/${index}`);
 <template>
     <div class="max-w-7xl grow ">
         <!-- Grid of activity links to provide an overview, shows limited information about each activity -->
-        <div class="grid lg:grid-cols-2 xl:grid-cols-3 md:grid-cols-1 gap-5">
+        <div class="grid lg:grid-cols-2 transition-all xl:grid-cols-3 md:grid-cols-1 gap-5">
             <RouterLink v-for="(activity, index) in activities" :to="route(index)"
                 class="flex flex-col p-5 h-44 w-full bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg shadow hover:shadow-lg hover:scale-[102%] transition-all">
 
