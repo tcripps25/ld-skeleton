@@ -38,7 +38,7 @@ const submitTitle = () => {
       </template>
 
       <div class="max-w-4xl mx-auto flex flex-col gap-5">
-        <Panel :title="'Module Information'">
+        <Panel collapse :title="'Module Information'">
           <template v-slot:subtitle>
             <p>Basic information about your Module.</p>
           </template>
@@ -73,7 +73,7 @@ const submitTitle = () => {
             </div>
           </Fieldset>
         </Panel>
-        <Panel :title="'Learning Outcomes'">
+        <Panel collapse :title="'Learning Outcomes'">
           <template v-slot:subtitle>
             <p>Learning outcomes information drawn from the SITS database.</p>
           </template>
@@ -98,7 +98,7 @@ const submitTitle = () => {
               Information</a>
           </div>
         </Panel>
-        <Panel :title="'Assessments'">
+        <Panel collapse :title="'Assessments'">
           <template v-slot:subtitle>
             Assessments shown below have been populated automatically.
           </template>
