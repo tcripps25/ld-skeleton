@@ -52,7 +52,7 @@ const noActivitySelected = computed(() => route.path === '/design/' + props.week
 </script>
 
 <template>
-  <Panel title="Activities">
+  <Panel collapse :title="'Activities ' + '(' + week.activities.length + ')'">
     <template #action>
 
       <GptPanel :weekIndex="weekIndex" />
@@ -61,30 +61,25 @@ const noActivitySelected = computed(() => route.path === '/design/' + props.week
 
 
 
-    <div v-if="!noActivitySelected" class="flex justify-between items-center mb-5">
 
-      <Pbutton @click="router.push('/design/' + props.weekIndex)" label="All Activities">
-        <template #icon>
-          <Squares2X2Icon class="w-5 h-5" />
-        </template>
-      </Pbutton>
 
-      <div class="flex items-center gap-1 mb-5">
-        <Pbutton ghost @click="course.addActivityToWeek(weekIndex)" label="Add Activity"
-          :badge="week.activities.length">
+    <template v-if="!noActivitySelected" #lhcontent>
+      <div class="flex flex-col gap-3 justify-center items-center sticky top-0">
+        <Pbutton @click="router.push('/design/' + props.weekIndex)" aria-label="View all Activities">
           <template #icon>
-            <PlusIcon class="w-5 h-5" />
+            <Squares2X2Icon class="w-5 h-5" />
           </template>
         </Pbutton>
 
-      </div>
-    </div>
-
-    <template v-if="!noActivitySelected" #rhcontent>
-      <div class="flex flex-col justify-center items-center sticky top-0 mt-20">
         <Pbutton aria-label="Next Activity">
           <template #icon>
             <ChevronDoubleUpIcon class="w-5 h-5" />
+          </template>
+        </Pbutton>
+
+        <Pbutton ghost rounded @click="course.addActivityToWeek(weekIndex)" aria-label="Add Activity">
+          <template #icon>
+            <PlusIcon class="w-5 h-5" />
           </template>
         </Pbutton>
 
@@ -95,12 +90,13 @@ const noActivitySelected = computed(() => route.path === '/design/' + props.week
         </Pbutton>
       </div>
     </template>
+
     <!-- Activity shown here -->
 
     <router-view v-slot="{ Component }">
-      <transition mode="out-in" name="fade">
+      <Transition mode="out-in" name="fade">
         <component :is="Component" />
-      </transition>
+      </Transition>
     </router-view>
 
 
@@ -109,25 +105,23 @@ const noActivitySelected = computed(() => route.path === '/design/' + props.week
 
 
 
-  <!-- <TransitionGroup name="list" tag="div" class="flex flex-wrap gap-5 pl-5">
-      <Activity v-for="(activity, activityIndex) in week.activities" :key="activityIndex" :week="week"
-        :weekIndex="weekIndex" :activity="activity" :activityIndex="activityIndex"
-        @remove-activity="handleRemoveActivity(weekIndex, activityIndex)" />
-    </TransitionGroup>
-    -->
 
 </template>
 
 <style scoped>
-.fade-enter-active,
+.fade-move,
+.fade-enter-active {
+  transition: all 0.2s ease-out;
+}
+
 .fade-leave-active {
-  transition: opacity 0.2s ease-out;
+  transition: all 0.2s ease-out;
 }
 
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-
+  transform: translateX(.2rem);
 }
 
 .v-enter-active,

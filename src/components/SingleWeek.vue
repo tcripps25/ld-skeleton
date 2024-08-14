@@ -113,7 +113,7 @@ watch(weekStats, (newStats) => {
       </Transition>
     </template>
 
-    <Panel title="General Information">
+    <Panel collapse title="General Information">
       <template #info>
         Both Week Name and Week description will appear on your Moodle module for students to see. <br><br> Week name
         should
@@ -131,7 +131,7 @@ watch(weekStats, (newStats) => {
         </ActivityLabel>
         <ActivityLabel label="Week description" targetId="week-description"
           help="Describe the aims of this week to your students.">
-          <Textarea v-model="week.description" id="week-description" />
+          <Textarea autoResize rows="5" v-model="week.description" id="week-description" />
         </ActivityLabel>
       </div>
     </Panel>

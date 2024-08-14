@@ -14,7 +14,7 @@ import ActivityPlaceholder from './ActivityPlaceholder.vue';
 import ManageActivityButton from '@/components/buttons/ManageActivityButton.vue';
 import MoodleActivity from './ui/MoodleActivity.vue';
 import MultiSelect from 'primevue/multiselect';
-import { Transition, TransitionGroup } from 'vue';
+
 
 const props = defineProps({
     weekIndex: Number,
@@ -31,7 +31,7 @@ const cardCount = computed(() => Math.min((activityWeek.value.activityCount - 1)
 const dynamicBgClass = (index) => {
     const baseColor = 100;
     const increment = 100;
-    const colors = ['bg-slate-400', 'bg-slate-500']
+    const colors = ['bg-slate-100', 'bg-slate-200', 'bg-slate-300', 'bg-slate-400', 'bg-slate-500']
     const colorValue = baseColor + (index * increment);
     const clampedColorValue = Math.min(colorValue, 900);
     return `bg-slate-${clampedColorValue}`;
@@ -81,9 +81,12 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
 </script>
 
 <template>
-    <div v-if="activity" class="relative w-full max-w-7xl" :style="{ marginTop: `${cardCount * 10}px` }">
-        <Panel headerBar :title="(activityIndex + 1) + '. ' + activity.title" removeHeadUnderline
-            class=" bg-slate-50 p-5 rounded h-full relative z-20 shadow">
+
+    <div v-if="activity" class="relative w-full max-w-7xl transition-all" :style="{ marginTop: `${cardCount * 10}px` }">
+        <Panel headerBar removeHeadUnderline class=" bg-slate-50 p-5 rounded h-full relative z-20 shadow">
+            <template #title>
+                <h3 class="font-semibold">{{ (activityIndex + 1) + '. ' + activity.title }}</h3>
+            </template>
             <template #action>
                 <ManageActivityButton :week-index="weekIndex" :activity-index="activityIndex" :activity="activity" />
             </template>
@@ -125,7 +128,8 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
                 </div>
                 <Fieldset legend="Alignments">
                     <div>
-                        <p class="text-sm mb-4">Select which Learning Outcomes or Assessments this Activity is aligned
+                        <p class="text-sm mb-4">Select which Learning Outcomes or Assessments this Activity is
+                            aligned
                             with.</p>
                         <div v-for="(option, optionIndex) in course.alignmentOptions" :key="optionIndex">
                             <Divider v-if="optionIndex !== 0" />
@@ -166,17 +170,33 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
                 <FileUpload />
             </div>
         </Panel>
-        <TransitionGroup name="list">
+        <TransitionGroup appear name="tabs">
             <div v-for="index in cardCount" :key="index"
                 :class="['rounded shadow-sm', 'h-full', 'w-full', 'absolute', dynamicBgClass(index)]"
                 :style="{ top: `-${index * 20}px`, transform: `scale(${1 - index * 0.02})`, zIndex: `${cardCount - index}` }">
             </div>
         </TransitionGroup>
     </div>
-    <ActivityPlaceholder :activities="course.weeks[weekIndex].activities" v-else />
+    <ActivityPlaceholder v-else :activities="course.weeks[weekIndex].activities" />
+
 </template>
 
 <style scoped>
+.fade-move,
+.fade-enter-active {
+    transition: all 0.2s ease-out;
+}
+
+.fade-leave-active {
+    transition: all 0.2s ease-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+
+}
+
 .v-enter-active,
 .v-leave-active {
     transition: opacity 0.5s ease;
@@ -187,10 +207,24 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
     opacity: 0;
 }
 
+.tabs-move,
+.tabs-enter-active,
+.tabs-leave-active {
+    transition: all 0.5s ease-out;
+}
+
+.tabs-enter-from,
+.tabs-leave-to {
+
+    margin-top: 10px;
+}
+
+
+
 .list-move,
 .list-enter-active,
 .list-leave-active {
-    transition: all 0.5s ease;
+    transition: all 0.5s ease-out;
 }
 
 .list-enter-from,

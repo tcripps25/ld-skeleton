@@ -23,7 +23,7 @@ const props = defineProps({
                 </div>
                 <slot></slot>
             </div>
-            <small class="text-right text-slate-500 mb-2" v-if="help" :id="targetId + '-help'">{{ help }}</small>
+            <small class="text-slate-500 mb-2" v-if="help" :id="targetId + '-help'">{{ help }}</small>
         </div>
 
     </div>

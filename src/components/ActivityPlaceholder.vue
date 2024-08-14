@@ -20,7 +20,7 @@ const route = (index) => computed(() => `/design/${props.weekIndex}/${index}`);
 </script>
 
 <template>
-    <div class="max-w-7xl grow ">
+    <div class="">
         <!-- Grid of activity links to provide an overview, shows limited information about each activity -->
         <div class="grid lg:grid-cols-2 transition-all xl:grid-cols-3 md:grid-cols-1 gap-5">
             <RouterLink v-for="(activity, index) in activities" :to="route(index)"
@@ -41,7 +41,6 @@ const route = (index) => computed(() => `/design/${props.weekIndex}/${index}`);
             <!-- Add activity button -->
             <Pbutton @click="course.addActivityToWeek(weekIndex)" ghost label="Add Activity"
                 class="p-5 h-44 !w-full text-2xl bg-gradient-to-br rounded-lg flex shadow">
-
                 <template #icon>
                     <PlusIcon class="h-5 w-5" />
                 </template>
