@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue';
 import Button from 'primevue/button';
+import SplitButton from 'primevue/splitbutton';
 
 const props = defineProps({
     label: String,
@@ -17,6 +18,7 @@ const props = defineProps({
     severity: String,
     rounded: Boolean,
     badge: String,
+    items: Object,
 })
 
 const computedRootClasses = computed(() => {
@@ -42,8 +44,11 @@ const computedRootClasses = computed(() => {
 </script>
 
 <template>
-    <Button :severity="severity" :badge="badge" :icon="icon" :disabled="disabled" :label="label"
-        :aria-label="ariaLabel ? ariaLabel : label" :title="ariaLabel ? ariaLabel : label"
+    <SplitButton v-if="items" :disabled="disabled" :pt:pcButton:root="computedRootClasses" :pt:pcDropdown:root="computedRootClasses" :model="items" :label="label" :aria-label="ariaLabel ? ariaLabel : label" >
+      
+    </SplitButton>
+    <Button v-else :severity="severity" :badge="badge" :icon="icon" :disabled="disabled" :label="label"
+         :title="ariaLabel ? ariaLabel : label"
         :pt:root="computedRootClasses"
         :pt:pcBadge="solid ? '!bg-purple-500 text-purple-50' : '!bg-slate-300 text-slate-900'"
         :pt:label="label ? '' : 'hidden'">
@@ -54,6 +59,6 @@ const computedRootClasses = computed(() => {
             </slot>
         </template>
     </Button>
-
+    
 
 </template>

@@ -6,8 +6,8 @@ import Panel from '@/components/ui/Panel.vue';
 import Page from '@/components/Page.vue'
 import { useRoute, RouterView } from 'vue-router';
 import { useCourseStore } from '@/stores/course.js'
-import Button from 'primevue/button';
-import { PlusCircleIcon } from '@heroicons/vue/24/solid';
+import Pbutton from '@/components/buttons/Pbutton.vue';
+import { PlusIcon } from '@heroicons/vue/16/solid';
 
 const course = useCourseStore()
 const route = useRoute();
@@ -26,6 +26,14 @@ watch([totalActivities, numberOfWeeks], ([newTotalActivities, newNumberOfWeeks])
 // Check if the current route is '/design' or any of its sub-routes
 const isDesignPage = computed(() => route.path === '/design/overview');
 
+const items = [
+    {
+        label: 'Add multiple weeks',
+        command: () => {
+            toast.add({ severity: 'success', summary: 'Updated', detail: 'Data Updated', life: 3000 });
+        }
+    }
+];
 
 </script>
 
@@ -35,19 +43,25 @@ const isDesignPage = computed(() => route.path === '/design/overview');
       <template v-slot:page-header>
         <PageHeader title="Design" />
       </template>
-      <Panel>
-        <div class="flex flex-col gap-5">
+      <Panel title="Module Schedule">
+        <div class="flex flex-col gap-5 ">
           <TransitionGroup>
             <WeekSummary v-for="(week, weekIndex) in course.weeks" :key="weekIndex" :week="week" :weekIndex="weekIndex"
               class="flex flex-col gap-5" />
           </TransitionGroup>
-          <Button @click="course.incrementWeek();"
-            pt:root:class="ring group rounded-lg grow w-full h-full h-full flex justify-center items-center hover:shadow transition text-slate-800 p-5"
-            label="Add Week" title="Add Week">
-            <PlusCircleIcon class="h-10 w-10 text-blue-500 group-hover:text-blue-400 transition" />
-          </Button>
+          
         </div>
+        <template #lhcontent>
+          <div class="sticky top-0 flex justify-end">
+        <Pbutton ghost :items="items"  @click="course.incrementWeek();"
+            label="Add Week"  class="self-end">
+          
+          </Pbutton>
+        </div>
+        </template>
       </Panel>
+        
+    
     </Page>
     <router-view v-else></router-view>
 

@@ -42,7 +42,7 @@ const toggleSection = () => {
             class="flex justify-between items-center rounded-t" v-if="$slots.title || title || $slots.action">
             <div class="flex items-start">
                 <Pbutton v-if="collapse" :aria-label="sectionVisible ? 'Collapse ' + title : 'Collapse ' + title"
-                    @click="toggleSection()" :aria-expanded="sectionVisible ? true : false"
+                   class="mr-1" :class="headerBar ? '-ml-3' : ''" @click="toggleSection()" :aria-expanded="sectionVisible ? true : false"
                     :aria-controls="titleSlug() + '-panel-content'">
                     <template #icon>
                         <ChevronRightIcon class="w-5 h-5 transition text-slate-500"

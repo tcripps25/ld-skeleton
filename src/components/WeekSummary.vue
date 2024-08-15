@@ -1,12 +1,10 @@
 <script setup>
 import { TransitionGroup, computed, onMounted } from 'vue';
-import Activity from '@/components/Activity.vue';
 import { useCourseStore } from '@/stores/course.js'
 import { PlusCircleIcon, XMarkIcon } from '@heroicons/vue/24/solid';
 import Panel from './ui/Panel.vue';
-import Button from 'primevue/button';
-import ActivityClass from '@/classes/Activity';
 import Timeline from 'primevue/timeline';
+import Pbutton from './buttons/Pbutton.vue';
 
 const course = useCourseStore()
 
@@ -23,22 +21,18 @@ const removeWeek = (weekIndex) => {
 </script>
 
 <template>
-    <Panel v-if="week">
+    <Panel :title="week.name" header-bar collapse v-if="week" class="p-5 rounded-lg shadow">
         <template v-slot:action>
-            <button @click="removeWeek(weekIndex)" class="text-red-500 flex gap-1"><span class="sr-only">Remove
-                    Week</span>
-                <XMarkIcon class="w-5 h-5" />
-            </button>
+            <Pbutton aria-label="Delete week" @click="removeWeek(weekIndex)" >
+                <template #icon>    
+                    <XMarkIcon class="w-5 h-5 text-red-500" />
+                </template>
+            </Pbutton>
         </template>
-        <template v-slot:title>
-            <div class="flex flex-col">
-                <div class="font-semibold text-xl">{{ week.name }}</div>
-                <div class="text-sm">Teaching Week {{ weekIndex + 1 }} Commencing: {{ week.formattedDate }}</div>
-            </div>
-        </template>
+   
 
-        <div class="flex p-5 -ml-5">
-
+        <div class="flex">
+            <div class="text-sm">Teaching Week {{ weekIndex + 1 }} Commencing: {{ week.formattedDate }}</div>
             <Timeline v-if="week.activities.length > 0" :value="week.activities" align="right"
                 class="shrink bg-slate-100 py-5 -ml-5 rounded">
                 <template #content="slotProps">
