@@ -16,11 +16,7 @@ const menu = ref(['Set Up', 'Schedule'])
     <div class="pb-3">
       <div class="flex justify-between">
         <h1 class="text-2xl font-semibold text-sky-900">Design</h1>
-        <div class="flex">
-          <div v-for="item in menu" class="bg-slate-300 -skew-x-12 p-5 -my-5 shadow">
-            <p class="skew-x-12">{{ item }}</p>
-          </div>
-        </div>
+
       </div>
     </div>
     <div class="bg-white p-5 -mb-5 -mx-5 relative">
