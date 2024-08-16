@@ -58,15 +58,7 @@ watch(weekStats, (newStats) => {
 <template>
   <Page class="grow relative" sidebar-title="Statistics">
     <template #page-header>
-      <PageHeader :title="week.name">
-        <template #toolbar>
-          <Pbutton aria-label="Manage Week">
-            <template #icon>
-              <EllipsisHorizontalIcon class="w-5 h-5" />
-            </template>
-          </Pbutton>
-        </template>
-      </PageHeader>
+      <PageHeader title="Module Schedule" :subtitle="week.name" />
     </template>
     <template #lead>
       <p>Enter information about this week of your Module.</p>
@@ -136,10 +128,6 @@ watch(weekStats, (newStats) => {
       </div>
     </Panel>
     <Week v-if="week" :week="week" :week-index="index" />
-
-
-
-
     <div v-else class="">
       <Panel title="Not found">
         <p>Selected Week can't be found, navigate to 'Set Up' and then refresh the page.</p>

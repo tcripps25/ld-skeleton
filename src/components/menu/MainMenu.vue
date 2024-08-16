@@ -34,8 +34,8 @@ const menu = ref([
         route: '/setup'
       },
       {
-        label: 'Design',
-        icon: 'pi pi-palette',
+        label: 'Schedule',
+        icon: 'pi pi-calendar',
         route: '/design/overview'
       },
       {
@@ -74,7 +74,7 @@ const weeksExist = computed(() => {
         <ul v-if="cat.items">
           <li v-for="(item, index) in cat.items">
             <MenuItem :item="item" />
-            <ModuleMenu v-if="item.label == 'Design'" />
+            <ModuleMenu v-if="item.label == 'Schedule'" />
           </li>
         </ul>
       </li>

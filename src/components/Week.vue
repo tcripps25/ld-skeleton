@@ -112,6 +112,7 @@ const noActivitySelected = computed(() => route.path === '/design/' + props.week
 .fade-move,
 .fade-enter-active {
   transition: all 0.2s ease-out;
+  transition-delay: 0.25s;
 }
 
 .fade-leave-active {
@@ -121,7 +122,8 @@ const noActivitySelected = computed(() => route.path === '/design/' + props.week
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-  transform: translateX(.2rem);
+  transform: translateX(.5rem);
+
 }
 
 .v-enter-active,

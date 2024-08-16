@@ -27,12 +27,12 @@ watch([totalActivities, numberOfWeeks], ([newTotalActivities, newNumberOfWeeks])
 const isDesignPage = computed(() => route.path === '/design/overview');
 
 const items = [
-    {
-        label: 'Add multiple weeks',
-        command: () => {
-            toast.add({ severity: 'success', summary: 'Updated', detail: 'Data Updated', life: 3000 });
-        }
+  {
+    label: 'Add multiple weeks',
+    command: () => {
+      toast.add({ severity: 'success', summary: 'Updated', detail: 'Data Updated', life: 3000 });
     }
+  }
 ];
 
 </script>
@@ -41,27 +41,26 @@ const items = [
   <div>
     <Page v-if="isDesignPage">
       <template v-slot:page-header>
-        <PageHeader title="Design" />
+        <PageHeader title="Module Schedule" />
       </template>
-      <Panel title="Module Schedule">
+      <Panel title="Teaching Weeks">
         <div class="flex flex-col gap-5 ">
           <TransitionGroup>
-            <WeekSummary v-for="(week, weekIndex) in course.weeks" :key="weekIndex" :week="week" :weekIndex="weekIndex"
-              class="flex flex-col gap-5" />
+            <WeekSummary v-for="(week, weekIndex) in course.weeks" :key="weekIndex" :week="week"
+              :weekIndex="weekIndex" />
           </TransitionGroup>
-          
+
         </div>
         <template #lhcontent>
           <div class="sticky top-0 flex justify-end">
-        <Pbutton ghost :items="items"  @click="course.incrementWeek();"
-            label="Add Week"  class="self-end">
-          
-          </Pbutton>
-        </div>
+            <Pbutton ghost :items="items" @click="course.incrementWeek();" label="Add Week" class="self-end">
+
+            </Pbutton>
+          </div>
         </template>
       </Panel>
-        
-    
+
+
     </Page>
     <router-view v-else></router-view>
 

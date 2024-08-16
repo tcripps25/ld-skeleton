@@ -7,7 +7,6 @@ import { computed } from 'vue';
 import WeekLink from '@/components/menu/WeekLink.vue';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import MenuItem from './MenuItem.vue';
-import Button from 'primevue/button';
 import Pbutton from '../buttons/Pbutton.vue';
 
 const course = useCourseStore();

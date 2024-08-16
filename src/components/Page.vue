@@ -13,7 +13,7 @@ import ScrollPanel from 'primevue/scrollpanel';
                 <div class="p-5 flex-col flex grow overflow-y-auto overflow-x-hidden ">
                     <slot name="page-header">
                     </slot>
-                    <div v-if="$slots.lead" class="w-full max-w-7xl mx-auto">
+                    <div v-if="$slots.lead" class="w-full mx-auto">
                         <slot name="lead"></slot>
                     </div>
                     <div class="mt-5 grow ">

@@ -1,13 +1,14 @@
 <script setup>
-import { TransitionGroup, computed, onMounted } from 'vue';
+
 import { useCourseStore } from '@/stores/course.js'
-import { PlusCircleIcon, XMarkIcon } from '@heroicons/vue/24/solid';
+import ManageWeekButton from './buttons/ManageWeekButton.vue';
 import Panel from './ui/Panel.vue';
 import Timeline from 'primevue/timeline';
 import Pbutton from './buttons/Pbutton.vue';
-
+import { ArrowRightCircleIcon } from '@heroicons/vue/16/solid';
+import { useRouter } from 'vue-router';
 const course = useCourseStore()
-
+const router = useRouter()
 // Define props
 const props = defineProps({
     week: Object,
@@ -21,35 +22,25 @@ const removeWeek = (weekIndex) => {
 </script>
 
 <template>
-    <Panel :title="week.name" header-bar collapse v-if="week" class="p-5 rounded-lg shadow">
-        <template v-slot:action>
-            <Pbutton aria-label="Delete week" @click="removeWeek(weekIndex)" >
-                <template #icon>    
-                    <XMarkIcon class="w-5 h-5 text-red-500" />
-                </template>
-            </Pbutton>
+    <Panel v-if="week" card :title="week.name" header-bar :link="'./' + weekIndex">
+        <template #action>
+            <ManageWeekButton :week-index="weekIndex" :activity-index="activityIndex" :activity="activity" />
         </template>
-   
+
 
         <div class="flex">
             <div class="text-sm">Teaching Week {{ weekIndex + 1 }} Commencing: {{ week.formattedDate }}</div>
-            <Timeline v-if="week.activities.length > 0" :value="week.activities" align="right"
-                class="shrink bg-slate-100 py-5 -ml-5 rounded">
-                <template #content="slotProps">
-                    <div class="text-sm font-semibold">{{ slotProps.item.name || 'Untitled Activity ' + (slotProps.index
-                        + 1) }}</div>
-                </template>
-                <template #opposite="slotProps">
-                    <ul class="text-sm">
-                        <li v-for="(type, typeIndex) in slotProps.item.selectedTypes">
-                            {{ type }}
-                        </li>
-                    </ul>
-                </template>
-            </Timeline>
 
         </div>
+        <div class="flex justify-end">
+            <Pbutton @click="router.push('./' + weekIndex)" ghost trailing label="Edit week">
+                <template #icon>
+                    <ArrowRightCircleIcon class="w-5 h-5" />
+                </template>
+            </Pbutton>
+        </div>
     </Panel>
+
 </template>
 
 <style scoped>

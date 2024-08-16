@@ -92,7 +92,7 @@ const deleteConfirm = () => {
 const manageMenu = ref();
 const manageItems = ref([
     {
-        label: 'Manage Activity',
+        label: 'Manage Week',
         items: [
             {
                 label: 'Duplicate',
@@ -119,7 +119,7 @@ const toggleManageMenu = (event) => {
 <template>
 
 
-    <Pbutton aria-title="Manage Activity" type="button" @click="toggleManageMenu" aria-haspopup="true"
+    <Pbutton aria-title="Manage Week" type="button" @click="toggleManageMenu" aria-haspopup="true"
         aria-controls="overlay_menu">
         <template #icon>
             <EllipsisHorizontalIcon class="w-5 h-5" />
