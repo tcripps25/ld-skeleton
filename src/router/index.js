@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import VisualiseView from '@/views/VisualiseView.vue'
+import ScheduleView from '@/views/ScheduleView.vue'
 import DesignView from '@/views/DesignView.vue'
 import AboutView from '@/views/AboutView.vue'
 import HelpView from '@/views/HelpView.vue'
@@ -30,13 +31,15 @@ const router = createRouter({
     },
     {
       path: '/design',
+      name: 'design',
       component: DesignView,
+      children: []
+    },
+    {
+      path: '/schedule',
+      component: ScheduleView,
+      name: 'schedule',
       children: [
-        {
-          path: 'overview',
-          name: 'design-overview',
-          component: DesignView
-        },
         {
           path: ':index',
           name: 'week-detail',

@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 // Define props
 const props = defineProps({
+  sectionTitle: String,
   title: String,
   subtitle: String,
   message: String
@@ -12,19 +13,21 @@ const menu = ref(['Set Up', 'Schedule'])
 <template>
 
   <div
-    class="py-3 bg-gradient-to-b from-slate-200 via-slate-200 to-slate-300 -mt-5 -mx-5 px-5 z-10 dark:bg-zinc-800 border-slate-200 dark:border-zinc-800 flex justify-between mb-3 flex-col">
-    <div class="pb-3">
-      <div class="flex justify-between">
-        <h1 class="text-2xl font-semibold text-sky-900">Design</h1>
+    class="z-10 dark:bg-zinc-800 border-slate-200 dark:border-zinc-800 flex justify-between mb-3 flex-col bg-slate-100 -m-5 px-5 border-b py-3">
 
-      </div>
+    <div v-if="sectionTitle" class="flex justify-between">
+      <h1 class="font-semibold">
+        {{ sectionTitle }}
+      </h1>
     </div>
-    <div class="bg-white p-5 -mb-5 -mx-5 relative">
+
+    <div class=" px-5 mt-2 -mx-5 relative">
       <div class="flex justify-between items-center">
-        <div class="flex gap-2 items-center">
-          <h1 class="text-xl mb-0 font-semibold flex gap-2 items-center">{{ title }}</h1>
-          <p v-if="subtitle" class="font-semibold text-xl text-slate-400">/</p>
-          <h2 v-if="subtitle" class="font-semibold text-xl ">{{ subtitle }}</h2>
+        <div class="flex gap-1 items-center text-xl font-semibold">
+          <h1 class=" mb-0  flex gap-2 items-center " :class="subtitle ? 'text-slate-500' : 'text-slate-900'">{{ title
+            }}</h1>
+          <p v-if="subtitle" class="  text-slate-400">/</p>
+          <h2 v-if="subtitle" class=" ">{{ subtitle }}</h2>
         </div>
         <div class="flex flex-col items-center">
           <p class="text-sm">{{ message }}</p>

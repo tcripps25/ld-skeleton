@@ -22,7 +22,7 @@ const removeWeek = (weekIndex) => {
 </script>
 
 <template>
-    <Panel v-if="week" card :title="week.name" header-bar :link="'./' + weekIndex">
+    <Panel v-if="week" card :title="week.name" header-bar :link="'./schedule/' + weekIndex">
         <template #action>
             <ManageWeekButton :week-index="weekIndex" :activity-index="activityIndex" :activity="activity" />
         </template>
@@ -33,7 +33,7 @@ const removeWeek = (weekIndex) => {
 
         </div>
         <div class="flex justify-end">
-            <Pbutton @click="router.push('./' + weekIndex)" ghost trailing label="Edit week">
+            <Pbutton @click="router.push('./schedule/' + weekIndex)" ghost trailing label="Edit week">
                 <template #icon>
                     <ArrowRightCircleIcon class="w-5 h-5" />
                 </template>

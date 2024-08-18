@@ -10,14 +10,29 @@ const course = useCourseStore();
 const moduleData = computed(() => {
     // Check if course.weeks exists and has length
     if (!course.weeks || course.weeks.length === 0) {
-        return [];
+        // If no weeks, just return the static Schedule item
+        return [
+            {
+                label: 'Schedule',
+                icon: 'pi pi-calendar',
+                route: '/schedule'
+            }
+        ];
     }
 
-    return course.weeks.map((week, index) => ({
-        label: week.name,
-        icon: 'pi pi-calendar',
-        route: `/design/${index}`
-    }));
+    // Combine the static Schedule item with the dynamic weeks items
+    return [
+        {
+            label: 'Schedule',
+            icon: 'pi pi-calendar',
+            route: '/schedule'
+        },
+        ...course.weeks.map((week, index) => ({
+            label: week.name,
+            icon: 'pi pi-circle-fill',
+            route: `/schedule/${index}`
+        }))
+    ];
 });
 </script>
 
@@ -27,7 +42,7 @@ const moduleData = computed(() => {
     <nav aria-labelledby="submenulabel">
         <h2 id="submenulabel" class="sr-only">Module Schedule Menu</h2>
 
-        <TransitionGroup v-if="course.weeks.length > 0" class="flex flex-col relative ml-6" name="list" tag="ul">
+        <TransitionGroup class="flex flex-col relative ml-6" name="list" tag="ul">
             <li v-for="(week, index) in moduleData" :key="index">
                 <MenuItem :item="week" />
             </li>

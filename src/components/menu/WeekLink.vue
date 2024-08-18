@@ -13,7 +13,7 @@ const props = defineProps({
 
 const route = useRoute();
 
-const to = computed(() => `/design/${props.index}`);
+const to = computed(() => `/schedule/${props.index}`);
 const isActiveLink = computed(() => route.path === to.value);
 
 

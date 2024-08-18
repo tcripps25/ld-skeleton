@@ -6,6 +6,7 @@ import MoodleLogo from '@/assets/moodle.png';
 import Pbutton from '@/components/buttons/Pbutton.vue';
 import { useCourseStore } from '@/stores/course.js';
 import { slugify } from '@/utils/utils';
+import PageHeader from '@/components/PageHeader.vue';
 
 const course = useCourseStore();
 const props = defineProps({
@@ -47,6 +48,9 @@ const exportJSON = () => {
 
 <template>
     <Page class="h-full">
+        <template #page-header>
+            <PageHeader section-title="Publish" />
+        </template>
         <div class="flex justify-center items-center h-full">
             <div class="flex gap-3">
                 <div class="p-5 bg-white border w-56 rounded-lg flex flex-col gap-10 items-center justify-between">

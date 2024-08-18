@@ -1,7 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import { PencilIcon } from "@heroicons/vue/16/solid";
-import MainNav from "@/components/menu/MainNav.vue";
 import Logo from "@/assets/uop_notext.png";
 import InputText from "primevue/inputtext";
 import MainMenu from "./menu/MainMenu.vue";

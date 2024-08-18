@@ -1,8 +1,8 @@
 <script setup>
-import { onMounted } from 'vue';
+
 import PageHeader from '@/components/PageHeader.vue';
 import { useCourseStore } from '@/stores/course.js'
-import CourseOverviewBlock from '@/components/dashboard/CourseOverviewBlock.vue'
+
 import Page from '@/components/Page.vue'
 import LineChart from '@/components/charts/LineChart.vue';
 import Panel from '@/components/ui/Panel.vue';
@@ -21,11 +21,11 @@ const course = useCourseStore()
 
     <Page>
       <template v-slot:page-header>
-        <PageHeader :title="'Visualise'" />
+        <PageHeader title="Module Overview" section-title="Visualise" />
       </template>
 
       <div class="grid sm:grid-cols-1 2xl:grid-cols-3 gap-6">
-        <CourseOverviewBlock class="col-span-full" />
+
 
         <Panel :title="'Activities per week'" class="col-span-2">
           <LineChart :datax="course.weekNames" :datay="course.activitiesPerWeek">

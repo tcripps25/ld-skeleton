@@ -4,7 +4,7 @@ import { PlusIcon } from '@heroicons/vue/24/solid';
 import { useCourseStore } from '@/stores/course';
 import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
-import Carousel from 'primevue/carousel';
+
 
 
 const course = useCourseStore()
@@ -16,7 +16,7 @@ const props = defineProps({
 
 const week = course.getWeek(props.weekIndex)
 
-const route = (index) => computed(() => `/design/${props.weekIndex}/${index}`);
+const route = (index) => computed(() => `/schedule/${props.weekIndex}/${index}`);
 </script>
 
 <template>

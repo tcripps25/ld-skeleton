@@ -58,15 +58,12 @@ watch(weekStats, (newStats) => {
 <template>
   <Page class="grow relative" sidebar-title="Statistics">
     <template #page-header>
-      <PageHeader title="Module Schedule" :subtitle="week.name" />
+      <PageHeader sectionTitle="Design" title="Module Schedule" :subtitle="week.name" />
     </template>
-    <template #lead>
-      <p>Enter information about this week of your Module.</p>
-    </template>
+
     <template #sidebar>
       <Transition name="slide-fade">
         <div class="flex flex-col gap-10 divide-y">
-
           <Transition name="fade">
             <Panel borderless flush sidebar>
               <Meter title="Activity Duration" :values="course.getActivitiesForWeek(index)"

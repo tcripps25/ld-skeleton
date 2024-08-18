@@ -45,7 +45,7 @@ const toggleSection = () => {
         </div>
         <div class="grow max-w-7xl w-full"
             :class="sidebar ? 'bg-transparent !w-auto -mx-10 px-10 pt-5 rounded-none' : 'mb-5 mx-auto', card ? 'p-5 rounded-lg shadow' : ''">
-            <div :class="{ 'sticky top-0 bg-white': stickyHeader }, removeHeadUnderline ? 'border-none mb-0' : 'border-b mb-5', headerBar ? 'bg-slate-100 mb-3 -m-5 px-5 py-3 ' : 'py-1'"
+            <div :class="{ 'sticky top-0 bg-white': stickyHeader }, removeHeadUnderline ? 'border-none mb-0' : 'border-b-2 mb-5', headerBar ? 'bg-slate-100 mb-3 -m-5 px-5 py-3 ' : 'py-2'"
                 class="flex justify-between items-center rounded-t" v-if="$slots.title || title || $slots.action">
                 <div class="flex items-start">
                     <Pbutton v-if="collapse" :aria-label="sectionVisible ? 'Collapse ' + title : 'Collapse ' + title"

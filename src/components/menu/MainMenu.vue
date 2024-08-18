@@ -4,7 +4,7 @@ import { useCourseStore } from '@/stores/course.js'
 import { useRouter, RouterLink } from 'vue-router';
 import Menu from 'primevue/menu';
 import PanelMenu from 'primevue/panelmenu';
-import ModuleMenu from '@/components/menu/ModuleMenu.vue'
+import DesignMenu from '@/components/menu/DesignMenu.vue'
 import MenuItem from "./MenuItem.vue";
 const router = useRouter();
 const course = useCourseStore()
@@ -34,9 +34,9 @@ const menu = ref([
         route: '/setup'
       },
       {
-        label: 'Schedule',
-        icon: 'pi pi-calendar',
-        route: '/design/overview'
+        label: 'Design',
+        icon: 'pi pi-palette',
+        route: '/design'
       },
       {
         label: 'Visualise',
@@ -74,7 +74,7 @@ const weeksExist = computed(() => {
         <ul v-if="cat.items">
           <li v-for="(item, index) in cat.items">
             <MenuItem :item="item" />
-            <ModuleMenu v-if="item.label == 'Schedule'" />
+            <DesignMenu v-if="item.label == 'Design'" />
           </li>
         </ul>
       </li>
