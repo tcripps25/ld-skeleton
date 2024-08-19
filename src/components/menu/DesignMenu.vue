@@ -14,8 +14,7 @@ const moduleData = computed(() => {
         return [
             {
                 label: 'Schedule',
-                icon: 'pi pi-calendar',
-                route: '/schedule'
+                route: '/design/schedule'
             }
         ];
     }
@@ -24,13 +23,13 @@ const moduleData = computed(() => {
     return [
         {
             label: 'Schedule',
-            icon: 'pi pi-calendar',
-            route: '/schedule'
+            route: '/design/schedule'
         },
         ...course.weeks.map((week, index) => ({
             label: week.name,
-            icon: 'pi pi-circle-fill',
-            route: `/schedule/${index}`
+            icon: 'pi pi-circle',
+            route: `/design/schedule/${index}`,
+            week: true,
         }))
     ];
 });

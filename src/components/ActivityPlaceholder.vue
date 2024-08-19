@@ -16,7 +16,7 @@ const props = defineProps({
 
 const week = course.getWeek(props.weekIndex)
 
-const route = (index) => computed(() => `/schedule/${props.weekIndex}/${index}`);
+const route = (index) => computed(() => `/design/schedule/${props.weekIndex}/${index}`);
 </script>
 
 <template>

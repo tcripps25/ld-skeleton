@@ -24,7 +24,7 @@ watch([totalActivities, numberOfWeeks], ([newTotalActivities, newNumberOfWeeks])
 });
 
 // Check if the current route is '/design' or any of its sub-routes
-const isDesignPage = computed(() => route.path === '/schedule');
+const isDesignPage = computed(() => route.path === '/design/schedule');
 
 const items = [
   {

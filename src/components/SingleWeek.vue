@@ -103,12 +103,7 @@ watch(weekStats, (newStats) => {
     </template>
 
     <Panel collapse title="General Information">
-      <template #info>
-        Both Week Name and Week description will appear on your Moodle module for students to see. <br><br> Week name
-        should
-        describe the main themes of the learning content succinctly. <br><br> Week description can be longer, you'll be
-        able to toggle whether this is permanently displayed on your module within Moodle itself.
-      </template>
+
       <template #rhcontent>
         <TipBox right-col>
           Both Week Name and Week description will appear on your Moodle module for students to see.

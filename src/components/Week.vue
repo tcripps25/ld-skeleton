@@ -37,17 +37,17 @@ const panelTitle = computed(() => {
 
 const items = computed(() =>
   props.week.activities.map((activity, index) => ({
-    route: `/schedule/${props.weekIndex}/${index}`,
+    route: `/design/schedule/${props.weekIndex}/${index}`,
     label: activity.title
   }))
 );
 
 const allActivitiesItem = computed(() => ({
-  route: `/schedule/${props.weekIndex}`,
+  route: `/design/schedule/${props.weekIndex}`,
   label: 'All Activities',
 }));
 
-const noActivitySelected = computed(() => route.path === '/schedule/' + props.weekIndex);
+const noActivitySelected = computed(() => route.path === '/design/schedule/' + props.weekIndex);
 
 </script>
 
@@ -65,7 +65,7 @@ const noActivitySelected = computed(() => route.path === '/schedule/' + props.we
 
     <template v-if="!noActivitySelected" #lhcontent>
       <div class="flex flex-col gap-3 justify-center items-center sticky top-0">
-        <Pbutton @click="router.push('/schedule/' + props.weekIndex)" aria-label="View all Activities">
+        <Pbutton @click="router.push('/design/schedule/' + props.weekIndex)" aria-label="View all Activities">
           <template #icon>
             <Squares2X2Icon class="w-5 h-5" />
           </template>

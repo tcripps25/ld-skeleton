@@ -33,50 +33,53 @@ const router = createRouter({
       path: '/design',
       name: 'design',
       component: DesignView,
-      children: []
-    },
-    {
-      path: '/schedule',
-      component: ScheduleView,
-      name: 'schedule',
       children: [
         {
-          path: ':index',
-          name: 'week-detail',
-          component: SingleWeek,
-          props: (route) => {
-            const course = useCourseStore()
-            const index = parseInt(route.params.index)
-            const week = course.weeks[index]
-            return { index, week }
-          },
+          path: 'schedule',
+          component: ScheduleView,
+          name: 'schedule',
           children: [
             {
-              path: ':activityIndex',
-              name: 'activity-detail',
-              component: SingleActivity,
+              path: ':index',
+              name: 'week-detail',
+              component: SingleWeek,
               props: (route) => {
                 const course = useCourseStore()
-                const activityIndex = parseInt(route.params.activityIndex)
-                const weekIndex = parseInt(route.params.index) // get index from parent route params
-                const activity = course.weeks[weekIndex].activities[activityIndex]
-                return { weekIndex, activityIndex, activity }
-              }
-            },
-            {
-              path: '',
-              component: ActivityPlaceholder,
-              props: (route) => {
-                const course = useCourseStore()
-                const weekIndex = parseInt(route.params.index) // get index from parent route params
-                const activities = course.weeks[weekIndex].activities
-                return { activities, weekIndex }
-              }
+                const index = parseInt(route.params.index)
+                const week = course.weeks[index]
+                return { index, week }
+              },
+              children: [
+                {
+                  path: ':activityIndex',
+                  name: 'activity-detail',
+                  component: SingleActivity,
+                  props: (route) => {
+                    const course = useCourseStore()
+                    const activityIndex = parseInt(route.params.activityIndex)
+                    const weekIndex = parseInt(route.params.index) // get index from parent route params
+                    const activity = course.weeks[weekIndex].activities[activityIndex]
+                    return { weekIndex, activityIndex, activity }
+                  }
+                },
+                {
+                  path: '',
+                  component: ActivityPlaceholder,
+                  name: 'activity-placeholder',
+                  props: (route) => {
+                    const course = useCourseStore()
+                    const weekIndex = parseInt(route.params.index) // get index from parent route params
+                    const activities = course.weeks[weekIndex].activities
+                    return { activities, weekIndex }
+                  }
+                }
+              ]
             }
           ]
         }
       ]
     },
+
     {
       path: '/visualise',
       name: 'visualise',
