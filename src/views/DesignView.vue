@@ -13,6 +13,12 @@ const designPage = computed(() => route.path === '/design');
         <template v-slot:page-header>
             <PageHeader title="Start your Design" section-title="Design" />
         </template>
+
+        <div class="">
+
+            <p>Hi</p>
+
+        </div>
     </Page>
 
     <RouterView v-else></RouterView>

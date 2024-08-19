@@ -53,7 +53,7 @@ const items = [
         </div>
         <template #lhcontent>
           <div class="sticky top-0 flex justify-end">
-            <Pbutton ghost :items="items" @click="course.incrementWeek();" label="Add Week" class="self-end">
+            <Pbutton ghost :items="items" @click="course.incrementWeek()" label="Add Week" class="self-end">
             </Pbutton>
           </div>
         </template>

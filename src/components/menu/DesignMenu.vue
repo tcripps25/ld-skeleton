@@ -3,8 +3,10 @@ import { ref, computed } from 'vue';
 import Menu from 'primevue/menu';
 import { useRouter, RouterLink } from 'vue-router';
 import { useCourseStore } from '@/stores/course.js';
-import MainMenu from './MainMenu.vue';
+
 import MenuItem from './MenuItem.vue';
+import Pbutton from '../buttons/Pbutton.vue';
+import { PlusIcon } from '@heroicons/vue/16/solid';
 const course = useCourseStore();
 
 const moduleData = computed(() => {
@@ -27,7 +29,7 @@ const moduleData = computed(() => {
         },
         ...course.weeks.map((week, index) => ({
             label: week.name,
-            icon: 'pi pi-circle',
+
             route: `/design/schedule/${index}`,
             week: true,
         }))
@@ -40,11 +42,17 @@ const moduleData = computed(() => {
 
     <nav aria-labelledby="submenulabel">
         <h2 id="submenulabel" class="sr-only">Module Schedule Menu</h2>
-
         <TransitionGroup class="flex flex-col relative ml-6" name="list" tag="ul">
-            <li v-for="(week, index) in moduleData" :key="index">
+            <li v-for="(week, index) in moduleData" :key="index"
+                class="before:content-[''] before:w-[.1rem] before:bg-slate-400 before:absolute before:top-14 before:left-3 before:bottom-14">
                 <MenuItem :item="week" />
             </li>
+            <Pbutton class="w-full" @click="course.incrementWeek()" menu-link label="Add Week">
+                <template #icon>
+                    <PlusIcon class="w-5 h-5" />
+                </template>
+                >
+            </Pbutton>
         </TransitionGroup>
 
     </nav>
