@@ -15,7 +15,7 @@ const moduleData = computed(() => {
         // If no weeks, just return the static Schedule item
         return [
             {
-                label: 'Schedule',
+                label: 'Module Schedule',
                 route: '/design/schedule'
             }
         ];
@@ -24,7 +24,7 @@ const moduleData = computed(() => {
     // Combine the static Schedule item with the dynamic weeks items
     return [
         {
-            label: 'Schedule',
+            label: 'Module Schedule',
             route: '/design/schedule'
         },
         ...course.weeks.map((week, index) => ({
