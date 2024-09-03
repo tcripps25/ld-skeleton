@@ -54,14 +54,8 @@ const noActivitySelected = computed(() => route.path === '/design/schedule/' + p
 <template>
   <Panel collapse :title="'Activities ' + '(' + week.activities.length + ')'">
     <template #action>
-
       <GptPanel :weekIndex="weekIndex" />
-
     </template>
-
-
-
-
 
     <template v-if="!noActivitySelected" #lhcontent>
       <div class="flex flex-col gap-3 justify-center items-center sticky top-0">
@@ -98,9 +92,6 @@ const noActivitySelected = computed(() => route.path === '/design/schedule/' + p
         <component :is="Component" />
       </Transition>
     </router-view>
-
-
-
   </Panel>
 
 
