@@ -7,6 +7,7 @@ import router from './router'
 import PrimeVue from 'primevue/config'
 import ConfirmationService from 'primevue/confirmationservice'
 import ToastService from 'primevue/toastservice'
+import DialogService from 'primevue/dialogservice'
 import { definePreset } from '@primevue/themes'
 import Aura from '@primevue/themes/aura'
 import AuraPreset from './presets/aura'
@@ -17,14 +18,20 @@ app.use(createPinia())
 app.use(router)
 app.use(ConfirmationService)
 app.use(ToastService)
-
+app.use(DialogService)
 app.use(PrimeVue, {
   unstyled: true,
   pt: {
     ...AuraPreset,
     fieldset: {
       root: {
-        class: ['p-[1.125rem] pt-0', 'rounded-md', '!border border-surface-200 dark:border-surface-700', 'bg-transparent dark:bg-transparent', 'text-surface-700 dark:text-surface-0/80']
+        class: [
+          'p-[1.125rem] pt-0',
+          'rounded-md',
+          '!border border-surface-200 dark:border-surface-700',
+          'bg-transparent dark:bg-transparent',
+          'text-surface-700 dark:text-surface-0/80'
+        ]
       },
       legend: ({ props }) => ({
         class: [
@@ -46,7 +53,10 @@ app.use(PrimeVue, {
           { 'rounded-md': props.toggleable },
           { 'text-surface-700 dark:text-surface-200 hover:text-surface-900': props.toggleable },
           { 'hover:text-surface-900 dark:hover:text-surface-100': props.toggleable },
-          { 'focus:outline-none focus:outline-offset-0 focus-visible:ring-1 focus-visible:ring-primary-400 dark:focus-visible:ring-primary-300': props.toggleable },
+          {
+            'focus:outline-none focus:outline-offset-0 focus-visible:ring-1 focus-visible:ring-primary-400 dark:focus-visible:ring-primary-300':
+              props.toggleable
+          },
           'transition-none cursor-pointer overflow-hidden select-none'
         ]
       }),
@@ -61,10 +71,12 @@ app.use(PrimeVue, {
       },
       transition: {
         enterFromClass: 'max-h-0',
-        enterActiveClass: 'overflow-hidden transition-[max-height] duration-1000 ease-[cubic-bezier(0.42,0,0.58,1)]',
+        enterActiveClass:
+          'overflow-hidden transition-[max-height] duration-1000 ease-[cubic-bezier(0.42,0,0.58,1)]',
         enterToClass: 'max-h-[1000px]',
         leaveFromClass: 'max-h-[1000px]',
-        leaveActiveClass: 'overflow-hidden transition-[max-height] duration-[450ms] ease-[cubic-bezier(0,1,0,1)]',
+        leaveActiveClass:
+          'overflow-hidden transition-[max-height] duration-[450ms] ease-[cubic-bezier(0,1,0,1)]',
         leaveToClass: 'max-h-0'
       }
     }

@@ -1,11 +1,12 @@
 <script setup>
+import { ref } from "vue";
 import Pbutton from './buttons/Pbutton.vue';
 import { PlusIcon } from '@heroicons/vue/24/solid';
 import { useCourseStore } from '@/stores/course';
 import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
-
-
+import Dialog from 'primevue/dialog';
+import SingleActivity from './SingleActivity.vue';
 
 const course = useCourseStore()
 
@@ -16,14 +17,27 @@ const props = defineProps({
 
 const week = course.getWeek(props.weekIndex)
 
+// Create a ref to track which dialog is open, initialized as an empty object
+const showActivity = ref({});
+
 const route = (index) => computed(() => `/design/schedule/${props.weekIndex}/${index}`);
+
+// Function to open the dialog for a specific activity
+const openDialog = (index) => {
+    showActivity.value[index] = true;
+};
+
+// Function to close the dialog for a specific activity
+const closeDialog = (index) => {
+    showActivity.value[index] = false;
+};
 </script>
 
 <template>
     <div class="">
         <!-- Grid of activity links to provide an overview, shows limited information about each activity -->
         <div class="grid lg:grid-cols-2 transition-all xl:grid-cols-3 md:grid-cols-1 gap-5">
-            <RouterLink v-for="(activity, index) in activities" :to="route(index)"
+            <div @click="openDialog(index)" v-for="(activity, index) in activities"
                 class="flex flex-col p-5 h-44 w-full bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg shadow hover:shadow-lg hover:scale-[102%] transition-all">
 
                 <h4 class="text-sky-50 font-medium text-xl">{{ activity.title }}</h4>
@@ -37,7 +51,12 @@ const route = (index) => computed(() => `/design/schedule/${props.weekIndex}/${i
                         </div>
                     </div>
                 </div>
-            </RouterLink>
+
+                <!-- Activity Dialog -->
+                <Dialog v-model:visible="showActivity[index]" modal :header="activity.title" class="w-90" :key="index">
+                    <SingleActivity :activity="activity" :activity-index="index" :week-index="weekIndex" />
+                </Dialog>
+            </div>
             <!-- Add activity button -->
             <Pbutton @click="course.addActivityToWeek(weekIndex)" ghost label="Add Activity"
                 class="p-5 h-44 !w-full text-2xl bg-gradient-to-br rounded-lg flex shadow">

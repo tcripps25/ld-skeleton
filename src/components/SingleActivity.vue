@@ -81,15 +81,9 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
 </script>
 
 <template>
-
     <div v-if="activity" class="relative w-full max-w-7xl transition-all" :style="{ marginTop: `${cardCount * 10}px` }">
-        <Panel headerBar removeHeadUnderline class=" bg-slate-50 p-5 rounded h-full relative z-20 shadow">
-            <template #title>
-                <h3 class="font-semibold">{{ (activityIndex + 1) + '. ' + activity.title }}</h3>
-            </template>
-            <template #action>
-                <ManageActivityButton :week-index="weekIndex" :activity-index="activityIndex" :activity="activity" />
-            </template>
+        <Panel>
+
             <div class="grid xs:grid-cols-1 2xl:grid-cols-2 gap-5">
                 <div class="grow">
                     <Fieldset legend="Basic Information">
@@ -118,7 +112,8 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
                                 <SelectButton id="activity-mode-select" :options="['Sync', 'Async']"
                                     aria-labelledby="activity-mode-select" v-model="activity.mode" />
                             </ActivityLabel>
-                            <ActivityLabel label="Learning Type" targetId="select-learning-type" help="Select one or more Learning Types for this Activity.">
+                            <ActivityLabel label="Learning Type" targetId="select-learning-type"
+                                help="Select one or more Learning Types for this Activity.">
                                 <MultiSelect v-model="activity.selectedTypes" :options="course.activityTypesColors"
                                     optionLabel="type" optionValue="type" placeholder="Select Learning Types"
                                     :maxSelectedLabels="3" inputId="select-learning-type" />
@@ -170,12 +165,7 @@ const additionalActivities = ref(removeSuggestedActivities(course.moodleActiviti
                 <FileUpload />
             </div>
         </Panel>
-        <TransitionGroup appear name="tabs">
-            <div v-for="index in cardCount" :key="index"
-                :class="['rounded shadow-sm', 'h-full', 'w-full', 'absolute', dynamicBgClass(index)]"
-                :style="{ top: `-${index * 20}px`, transform: `scale(${1 - index * 0.02})`, zIndex: `${cardCount - index}` }">
-            </div>
-        </TransitionGroup>
+
     </div>
     <ActivityPlaceholder v-else :activities="course.weeks[weekIndex].activities" />
 

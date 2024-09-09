@@ -5,6 +5,7 @@ import 'primeicons/primeicons.css'
 import MainSidebar from "@/components/MainSidebar.vue"
 import ConfirmDialog from 'primevue/confirmdialog';
 import Toast from 'primevue/toast';
+import DynamicDialog from 'primevue/dynamicdialog';
 
 
 </script>
@@ -19,4 +20,5 @@ import Toast from 'primevue/toast';
   <ConfirmDialog class="!rounded">
   </ConfirmDialog>
   <Toast />
+  <DynamicDialog />
 </template>
