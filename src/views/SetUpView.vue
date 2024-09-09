@@ -34,7 +34,7 @@ const submitTitle = () => {
 
     <Page>
       <template v-slot:page-header>
-        <PageHeader sectionTitle="Design" :title="'Set Up'" />
+        <PageHeader sectionTitle="Set Up" :title="'Basic Information'" />
       </template>
 
       <div class="max-w-4xl mx-auto flex flex-col gap-5">
