@@ -7,7 +7,7 @@ import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
 import Dialog from 'primevue/dialog';
 import SingleActivity from './SingleActivity.vue';
-
+import CreateActivity from "./CreateActivity.vue";
 const course = useCourseStore()
 
 const props = defineProps({
@@ -58,7 +58,8 @@ const closeDialog = (index) => {
                 </Pbutton>
                 <!-- Activity Dialog -->
                 <Dialog v-model:visible="showActivity[index]" modal :header="activity.title" class="w-90" :key="index">
-                    <SingleActivity :activity="activity" :activity-index="index" :week-index="weekIndex" />
+                    <!-- <SingleActivity :activity="activity" :activity-index="index" :week-index="weekIndex" />-->
+                    <CreateActivity :activity="activity" :activity-index="index" :week-index="weekIndex" />
                 </Dialog>
             </div>
 
