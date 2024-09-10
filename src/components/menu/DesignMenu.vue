@@ -44,17 +44,17 @@ const moduleData = computed(() => {
         <h2 id="submenulabel" class="sr-only">Module Schedule Menu</h2>
         <TransitionGroup class="flex flex-col relative ml-6" name="list" tag="ul">
             <li v-for="(week, index) in moduleData" :key="index"
-                class="before:content-[''] before:w-[.1rem] before:bg-slate-400 before:absolute before:top-14 before:left-3 before:bottom-14">
+                class="before:content-[''] before:w-[.1rem] before:bg-slate-400 before:absolute before:top-14 before:left-3 before:bottom-4">
                 <MenuItem :item="week" />
             </li>
-            <Pbutton class="w-full" @click="course.incrementWeek()" menu-link label="Add Week">
-                <template #icon>
-                    <PlusIcon class="w-5 h-5" />
-                </template>
-                >
-            </Pbutton>
-        </TransitionGroup>
 
+        </TransitionGroup>
+        <Pbutton class="w-full ml-6" @click="course.incrementWeek()" menu-link label="Add Week">
+            <template #icon>
+                <PlusIcon class="w-5 h-5" />
+            </template>
+            >
+        </Pbutton>
     </nav>
 
 </template>
