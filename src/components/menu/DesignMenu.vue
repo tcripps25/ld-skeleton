@@ -47,14 +47,15 @@ const moduleData = computed(() => {
                 class="before:content-[''] before:w-[.1rem] before:bg-slate-400 before:absolute before:top-14 before:left-3 before:bottom-4">
                 <MenuItem :item="week" />
             </li>
-
         </TransitionGroup>
-        <Pbutton class="w-full ml-6" @click="course.incrementWeek()" menu-link label="Add Week">
-            <template #icon>
-                <PlusIcon class="w-5 h-5" />
-            </template>
-            >
-        </Pbutton>
+        <ul class="flex flex-col relative">
+            <Pbutton class="ml-6" @click="course.incrementWeek()" menu-link label="Add Week">
+                <template #icon>
+                    <PlusIcon class="w-5 h-5" />
+                </template>
+                >
+            </Pbutton>
+        </ul>
     </nav>
 
 </template>
