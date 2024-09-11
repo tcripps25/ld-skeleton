@@ -12,6 +12,7 @@ import ActivityLearningApproach from './forms/activity/ActivityLearningApproach.
 import ActivityAlignments from './forms/activity/ActivityAlignments.vue';
 import Pbutton from './buttons/Pbutton.vue';
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/vue/16/solid';
+import ActivityMoodle from './forms/activity/ActivityMoodle.vue';
 
 const props = defineProps({
     weekIndex: Number,
@@ -56,11 +57,7 @@ const props = defineProps({
                 </div>
             </StepPanel>
             <StepPanel v-slot="{ activateCallback }" value="3">
-                <div class="flex flex-col h-48">
-                    <div
-                        class="border-2 border-dashed border-surface-200 dark:border-surface-700 rounded bg-surface-50 dark:bg-surface-950 flex-auto flex justify-center items-center font-medium">
-                        Content III</div>
-                </div>
+                <ActivityMoodle :activity="activity" :activity-index="index" :week-index="weekIndex"/>
                 <div class="flex pt-6 justify-between">
                     <Pbutton ghost label="Back" @click="activateCallback('2')">
                         <template #icon>
