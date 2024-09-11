@@ -37,27 +37,9 @@ const toggleSelected = () => {
 </script>
 
 <template>
-  <Button @click="() => { $emit('selected'); toggleSelected(); }"
-    pt:root:class="border bg-slate-50 hover:bg-slate-100 transition p-1 text-sm w-full rounded">
-    <div class="flex gap-2">
-      <Transition name="fade">
-        <CheckCircleIcon v-if="selected" class="w-5 h-5 absolute text-blue-500" />
-      </Transition>
-      <div class="w-5 h-5 bg-slate-100 rounded-full border"></div>
-      <span>{{ moodleActivity.name }}</span>
-    </div>
-  </Button>
+
+  <div class="bg-slate-100 rounded px-2 py-1 my-1">
+    <span>{{ moodleActivity.name }}</span>
+  </div>
+
 </template>
-
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.2s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-  transform: scale(.7);
-}
-</style>
