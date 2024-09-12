@@ -40,6 +40,7 @@ const computedRootClasses = computed(() => {
         props.reverse ? 'text-sky-50' : '',
         props.rounded ? 'rounded-full' : 'rounded',
         props.card ? 'w-full' : 'w-max',
+        props.disabled ? 'disabled:bg-sky-700/10 disabled:dark:bg-white/10' : '',
     ].join(' ');
 });
 

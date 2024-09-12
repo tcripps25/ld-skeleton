@@ -5,10 +5,12 @@ const props = defineProps({
     targetId: String,
     help: String,
     horizontal: Boolean,
+    unseparated: Boolean
 })
 </script>
 <template>
-    <div class="flex gap-5 items-center border-b last-of-type:border-none py-2 mr-[-1.2rem] pr-5">
+    <div class="flex gap-5 items-center py-2 mr-[-1.2rem] pr-5"
+        :class="unseparated ? 'border-none' : 'border-b last-of-type:border-none'">
         <div class="flex grow flex-col gap-1">
             <div class="flex gap-1" :class="horizontal ? 'flex-row justify-between items-center' : 'flex-col'">
                 <div class="flex gap-2">

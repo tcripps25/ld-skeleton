@@ -43,19 +43,19 @@ export const useCourseStore = defineStore('course', () => {
   ])
 
   const moodleActivities = ref([
-    { name: 'Book', value: 'book', image: '#' },
-    { name: 'Quiz', value: 'quiz', image: '#' },
-    { name: 'Wiseflow', value: 'wiseflow', image: '#' },
-    { name: 'Chat', value: 'chat', image: '#' },
-    { name: 'Forum', value: 'forum', image: '#' },
-    { name: 'Lesson', value: 'lesson', image: '#' },
-    { name: 'Choice', value: 'choice', image: '#' },
-    { name: 'Database', value: 'database', image: '#' },
-    { name: 'Feedback', value: 'feedback', image: '#' },
-    { name: 'Glossary', value: 'glossary', image: '#' },
-    { name: 'Wiki', value: 'wiki', image: '#' },
-    { name: 'Workshop', value: 'workshop', image: '#' },
-    { name: 'Reading List', value: 'reading-list', image: '#' }
+    { id: '001', name: 'Book', value: 'book', image: '#' },
+    { id: '002', name: 'Quiz', value: 'quiz', image: '#' },
+    { id: '003', name: 'Wiseflow', value: 'wiseflow', image: '#' },
+    { id: '004', name: 'Chat', value: 'chat', image: '#' },
+    { id: '005', name: 'Forum', value: 'forum', image: '#' },
+    { id: '006', name: 'Lesson', value: 'lesson', image: '#' },
+    { id: '007', name: 'Choice', value: 'choice', image: '#' },
+    { id: '008', name: 'Database', value: 'database', image: '#' },
+    { id: '009', name: 'Feedback', value: 'feedback', image: '#' },
+    { id: '010', name: 'Glossary', value: 'glossary', image: '#' },
+    { id: '011', name: 'Wiki', value: 'wiki', image: '#' },
+    { id: '012', name: 'Workshop', value: 'workshop', image: '#' },
+    { id: '013', name: 'Reading List', value: 'reading-list', image: '#' }
   ])
 
   // Alignment options combining learning outcomes and assessments
