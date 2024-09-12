@@ -69,7 +69,7 @@ const deselectActivity = (moodleActivity) => {
         <div class="flex h-full gap-5">
             <ActivityLabel unseparated class="w-96 flex h-full" label="Selected Moodle activities"
                 targetId="selected-moodle-activities"
-                help="Reorder the activities to your liking, this order will be reflected in your Moodle site">
+                help="Reorder the activities to your liking, this order will be reflected in your Moodle site.">
                 <!-- Draggable list for selected Moodle activities -->
                 <div class="grow bg-slate-50 rounded border-dashed border-2 h-64 overflow-y-auto">
                     <div class="p-2 flex flex-col gap-2 grow">
