@@ -35,7 +35,7 @@ const computedRootClasses = computed(() => {
         props.solid && (props.severity == "info") ? 'bg-teal-400 text-teal-900 hover:bg-teal-300' : '',
         props.trailing ? 'flex-row-reverse' : 'flex-row',
         props.menuLink ? 'pl-1 gap-2 !w-48 justify-start' : 'justify-center',
-        props.ghost ? 'bg-sky-700/10 dark:bg-white/10 dark:hover:bg-white/50 text-sky-700 hover:bg-sky-700/20' : '',
+        props.ghost ? 'bg-sky-700/10 dark:bg-white/10 dark:hover:bg-white/50 text-sky-700 dark:text-sky-200 hover:bg-sky-700/20 dark:hover:bg-sky-300/20' : '',
         props.outline ? 'border-2 border-sky-700 hover:bg-sky-700 hover:text-sky-50' : '',
         props.reverse ? 'text-sky-50' : '',
         props.rounded ? 'rounded-full' : 'rounded',

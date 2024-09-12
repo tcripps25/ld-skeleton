@@ -4,6 +4,7 @@ import { slugify } from '@/utils/utils'
 import Week from '@/classes/Week.js'
 import { graphColors } from '@/data/graphColors'
 import Activity from '@/classes/Activity'
+import { moduleActivities } from '@/data/moduleActivities'
 export const useCourseStore = defineStore('course', () => {
   // Reactive state
   const title = ref('Contemporary Issues In Cyber Security')
@@ -368,6 +369,8 @@ export const useCourseStore = defineStore('course', () => {
     weeks.value[weekIndex].activities.push(newActivity)
   }
 
+  const moduleData = ref(moduleActivities)
+
   return {
     title,
     startDate,
@@ -399,6 +402,8 @@ export const useCourseStore = defineStore('course', () => {
     getActivityColor,
     key,
     getWeek,
-    addActivityToWeek
+    addActivityToWeek,
+    moduleActivities,
+    moduleData
   }
 })

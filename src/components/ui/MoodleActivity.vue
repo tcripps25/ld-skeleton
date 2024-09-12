@@ -16,7 +16,8 @@ const props = defineProps({
 <template>
   <div class="flex gap-1">
     <Pbutton :disabled="selected" :class="selected ? '!w-full cursor-move' : ''" trailing ghost
-      :label="moodleActivity.name" @click="$emit('activityClicked')">
+      :label="moodleActivity.type ? moodleActivity.name + ' (' + moodleActivity.type + ')' : moodleActivity.name"
+      @click="$emit('activityClicked')">
       <template v-if="!selected" #icon>
         <PlusCircleIcon class="w-4 h-4" />
       </template>

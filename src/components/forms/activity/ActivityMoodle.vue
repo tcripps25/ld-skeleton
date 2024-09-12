@@ -67,11 +67,12 @@ const deselectActivity = (moodleActivity) => {
 <template>
     <Fieldset legend="Moodle Activities">
         <div class="flex h-full gap-5">
-            <ActivityLabel unseparated class="w-96 flex h-full" label="Selected Moodle activities"
+            <ActivityLabel unseparated class="w-[40rem] flex h-full" label="Selected Moodle activities"
                 targetId="selected-moodle-activities"
                 help="Reorder the activities to your liking, this order will be reflected in your Moodle site.">
                 <!-- Draggable list for selected Moodle activities -->
-                <div class="grow bg-slate-50 rounded border-dashed border-2 h-64 overflow-y-auto">
+                <div
+                    class="grow bg-slate-50 dark:bg-transparent dark:border-zinc-700 rounded border-dashed border-2 h-64 overflow-y-auto">
                     <div class="p-2 flex flex-col gap-2 grow">
                         <Draggable v-model="activity.selectedMoodle" :animation="200" item-key="id">
                             <template #item="{ element }">
@@ -83,7 +84,7 @@ const deselectActivity = (moodleActivity) => {
                 </div>
             </ActivityLabel>
             <!-- List of available Moodle activities -->
-            <div class="flex flex-col max-w-3xl shrink">
+            <div class="flex flex-col  shrink">
                 <!-- Choose new Moodle activities -->
                 <ActivityLabel label="Choose new Moodle activities" targetId="select-moodle-activities"
                     help="Find out more about these Moodle activities, and when each is appropriate to use via the EXPLORE tool.">
@@ -100,13 +101,12 @@ const deselectActivity = (moodleActivity) => {
                 <ActivityLabel label="Re-use existing Moodle activities"
                     help="These activities are populated from your current Moodle module site."
                     targetId="select-moodle-activities">
-                    <ul class="flex gap-1 flex-wrap">
-                        <li id="select-moodle-activities" v-for="(moodleactivity, index) in course.moodleActivities"
-                            :key="index">
-                            <MoodleActivity :activity="activity" :moodle-activity="moodleactivity"
-                                @activity-clicked="selectActivity(moodleactivity)" />
-                        </li>
-                    </ul>
+                    <MultiSelect v-model="activity.selectedMoodle" :options="course.moduleData" optionLabel="name"
+                        filter optionGroupLabel="name" optionGroupChildren="items" placeholder="Select activities"
+                        :maxSelectedLabels="0">
+
+                    </MultiSelect>
+
                 </ActivityLabel>
             </div>
         </div>
