@@ -45,6 +45,7 @@ export const useCourseStore = defineStore('course', () => {
 
   const moodleActivities = ref([
     { id: '001', name: 'Book', value: 'book', image: '#' },
+    { id: '014', name: 'Page', value: 'page', image: '#' },
     { id: '002', name: 'Quiz', value: 'quiz', image: '#' },
     { id: '003', name: 'Wiseflow', value: 'wiseflow', image: '#' },
     { id: '004', name: 'Chat', value: 'chat', image: '#' },

@@ -30,7 +30,7 @@ const computedRootClasses = computed(() => {
         'flex',
         'gap-1',
         'text-sm',
-        props.label ? 'px-3 py-2' : '',
+        props.label ? 'px-3 py-2 font-medium' : '',
         props.solid ? 'bg-gradient-to-br from-blue-600 to-purple-600 text-sky-50 hover:from-blue-500 hover:to-purple-500' : 'text-sky-800 hover:bg-sky-700/10',
         props.solid && (props.severity == "info") ? 'bg-teal-400 text-teal-900 hover:bg-teal-300' : '',
         props.trailing ? 'flex-row-reverse' : 'flex-row',
