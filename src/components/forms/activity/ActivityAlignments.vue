@@ -50,7 +50,7 @@ const isAligned = (item) => computed({
                
                 <Transition name="fade">
                     <div class="flex flex-col">
-                            <ActivityLabel v-for="(item, itemIndex) in option.items" :key="itemIndex" class="py-3"  horizontal :label="item.nickname ? item.nickname : item.label" :targetId="'activity-' + activityIndex + item.value + '-switch-' + itemIndex" :sublabel="item.nickname ? item.label : ''">
+                            <ActivityLabel v-for="(item, itemIndex) in option.items" :key="itemIndex" class="py-3" :index="itemIndex + 1"  horizontal :label="item.nickname ? item.nickname : item.label" :targetId="'activity-' + activityIndex + item.value + '-switch-' + itemIndex" :sublabel="item.nickname ? item.label : ''">
                                 <ToggleSwitch v-model="isAligned(item).value"
                                 :inputId="'activity-' + activityIndex + item.value + '-switch-' + itemIndex" />
                             </ActivityLabel>

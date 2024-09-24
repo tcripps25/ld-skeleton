@@ -15,7 +15,7 @@ const props = defineProps({
 
 <template>
   <div class="flex gap-1">
-    <Pbutton :disabled="selected" :class="selected ? '!w-full cursor-move hover:shadow-sm  hover:scale-[101%]' : ''"
+    <Pbutton :disabled="selected" :class="selected ? '!w-full cursor-move hover:shadow-sm hover:ring-2' : ''"
       trailing ghost
       :label="moodleActivity.type ? moodleActivity.name + ' (' + moodleActivity.type + ')' : moodleActivity.name"
       @click="$emit('activityClicked')">
