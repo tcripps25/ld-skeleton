@@ -2,6 +2,8 @@
   @tailwind components;
   @tailwind utilities;
 
+ 
+
 /* Primary and Surface Palettes */
 :root {
   --p-primary-50: #f0f9ff;

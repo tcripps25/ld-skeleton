@@ -1,4 +1,4 @@
-import '@/assets/main.css'
+import '@/assets/main.css' // Import your main styles (if necessary)
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
@@ -11,10 +11,10 @@ import { definePreset } from '@primevue/themes'
 import Aura from '@primevue/themes/aura'
 import AuraPreset from './presets/aura'
 
-// This is the init function that Moodle will call using js_call_amd()
-
+// Create a new Vue application instance
 const app = createApp(App)
 
+// Use Pinia, Router, and PrimeVue
 app.use(createPinia())
 app.use(router)
 app.use(ConfirmationService)
@@ -84,4 +84,29 @@ app.use(PrimeVue, {
   }
 })
 
-app.mount('#app')
+// Find the mounting point
+const appContainer = document.getElementById('app')
+
+// Create a Shadow DOM
+const shadowRoot = appContainer.attachShadow({ mode: 'open' })
+
+// Create a div for the Vue app inside the shadow root
+const vueAppContainer = document.createElement('div')
+vueAppContainer.id = 'vue-app'
+shadowRoot.appendChild(vueAppContainer)
+
+// Mount the Vue app to the new container inside Shadow DOM
+app.mount(vueAppContainer)
+
+// Function to append styles from the document to the shadow root
+function appendStylesToShadowDOM() {
+  const styles = Array.from(document.querySelectorAll('style')) // Get all <style> tags from the main document
+  styles.forEach((style) => {
+    const styleClone = document.createElement('style') // Create a new style element
+    styleClone.textContent = style.textContent // Copy the content from the main style
+    shadowRoot.appendChild(styleClone) // Append to the shadow DOM
+  })
+}
+
+// Call the function to append styles
+appendStylesToShadowDOM()
