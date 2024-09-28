@@ -1,5 +1,4 @@
 import '@/assets/main.css'
-
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
@@ -11,6 +10,8 @@ import DialogService from 'primevue/dialogservice'
 import { definePreset } from '@primevue/themes'
 import Aura from '@primevue/themes/aura'
 import AuraPreset from './presets/aura'
+
+// This is the init function that Moodle will call using js_call_amd()
 
 const app = createApp(App)
 

@@ -1,33 +1,31 @@
-import { fileURLToPath, URL } from 'node:url';
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import legacy from '@vitejs/plugin-legacy';
+import { fileURLToPath, URL } from 'node:url'
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import path from 'path'
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [
-    vue(),
-    legacy({
-      targets: ['defaults', 'not IE 11'],  // Compatibility with a wide range of browsers
-      additionalLegacyPolyfills: ['regenerator-runtime/runtime'],  // Polyfills for modern features
-      renderLegacyChunks: false,  // Avoid generating unnecessary legacy chunks
-    })
-  ],
-  base: "/ld-skeleton/",
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  },
-  build: {
-    rollupOptions: {
-      output: {
-        format: 'amd',  // Output in AMD format to support Moodle
-        entryFileNames: 'vueapp_bundle.js',  // The name of the generated file
-        amd: {
-          id: 'local_vueapp',  // Define the AMD module name for Moodle's requirejs
-        },
-      },
+export default defineConfig(({ command }) => {
+  const isBuild = command === 'build'
+
+  return {
+    plugins: [vue()],
+    base: isBuild ? '/moodle/local/moddesigner/amd/build/' : './', // Set base for production and relative for development
+    resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('./src', import.meta.url))
+      }
     },
-  },
-});
+    build: {
+      outDir: path.resolve(__dirname, '../moodle/local/moddesigner/amd/build'), // Output directory
+      rollupOptions: {
+        input: path.resolve(__dirname, 'src/main.js'), // Entry file
+        output: {
+          entryFileNames: 'bundle.js',
+          format: 'amd', // AMD format
+          amd: {
+            define: 'define'
+          }
+        }
+      }
+    }
+  }
+})

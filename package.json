@@ -1,6 +1,6 @@
 {
-  "name": "ld-skeleton",
-  "version": "0.0.0",
+  "name": "module-designer",
+  "version": "0.0.1",
   "private": true,
   "type": "module",
   "scripts": {
