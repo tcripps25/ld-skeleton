@@ -20,6 +20,18 @@ const showField = ref(false)
 const toggleShowField = () => {
     showField.value = !showField.value
 }
+
+import { get_string } from 'core/str';
+
+// Define reactive variables to store the language strings
+const appTitle = ref('');
+
+// Fetch the language strings when the component is mounted
+onMounted(() => {
+    get_string('greeting', 'yourplugin').done((str) => {
+        greeting.value = str;
+    });
+});
 </script>
 
 <template>
@@ -30,7 +42,7 @@ const toggleShowField = () => {
                 <img @click="toggleShowField" :src="Logo" class="h-11" alt="University of Portsmouth Logo" />
                 <a href="#" class="flex flex-col">
                     <h1 class="text-lg font-semibold">Module Designer</h1>
-                    <p class="text-sm px-1 font-medium bg-sky-600 text-sky-50 rounded w-max">Prototype UI2</p>
+                    <p class="text-sm px-1 font-medium bg-sky-600 text-sky-50 rounded w-max">Plugin UI3</p>
                 </a>
             </div>
 

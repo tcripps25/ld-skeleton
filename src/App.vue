@@ -7,11 +7,11 @@ import ConfirmDialog from 'primevue/confirmdialog';
 import Toast from 'primevue/toast';
 import DynamicDialog from 'primevue/dynamicdialog';
 
-
+const buildClasses = process.env.NODE_ENV === 'production' ? '-mt-[60px] pt-[60px]' : '';
 </script>
 
 <template>
-  <div class="flex grow h-screen overflow-hidden">
+  <div class="flex grow h-screen overflow-hidden" :class="buildClasses">
     <MainSidebar />
     <main class="flex grow bg-white">
       <RouterView class="flex grow relative" />

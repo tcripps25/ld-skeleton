@@ -56,9 +56,9 @@ const closeDialog = (index) => {
                         </div>
                     </template>
                 </Pbutton>
-                <!-- Activity Dialog -->
-                <Dialog v-model:visible="showActivity[index]" modal :header="'Editing: ' + activity.title"
-                    class="max-w-5xl" :key="index">
+                <!-- Activity Dialog appended to shadow DOM #modal-target -->
+                <Dialog :append-to="$shadowModalTarget" v-model:visible="showActivity[index]" modal
+                    :header="'Editing: ' + activity.title" class="max-w-5xl" :key="index">
                     <!-- <SingleActivity :activity="activity" :activity-index="index" :week-index="weekIndex" />-->
                     <CreateActivity :activity="activity" :activity-index="index" :week-index="weekIndex" />
                 </Dialog>

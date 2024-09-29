@@ -1,4 +1,4 @@
-import '@/assets/main.css' // Import your main styles (if necessary)
+import '@/assets/main.css' // Import your main styles
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
@@ -84,27 +84,35 @@ app.use(PrimeVue, {
   }
 })
 
-// Find the mounting point
+// Find the mounting point in the DOM
 const appContainer = document.getElementById('app')
 
 // Create a Shadow DOM
 const shadowRoot = appContainer.attachShadow({ mode: 'open' })
 
-// Create a div for the Vue app inside the shadow root
+// Create a div for the Vue app inside the Shadow DOM
 const vueAppContainer = document.createElement('div')
 vueAppContainer.id = 'vue-app'
 shadowRoot.appendChild(vueAppContainer)
 
-// Mount the Vue app to the new container inside Shadow DOM
+// Create a teleport target inside the Shadow DOM for modals/dialogs
+const modalTarget = document.createElement('div')
+modalTarget.id = 'modal-target'
+shadowRoot.appendChild(modalTarget)
+
+// Expose shadowModalTarget globally
+app.config.globalProperties.$shadowModalTarget = modalTarget
+
+// Mount the Vue app to the new container inside the Shadow DOM
 app.mount(vueAppContainer)
 
-// Function to append styles from the document to the shadow root
+// Function to append styles from the main document to the shadow root
 function appendStylesToShadowDOM() {
   const styles = Array.from(document.querySelectorAll('style')) // Get all <style> tags from the main document
   styles.forEach((style) => {
     const styleClone = document.createElement('style') // Create a new style element
     styleClone.textContent = style.textContent // Copy the content from the main style
-    shadowRoot.appendChild(styleClone) // Append to the shadow DOM
+    shadowRoot.appendChild(styleClone) // Append to the Shadow DOM
   })
 }
 
