@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onBeforeMount } from "vue";
 import Logo from "@/assets/uop_notext.png";
 import InputText from "primevue/inputtext";
 import MainMenu from "./menu/MainMenu.vue";
@@ -21,15 +21,17 @@ const toggleShowField = () => {
     showField.value = !showField.value
 }
 
-import { get_string } from 'core/str';
+
 
 // Define reactive variables to store the language strings
-const appTitle = ref('');
+const appName = ref('');
 
-// Fetch the language strings when the component is mounted
-onMounted(() => {
-    get_string('greeting', 'yourplugin').done((str) => {
-        greeting.value = str;
+// Use Moodle's RequireJS to load core/str
+onBeforeMount(() => {
+    require(['core/str'], function (str) {
+        str.get_string('appname', 'local_moddesigner').done(function (result) {
+            appName.value = result;
+        });
     });
 });
 </script>
@@ -41,7 +43,7 @@ onMounted(() => {
             <div class="flex justify-start gap-5 items-center mb-3">
                 <img @click="toggleShowField" :src="Logo" class="h-11" alt="University of Portsmouth Logo" />
                 <a href="#" class="flex flex-col">
-                    <h1 class="text-lg font-semibold">Module Designer</h1>
+                    <h1 class="text-lg font-semibold">{{ appName || 'Module Designer Dev' }}</h1>
                     <p class="text-sm px-1 font-medium bg-sky-600 text-sky-50 rounded w-max">Plugin UI3</p>
                 </a>
             </div>
