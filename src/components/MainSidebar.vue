@@ -8,6 +8,7 @@ import { useDesignMenuStore } from "@/stores/designMenu.js";
 import ExportCourseButton from "@/components/buttons/ExportCourseButton.vue";
 import ImportCourseButton from "@/components/buttons/ImportCourseButton.vue";
 import ResetCourseButton from "@/components/buttons/ResetCourseButton.vue";
+import StringHelper from "./StringHelper.vue";
 
 
 const course = useCourseStore();
@@ -21,19 +22,6 @@ const toggleShowField = () => {
     showField.value = !showField.value
 }
 
-
-
-// Define reactive variables to store the language strings
-const appName = ref('');
-
-// Use Moodle's RequireJS to load core/str
-onBeforeMount(() => {
-    require(['core/str'], function (str) {
-        str.get_string('appname', 'local_moddesigner').done(function (result) {
-            appName.value = result;
-        });
-    });
-});
 </script>
 
 <template>
@@ -43,7 +31,9 @@ onBeforeMount(() => {
             <div class="flex justify-start gap-5 items-center mb-3">
                 <img @click="toggleShowField" :src="Logo" class="h-11" alt="University of Portsmouth Logo" />
                 <a href="#" class="flex flex-col">
-                    <h1 class="text-lg font-semibold">{{ appName || 'Module Designer Dev' }}</h1>
+                    <h1 class="text-lg font-semibold">
+                        <StringHelper get-string="appname" alt-string="Module Designers Dev" />
+                    </h1>
                     <p class="text-sm px-1 font-medium bg-sky-600 text-sky-50 rounded w-max">Plugin UI3</p>
                 </a>
             </div>
