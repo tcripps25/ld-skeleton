@@ -64,9 +64,9 @@ const closeDialog = (index) => {
                 </Dialog>
             </div>
 
-            <!-- Add activity button -->
-            <Pbutton @click="course.addActivityToWeek(weekIndex)" ghost label="Add Activity"
-                class="p-5 h-44 !w-full text-2xl bg-gradient-to-br rounded-lg flex shadow">
+            <!-- Add activity button: Add new activity and immediately open the edit dialog -->
+            <Pbutton @click="course.addActivityToWeek(weekIndex), openDialog(activities.length - 1)" ghost
+                label="Add Activity" class="p-5 h-44 !w-full text-2xl bg-gradient-to-br rounded-lg flex shadow">
                 <template #icon>
                     <PlusIcon class="h-5 w-5" />
                 </template>

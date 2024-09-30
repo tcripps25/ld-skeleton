@@ -8,7 +8,7 @@ import { useDesignMenuStore } from "@/stores/designMenu.js";
 import ExportCourseButton from "@/components/buttons/ExportCourseButton.vue";
 import ImportCourseButton from "@/components/buttons/ImportCourseButton.vue";
 import ResetCourseButton from "@/components/buttons/ResetCourseButton.vue";
-import StringHelper from "./StringHelper.vue";
+import MoodleString from "@/components/helpers/MoodleString.vue";
 
 
 const course = useCourseStore();
@@ -32,9 +32,11 @@ const toggleShowField = () => {
                 <img @click="toggleShowField" :src="Logo" class="h-11" alt="University of Portsmouth Logo" />
                 <a href="#" class="flex flex-col">
                     <h1 class="text-lg font-semibold">
-                        <StringHelper get-string="appname" alt-string="Module Designers Dev" />
+                        <MoodleString get-string="appname" alt-string="Module Designers Dev" />
                     </h1>
-                    <p class="text-sm px-1 font-medium bg-sky-600 text-sky-50 rounded w-max">Plugin UI3</p>
+                    <p class="text-sm px-1 font-medium bg-sky-600 text-sky-50 rounded w-max">
+                        <MoodleString get-string="appsubtitle" alt-string="App Subtitle" />
+                    </p>
                 </a>
             </div>
 

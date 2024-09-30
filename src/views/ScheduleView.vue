@@ -4,11 +4,18 @@ import WeekSummary from '@/components/WeekSummary.vue';
 import PageHeader from '@/components/PageHeader.vue';
 import Panel from '@/components/ui/Panel.vue';
 import Page from '@/components/Page.vue'
+import { useToast } from "primevue/usetoast";
 import { useRoute, RouterView } from 'vue-router';
 import { useCourseStore } from '@/stores/course.js'
 import Pbutton from '@/components/buttons/Pbutton.vue';
-import { PlusIcon } from '@heroicons/vue/16/solid';
+import { useFetchMoodleString } from '@/utils/fetchMoodleString';
 
+const sectionTitle = useFetchMoodleString('mainmenu2', 'Design')
+const pageTitle = useFetchMoodleString('designmenutitle1', 'Module Schedule')
+const addweekbtnlabel = useFetchMoodleString('addweekbtn', 'Add Week')
+const schedulepaneltitle = useFetchMoodleString('schedulepaneltitle', 'Schedule Title')
+const addmultiweeksbtn = useFetchMoodleString('addmultiweeksbtn', 'Add multiple weeks')
+const toast = useToast();
 const course = useCourseStore()
 const route = useRoute();
 
@@ -28,7 +35,7 @@ const isDesignPage = computed(() => route.path === '/design/schedule');
 
 const items = [
   {
-    label: 'Add multiple weeks',
+    label: addmultiweeksbtn.value,
     command: () => {
       toast.add({ severity: 'success', summary: 'Updated', detail: 'Data Updated', life: 3000 });
     }
@@ -41,9 +48,9 @@ const items = [
   <div>
     <Page v-if="isDesignPage">
       <template v-slot:page-header>
-        <PageHeader sectionTitle="Design" title="Module Schedule" />
+        <PageHeader :sectionTitle=sectionTitle :title=pageTitle />
       </template>
-      <Panel title="Teaching Weeks">
+      <Panel :title=schedulepaneltitle>
         <div class="flex flex-col gap-5 ">
           <TransitionGroup>
             <WeekSummary v-for="(week, weekIndex) in course.weeks" :key="weekIndex" :week="week"
@@ -53,7 +60,7 @@ const items = [
         </div>
         <template #lhcontent>
           <div class="sticky top-0 flex justify-end">
-            <Pbutton ghost :items="items" @click="course.incrementWeek()" label="Add Week" class="self-end">
+            <Pbutton ghost @click="course.incrementWeek()" :label=addweekbtnlabel class="self-end">
             </Pbutton>
           </div>
         </template>

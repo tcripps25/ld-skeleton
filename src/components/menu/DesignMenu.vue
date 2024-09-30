@@ -1,13 +1,14 @@
 <script setup>
 import { ref, computed } from 'vue';
-import Menu from 'primevue/menu';
-import { useRouter, RouterLink } from 'vue-router';
+import { useFetchMoodleString } from '@/utils/fetchMoodleString';
 import { useCourseStore } from '@/stores/course.js';
-
 import MenuItem from './MenuItem.vue';
 import Pbutton from '../buttons/Pbutton.vue';
 import { PlusIcon } from '@heroicons/vue/16/solid';
 const course = useCourseStore();
+
+const designmenutitle = useFetchMoodleString('designmenutitle1', 'Design Menu Title');
+const addweekbtnlabel = useFetchMoodleString('addweekbtn', 'Add Week');
 
 const moduleData = computed(() => {
     // Check if course.weeks exists and has length
@@ -15,7 +16,7 @@ const moduleData = computed(() => {
         // If no weeks, just return the static Schedule item
         return [
             {
-                label: 'Module Schedule',
+                label: designmenutitle.value,
                 route: '/design/schedule'
             }
         ];
@@ -24,24 +25,27 @@ const moduleData = computed(() => {
     // Combine the static Schedule item with the dynamic weeks items
     return [
         {
-            label: 'Module Schedule',
+            label: designmenutitle.value,
             route: '/design/schedule'
         },
         ...course.weeks.map((week, index) => ({
             label: week.name,
-
             route: `/design/schedule/${index}`,
             week: true,
         }))
     ];
 });
+
+
 </script>
 
 <template>
 
 
     <nav aria-labelledby="submenulabel">
-        <h2 id="submenulabel" class="sr-only">Module Schedule Menu</h2>
+        <h2 id="submenulabel" class="sr-only">
+            <MoodleString get-string="designmenutitle1" alt-string="Module Schedule" />
+        </h2>
         <TransitionGroup class="flex flex-col relative ml-6" name="list" tag="ul">
             <li v-for="(week, index) in moduleData" :key="index"
                 class="before:content-[''] before:w-[.1rem] before:bg-slate-400 before:absolute before:top-14 before:left-3 before:bottom-4">
@@ -49,7 +53,7 @@ const moduleData = computed(() => {
             </li>
         </TransitionGroup>
         <ul class="flex flex-col relative">
-            <Pbutton class="ml-6" @click="course.incrementWeek()" menu-link label="Add Week">
+            <Pbutton class="ml-6" @click="course.incrementWeek()" menu-link :label=addweekbtnlabel>
                 <template #icon>
                     <PlusIcon class="w-5 h-5" />
                 </template>
