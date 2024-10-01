@@ -1,11 +1,12 @@
 <script setup>
 import { useCourseStore } from '@/stores/course.js';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import Draggable from 'vuedraggable';
 import MultiSelect from 'primevue/multiselect';
 import ActivityLabel from '../ActivityLabel.vue';
 import MoodleActivity from '@/components/ui/MoodleActivity.vue';
 import Fieldset from 'primevue/fieldset';
+import axios from 'axios';
 
 // Accessing course store
 const course = useCourseStore();
@@ -61,13 +62,15 @@ const deselectActivity = (moodleActivity) => {
 };
 
 
+
 </script>
 
 
 <template>
     <Fieldset legend="Moodle Activities">
+
         <div class="flex h-full gap-5">
-            <ActivityLabel unseparated class="w-[40rem] flex h-full" label="Selected Moodle activities"
+            <ActivityLabel unseparated class="min-w-[20rem] flex h-full" label="Selected Moodle activities"
                 targetId="selected-moodle-activities"
                 help="Reorder the activities to your liking, this order will be reflected in your Moodle site.">
                 <!-- Draggable list for selected Moodle activities -->
