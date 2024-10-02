@@ -19,8 +19,8 @@ export default defineConfig(({ command }) => {
       rollupOptions: {
         input: path.resolve(__dirname, 'src/main.js'), // Entry file
         output: {
-          entryFileNames: 'bundle.js',
-          format: 'amd', // AMD format
+          entryFileNames: 'bundle.js', // *This is what you have to load in the requirejs call in the moodle plugin*
+          format: 'amd', // AMD format for Moodle requirejs compatibility  *It will not work in Moodle without this*
           amd: {
             define: 'define'
           }
